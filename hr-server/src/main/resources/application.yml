@@ -1,0 +1,12 @@
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+server:
+  port: 8888
+spring:
+  application:
+    name: hrserver
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/hr?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: mizhuo

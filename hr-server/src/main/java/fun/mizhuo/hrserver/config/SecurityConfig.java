@@ -1,0 +1,112 @@
+package fun.mizhuo.hrserver.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fun.mizhuo.hrserver.model.Hr;
+import fun.mizhuo.hrserver.model.ResponseVo;
+import fun.mizhuo.hrserver.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+/**
+ * @author: Mizhuo
+ * @time: 2020/8/19 10:13 下午
+ * @description:
+ */
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserService userService;
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .loginProcessingUrl("/doLogin")
+                .loginPage("/login")
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
+                        resp.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = resp.getWriter();
+                        Hr hr = (Hr) authentication.getPrincipal();
+                        hr.setPassword(null);
+                        ResponseVo result = ResponseVo.ok("登录成功",hr);
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        out.write(objectMapper.writeValueAsString(result));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse resp, AuthenticationException exception) throws IOException, ServletException {
+                        resp.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = resp.getWriter();
+                        ResponseVo result = null;
+                        if(exception instanceof LockedException){
+                            result = ResponseVo.error("账户被锁定!请联系管理员解锁.");
+                        }else if(exception instanceof AccountExpiredException){
+                            result = ResponseVo.error("账户过期,请联系管理员.");
+                        }else if(exception instanceof DisabledException){
+                            result = ResponseVo.error("账户被禁用!请联系管理员.");
+                        }else if(exception instanceof CredentialsExpiredException){
+                            result = ResponseVo.error("密码过期!请联系管理员.");
+                        }else if(exception instanceof BadCredentialsException){
+                            result = ResponseVo.error("用户名或密码错误!");
+                        }
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        out.write(objectMapper.writeValueAsString(result));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
+                        resp.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = resp.getWriter();
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        out.write(objectMapper.writeValueAsString(ResponseVo.ok("注销成功")));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .permitAll()
+                .and()
+                .csrf().disable();
+    }
+}

@@ -15,6 +15,8 @@
 </template> 
 
 <script>
+    import { postKeyValueRequest } from "../utils/api"
+
     export default {
         name : "Login",
         data(){
@@ -34,7 +36,11 @@
             submitLogin(){
                 this.$refs.loginForm.validate((valid)=>{
                     if(valid){
-                        alert("success");
+                        postKeyValueRequest('/doLogin',this.loginForm).then(resp=>{
+                            if(resp){
+                                console.log(JSON.stringify(resp));
+                            }
+                        });
                     }else{
                         this.$message.error("请输入所有信息!");
                         return false;

@@ -83,16 +83,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
                         ResponseVo result = null;
-                        if(exception instanceof LockedException){
-                            result = ResponseVo.error("账户被锁定!请联系管理员解锁.");
+                        if(exception instanceof BadCredentialsException){
+                            result = ResponseVo.error("用户名或密码错误!");
                         }else if(exception instanceof AccountExpiredException){
                             result = ResponseVo.error("账户过期,请联系管理员.");
                         }else if(exception instanceof DisabledException){
                             result = ResponseVo.error("账户被禁用!请联系管理员.");
                         }else if(exception instanceof CredentialsExpiredException){
                             result = ResponseVo.error("密码过期!请联系管理员.");
-                        }else if(exception instanceof BadCredentialsException){
-                            result = ResponseVo.error("用户名或密码错误!");
+                        }else if(exception instanceof LockedException){
+                            result = ResponseVo.error("账户被锁定!请联系管理员解锁.");
                         }
                         ObjectMapper objectMapper = new ObjectMapper();
                         out.write(objectMapper.writeValueAsString(result));

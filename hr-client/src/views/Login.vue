@@ -38,11 +38,12 @@
                     if(valid){
                         postKeyValueRequest('/doLogin',this.loginForm).then(resp=>{
                             if(resp){
-                                console.log(JSON.stringify(resp));
+                                window.sessionStorage.setItem("user",JSON.stringify(resp.result));
+                                this.$router.replace('/home');
                             }
                         });
                     }else{
-                        this.$message.error("请输入所有信息!");
+                        this.$message.error("请输入所有信息!"); 
                         return false;
                     }
                 });

@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fun.mizhuo.hrserver.filter.MyAuthenticationFilter;
 import fun.mizhuo.hrserver.model.Hr;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -38,6 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    MyAuthenticationFilter myAuthenticationFilter() throws Exception {
+        MyAuthenticationFilter filter = new MyAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
     }
 
     @Override
@@ -108,5 +117,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf().disable();
+        http.addFilterAt(myAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

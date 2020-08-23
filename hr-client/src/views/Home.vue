@@ -5,7 +5,8 @@
                 <div class="title">微人事</div>
                 <el-dropdown class="userInfo" @command="commandHandler">
                   <span class="el-dropdown-link">
-                    {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+                      <img :src="user.userface">{{user.name}}
+                      <i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="userinfo"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
@@ -14,10 +15,20 @@
                   </el-dropdown-menu>
                 </el-dropdown>
             </el-header>
-            <el-container>
-                <el-aside width="200px">Aside</el-aside>
-                <el-main>Main</el-main>
-            </el-container>
+        </el-container>
+        <el-container>
+            <el-aside width="180px">
+                <el-menu router>
+                    <el-submenu index="1" v-for="(item,index) in this.$router.options.routes" :key="index" v-if="!item.hidden">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">{{item.name}}</span>
+                        </template>
+                        <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">{{child.name}}</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-main>Main</el-main>
         </el-container>
     </div>
 </template>
@@ -27,7 +38,8 @@ export default {
     name : "Home",
     data(){
         return {
-            user : JSON.parse(window.sessionStorage.getItem("user"))
+            user : JSON.parse(window.sessionStorage.getItem("user")),
+            collapse : true
         }
     },
     methods:{
@@ -55,6 +67,12 @@ export default {
 
                 }
             }
+        },
+        mouseOver(){
+            this.collapse = false;
+        },
+        mouseOut(){
+            this.collapse = true;
         }
     }
 }
@@ -78,5 +96,17 @@ export default {
 
 .homeHeader .userInfo{
     cursor: pointer;
+}
+
+.el-dropdown-link img{
+    width : 38px;
+    height: 38px;
+    border-radius: 20px;
+    margin-right: 8px;
+}
+
+.el-dropdown-link{
+    display: flex;
+    align-items: center;
 }
 </style>

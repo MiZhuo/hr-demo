@@ -48,8 +48,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
             // Allow subclasses to set the "details" property
             setDetails(request, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
-        }else{
-            return super.attemptAuthentication(request, response);
         }
+        return super.attemptAuthentication(request, response);
     }
 }

@@ -1,4 +1,4 @@
-package fun.mizhuo.hrserver.service;
+package fun.mizhuo.hrserver.service.impl;
 
 import fun.mizhuo.hrserver.mapper.HrMapper;
 import fun.mizhuo.hrserver.model.Hr;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @description:
  */
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
     HrMapper hrMapper;

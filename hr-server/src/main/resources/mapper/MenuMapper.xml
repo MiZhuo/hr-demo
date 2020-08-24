@@ -35,6 +35,7 @@
 
   <select id="initMenuByUserId" resultMap="MenuMap">
         SELECT
+          DISTINCT
           E.*,
           D.id as id2,
           D.URL AS url2,

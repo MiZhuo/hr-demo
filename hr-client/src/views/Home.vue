@@ -19,7 +19,7 @@
         <el-container>
             <el-aside width="180px">
                 <el-menu router>
-                    <el-submenu index="1" v-for="(item,index) in this.$router.options.routes" :key="index" v-if="!item.hidden">
+                    <el-submenu :index="index + ''" v-for="(item,index) in routes" :key="index" v-if="!item.hidden">
                         <template slot="title">
                             <i class="el-icon-location"></i>
                             <span slot="title">{{item.name}}</span>
@@ -73,6 +73,11 @@ export default {
         },
         mouseOut(){
             this.collapse = true;
+        }
+    },
+    computed:{
+        routes(){
+            return this.$store.state.routes;
         }
     }
 }

@@ -17,6 +17,7 @@ export const formatRoutes = (routes)=>{
     let fmtRoutes = [];
     routes.forEach(router=>{
         let {
+            url,
             path,
             component,
             name,
@@ -34,8 +35,11 @@ export const formatRoutes = (routes)=>{
             iconCls : iconCls,
             children : children,
             component(resolve){
-                let path = '../views/' + component.substr(0,3).toLowerCase() + '/' + component + '.vue';
-                require([path],resolve);
+                if(url != '/'){
+                    require(['../views/' + component.substr(0, 3).toLowerCase() + '/' + component + '.vue'],resolve);
+                }else {
+                    require(['../views/' + component + '.vue'],resolve);
+                }
             }
         }
         fmtRoutes.push(fmRouter);

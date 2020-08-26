@@ -17,18 +17,25 @@
             </el-header>
         </el-container>
         <el-container>
-            <el-aside width="180px">
-                <el-menu router>
-                    <el-submenu :index="index + ''" v-for="(item,index) in routes" :key="index" v-if="!item.hidden">
+            <el-aside width="200px">
+                <el-menu router unique-opened>
+                    <el-submenu :index="index + ''" v-for="(item,index) in routes" :key="index">  <!-- v-if="!item.hidden"-->
                         <template slot="title">
-                            <i class="el-icon-location"></i>
+                            <i style="color: #409eff;margin-right: 5px" :class="item.iconCls"></i>
                             <span slot="title">{{item.name}}</span>
                         </template>
                         <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">{{child.name}}</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-aside>
-            <el-main>Main</el-main>
+            <el-main>
+                <el-breadcrumb separator-class="el-icon-arrow-right" v-if="this.$router.currentRoute.path!='/home'">
+                    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
+                </el-breadcrumb>
+                <div v-if="this.$router.currentRoute.path=='/home'">Welcome to hr!</div>
+                <router-view/>
+            </el-main>
         </el-container>
     </div>
 </template>
@@ -59,6 +66,7 @@ export default {
                     }).then(() => {
                         this.getRequest("/logout");
                         window.sessionStorage.removeItem("user");
+                        this.$store.commit('initRoutes',[]);
                         this.$router.replace("/");
                     });
                     break;
@@ -68,11 +76,9 @@ export default {
                 }
             }
         },
-        mouseOver(){
-            this.collapse = false;
-        },
-        mouseOut(){
-            this.collapse = true;
+        menuClick(index){
+            // this.$router.push(index);
+            console.log(index);
         }
     },
     computed:{

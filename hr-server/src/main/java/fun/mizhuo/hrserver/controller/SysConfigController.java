@@ -25,6 +25,6 @@ public class SysConfigController {
     @GetMapping("/menu")
     public ResponseVo initMenuByUserId(){
         List<Menu> menuList = menuService.initMenuByUserId();
-        return ResponseVo.ok("获取菜单列表成功",menuList);
+        return ResponseVo.ok("",menuList);
     }
 }

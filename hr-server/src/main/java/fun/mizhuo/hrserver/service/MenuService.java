@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface MenuService {
     List<Menu> initMenuByUserId();
+
+    List<Menu> getMenuWithRole();
 }

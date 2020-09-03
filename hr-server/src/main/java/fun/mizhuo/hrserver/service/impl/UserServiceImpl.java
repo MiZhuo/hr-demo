@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserDetailsService {
         if(hr == null){
             throw new UsernameNotFoundException("用户不存在,请检查!");
         }
+        hr.setRoles(hrMapper.getRolesByHrId(hr.getId()));
         return hr;
     }
 }

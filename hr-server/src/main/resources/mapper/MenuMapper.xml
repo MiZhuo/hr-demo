@@ -70,9 +70,10 @@
 
   <select id="getMenuWithRole" resultMap="MenuMapWithRole">
       SELECT
+          A.*,
           B.id AS RID,
-          C.`name` AS "name",
-          C.nameZh AS "namezh"
+          C.`name` AS "rname",
+          C.nameZh AS "rnamezh"
       FROM
         menu A
       LEFT JOIN menu_role B ON A.ID = B.MID

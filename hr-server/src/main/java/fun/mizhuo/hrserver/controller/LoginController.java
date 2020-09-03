@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.controller;
 
 import fun.mizhuo.hrserver.model.ResponseVo;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @GetMapping("/login")
+//    @CrossOrigin
     public ResponseVo login(){
         return ResponseVo.error("尚未登录,请登录!");
     }

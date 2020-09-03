@@ -15,4 +15,14 @@ public class HelloController {
     public String hello(){
         return "hello";
     }
+
+    @GetMapping("/employee/basic/hello2")
+    public String hello2(){
+        return "hello2";
+    }
+
+    @GetMapping("/employee/advanced/hello3")
+    public String hello3(){
+        return "hello3";
+    }
 }

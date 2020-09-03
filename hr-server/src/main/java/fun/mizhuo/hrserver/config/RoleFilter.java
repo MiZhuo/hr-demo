@@ -41,6 +41,7 @@ public class RoleFilter implements FilterInvocationSecurityMetadataSource {
                 return SecurityConfig.createList(str);
             }
         }
+        //未匹配到的，登录便可以访问
         return SecurityConfig.createList("ROLE_LOGIN");
     }
 

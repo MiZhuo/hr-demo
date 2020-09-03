@@ -16,6 +16,13 @@
   <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
+
+
+  <select id="getRolesByHrId" resultType="fun.mizhuo.hrserver.model.Role">
+       select * from hr_role a left join role b on a.rid = b.id where a.hrid = #{id}
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

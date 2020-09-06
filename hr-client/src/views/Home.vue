@@ -34,7 +34,7 @@
                     <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
                 </el-breadcrumb>
                 <div v-if="this.$router.currentRoute.path=='/home'">Welcome to hr!</div>
-                <router-view/>
+                <router-view class="homeRouterView"/>
             </el-main>
         </el-container>
     </div>
@@ -90,6 +90,9 @@ export default {
 </script>
 
 <style>
+.homeRouterView{
+    margin-top: 10px;
+}
 .homeHeader{
     background-color: #409eff;
     display: flex;

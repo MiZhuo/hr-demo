@@ -17,7 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.alibaba:druid-spring-boot-starter:1.1.10'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
-    runtimeOnly 'mysql:mysql-connector-java:5.1.27'
+    implementation 'mysql:mysql-connector-java:5.1.27'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

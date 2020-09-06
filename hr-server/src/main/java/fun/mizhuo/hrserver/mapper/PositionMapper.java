@@ -2,16 +2,17 @@ package fun.mizhuo.hrserver.mapper;
 
 import fun.mizhuo.hrserver.model.Position;
 
+import java.util.List;
+
 public interface PositionMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(Position record);
+    List<Position> getAllPosition();
 
-    int insertSelective(Position record);
+    Integer addPosition(Position position);
 
-    Position selectByPrimaryKey(Integer id);
+    Integer updatePosition(Position position);
 
-    int updateByPrimaryKeySelective(Position record);
+    Integer deletePosition(Integer id);
 
-    int updateByPrimaryKey(Position record);
+    Integer deleteMorePosition(List<Position> positions);
 }

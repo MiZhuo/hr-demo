@@ -1,9 +1,9 @@
-package fun.mizhuo.hrserver.service.impl;
+package fun.mizhuo.hrserver.service.impl.common;
 
 import fun.mizhuo.hrserver.mapper.MenuMapper;
 import fun.mizhuo.hrserver.model.Hr;
 import fun.mizhuo.hrserver.model.Menu;
-import fun.mizhuo.hrserver.service.MenuService;
+import fun.mizhuo.hrserver.service.common.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

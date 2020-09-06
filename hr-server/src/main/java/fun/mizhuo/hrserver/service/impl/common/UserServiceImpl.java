@@ -1,4 +1,4 @@
-package fun.mizhuo.hrserver.service.impl;
+package fun.mizhuo.hrserver.service.impl.common;
 
 import fun.mizhuo.hrserver.mapper.HrMapper;
 import fun.mizhuo.hrserver.model.Hr;

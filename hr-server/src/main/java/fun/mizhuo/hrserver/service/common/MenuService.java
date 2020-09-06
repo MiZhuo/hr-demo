@@ -1,4 +1,4 @@
-package fun.mizhuo.hrserver.service;
+package fun.mizhuo.hrserver.service.common;
 
 
 import fun.mizhuo.hrserver.model.Menu;

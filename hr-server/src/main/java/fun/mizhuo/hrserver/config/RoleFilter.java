@@ -2,7 +2,7 @@ package fun.mizhuo.hrserver.config;
 
 import fun.mizhuo.hrserver.model.Menu;
 import fun.mizhuo.hrserver.model.Role;
-import fun.mizhuo.hrserver.service.MenuService;
+import fun.mizhuo.hrserver.service.common.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

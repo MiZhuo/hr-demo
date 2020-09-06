@@ -1,4 +1,4 @@
-package fun.mizhuo.hrserver.controller;
+package fun.mizhuo.hrserver.controller.common;
 
 import fun.mizhuo.hrserver.model.ResponseVo;
 import org.springframework.web.bind.annotation.CrossOrigin;

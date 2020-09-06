@@ -38,7 +38,8 @@
                         this.postKeyValueRequest('/doLogin',this.loginForm).then(resp=>{
                             if(resp){
                                 window.sessionStorage.setItem("user",JSON.stringify(resp.result));
-                                this.$router.replace('/home');
+                                let path = this.$route.query.redirect;
+                                this.$router.replace((path == '/' || path == undefined) ? '/home' : path);
                             }
                         });
                     }else{

@@ -1,8 +1,8 @@
-package fun.mizhuo.hrserver.controller;
+package fun.mizhuo.hrserver.controller.common;
 
 import fun.mizhuo.hrserver.model.Menu;
 import fun.mizhuo.hrserver.model.ResponseVo;
-import fun.mizhuo.hrserver.service.MenuService;
+import fun.mizhuo.hrserver.service.common.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

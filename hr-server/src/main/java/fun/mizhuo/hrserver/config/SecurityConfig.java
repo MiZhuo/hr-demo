@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fun.mizhuo.hrserver.filter.MyAuthenticationFilter;
 import fun.mizhuo.hrserver.model.Hr;
 import fun.mizhuo.hrserver.model.ResponseVo;
-import fun.mizhuo.hrserver.service.impl.UserServiceImpl;
+import fun.mizhuo.hrserver.service.impl.common.UserServiceImpl;
+import fun.mizhuo.hrserver.util.ErrMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -107,15 +108,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         PrintWriter out = resp.getWriter();
                         ResponseVo result = null;
                         if(exception instanceof BadCredentialsException){
-                            result = ResponseVo.error("用户名或密码错误!");
+                            result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE1);
                         }else if(exception instanceof AccountExpiredException){
-                            result = ResponseVo.error("账户过期,请联系管理员.");
+                            result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE3);
                         }else if(exception instanceof DisabledException){
-                            result = ResponseVo.error("账户被禁用!请联系管理员.");
+                            result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE4);
                         }else if(exception instanceof CredentialsExpiredException){
-                            result = ResponseVo.error("密码过期!请联系管理员.");
+                            result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE5);
                         }else if(exception instanceof LockedException){
-                            result = ResponseVo.error("账户被锁定!请联系管理员解锁.");
+                            result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE6);
                         }
                         ObjectMapper objectMapper = new ObjectMapper();
                         out.write(objectMapper.writeValueAsString(result));
@@ -148,7 +149,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             PrintWriter out = resp.getWriter();
                             ResponseVo result = null;
                             if(exception instanceof InsufficientAuthenticationException){
-                                result = ResponseVo.error("访问失败,请联系管理员!");
+                                result = ResponseVo.error(ErrMessage.SYSTEM_ERROR_MESSAGE2);
                             }
                             ObjectMapper objectMapper = new ObjectMapper();
                             out.write(objectMapper.writeValueAsString(result));

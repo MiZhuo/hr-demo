@@ -2,6 +2,8 @@ package fun.mizhuo.hrserver.mapper;
 
 import fun.mizhuo.hrserver.model.JobLevel;
 
+import java.util.List;
+
 public interface JobLevelMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,14 @@ public interface JobLevelMapper {
     int updateByPrimaryKeySelective(JobLevel record);
 
     int updateByPrimaryKey(JobLevel record);
+
+    List<JobLevel> getAllJobTitle();
+
+    Integer addJobTitle(JobLevel jobTitle);
+
+    Integer updateJobTitle(JobLevel jobTitle);
+
+    Integer deleteJobTitle(Integer id);
+
+    Integer deleteMoreJobTitle(List<JobLevel> jobTitles);
 }

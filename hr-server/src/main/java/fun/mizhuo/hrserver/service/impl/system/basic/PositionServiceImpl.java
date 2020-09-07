@@ -1,6 +1,5 @@
 package fun.mizhuo.hrserver.service.impl.system.basic;
 
-import fun.mizhuo.hrserver.controller.system.basic.PositionController;
 import fun.mizhuo.hrserver.mapper.PositionMapper;
 import fun.mizhuo.hrserver.model.Position;
 import fun.mizhuo.hrserver.service.system.basic.PositionService;

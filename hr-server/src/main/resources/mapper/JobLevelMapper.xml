@@ -4,30 +4,18 @@
   <resultMap id="BaseResultMap" type="fun.mizhuo.hrserver.model.JobLevel">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="titleLevel" jdbcType="CHAR" property="titlelevel" />
-    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="titleLevel" jdbcType="CHAR" property="titleLevel" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
     <result column="enabled" jdbcType="BIT" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, titleLevel, createDate, enabled
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from joblevel
-    where id = #{id,jdbcType=INTEGER}
+
+  <select id="getAllJobTitle" resultMap="BaseResultMap">
+    select * from joblevel
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from joblevel
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="fun.mizhuo.hrserver.model.JobLevel">
-    insert into joblevel (id, name, titleLevel, 
-      createDate, enabled)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{titlelevel,jdbcType=CHAR}, 
-      #{createdate,jdbcType=TIMESTAMP}, #{enabled,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.JobLevel">
+  <insert id="addJobTitle" parameterType="fun.mizhuo.hrserver.model.JobLevel">
     insert into joblevel
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -36,15 +24,11 @@
       <if test="name != null">
         name,
       </if>
-      <if test="titlelevel != null">
+      <if test="titleLevel != null">
         titleLevel,
       </if>
-      <if test="createdate != null">
         createDate,
-      </if>
-      <if test="enabled != null">
         enabled,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -53,28 +37,21 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="titlelevel != null">
-        #{titlelevel,jdbcType=CHAR},
+      <if test="titleLevel != null">
+        #{titleLevel,jdbcType=CHAR},
       </if>
-      <if test="createdate != null">
-        #{createdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=BIT},
-      </if>
+      current_timestamp ,
+      '1'
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="fun.mizhuo.hrserver.model.JobLevel">
+  <update id="updateJobTitle" parameterType="fun.mizhuo.hrserver.model.JobLevel">
     update joblevel
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="titlelevel != null">
-        titleLevel = #{titlelevel,jdbcType=CHAR},
-      </if>
-      <if test="createdate != null">
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="titleLevel != null">
+        titleLevel = #{titleLevel,jdbcType=CHAR},
       </if>
       <if test="enabled != null">
         enabled = #{enabled,jdbcType=BIT},
@@ -82,12 +59,17 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.JobLevel">
-    update joblevel
-    set name = #{name,jdbcType=VARCHAR},
-      titleLevel = #{titlelevel,jdbcType=CHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=BIT}
+
+  <delete id="deleteJobTitle">
+    delete from joblevel
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </delete>
+
+  <delete id="deleteMoreJobTitle" parameterType="list">
+    delete from joblevel where id in
+    <foreach collection="list" item="jobLevel" open="(" close=")" separator=",">
+      #{jobLevel.id}
+    </foreach>
+  </delete>
+
 </mapper>

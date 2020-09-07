@@ -10,7 +10,8 @@
         </div>
         <div style="margin-top: 10px">
             <el-table :data="positionData" size="mini" class="component-table"
-                    border stripe style="width: 65%">
+                    border stripe style="width: 65%"
+                    @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="编号" width="80"></el-table-column>
                 <el-table-column prop="name" label="职位名称" width="200"></el-table-column>
@@ -27,6 +28,7 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <el-button size="mini" type="danger" :disabled="batchBtnDisabled" style="margin-top:10px" @click="batchDelete">批量删除</el-button>
         </div>
         <el-dialog title="编辑职位" :visible.sync="dialogFormVisible">
             <el-form v-model="positionForm" style="text-align: center">
@@ -61,7 +63,13 @@
                 },
                 dialogFormVisible: false,
                 positionData:[],
-                positionForm:{}
+                positionForm:{
+                    id : "",
+                    name : "",
+                    createDate : ""
+                },
+                batchBtnDisabled: true,
+                multipleSelection: []
             }
         },
         methods:{
@@ -103,6 +111,25 @@
                     });
                 });
 
+            },
+            handleSelectionChange(val){
+                this.multipleSelection = val;
+                if(this.multipleSelection.length > 0){
+                    this.batchBtnDisabled = false;
+                }else{
+                    this.batchBtnDisabled = true;
+                }
+            },
+            batchDelete(){
+                this.$confirm('此操作将永久删除所有所选职位, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest("/system/basic/position/deleteMore",this.multipleSelection).then(()=>{
+                        this.initPositionTable();
+                    });
+                });
             }
         },
         mounted() {

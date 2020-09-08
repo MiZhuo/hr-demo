@@ -5,7 +5,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class Position implements Serializable {
+
+    private static final long serialVersionUID = -992184112025108413L;
+
     private Integer id;
 
     private String name;
@@ -14,8 +20,6 @@ public class Position implements Serializable {
     private Date createDate;
 
     private Boolean enabled;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

@@ -3,12 +3,12 @@
 <mapper namespace="fun.mizhuo.hrserver.mapper.OpLogMapper">
   <resultMap id="BaseResultMap" type="fun.mizhuo.hrserver.model.OpLog">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="addDate" jdbcType="DATE" property="adddate" />
+    <result column="addDate" jdbcType="DATE" property="addDate" />
     <result column="operate" jdbcType="VARCHAR" property="operate" />
-    <result column="hrid" jdbcType="INTEGER" property="hrid" />
+    <result column="hrId" jdbcType="INTEGER" property="hrId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, addDate, operate, hrid
+    id, addDate, operate, hrId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,9 +22,9 @@
   </delete>
   <insert id="insert" parameterType="fun.mizhuo.hrserver.model.OpLog">
     insert into oplog (id, addDate, operate, 
-      hrid)
-    values (#{id,jdbcType=INTEGER}, #{adddate,jdbcType=DATE}, #{operate,jdbcType=VARCHAR}, 
-      #{hrid,jdbcType=INTEGER})
+      hrId)
+    values (#{id,jdbcType=INTEGER}, #{addDate,jdbcType=DATE}, #{operate,jdbcType=VARCHAR}, 
+      #{hrId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.OpLog">
     insert into oplog
@@ -32,51 +32,51 @@
       <if test="id != null">
         id,
       </if>
-      <if test="adddate != null">
+      <if test="addDate != null">
         addDate,
       </if>
       <if test="operate != null">
         operate,
       </if>
-      <if test="hrid != null">
-        hrid,
+      <if test="hrId != null">
+        hrId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="adddate != null">
-        #{adddate,jdbcType=DATE},
+      <if test="addDate != null">
+        #{addDate,jdbcType=DATE},
       </if>
       <if test="operate != null">
         #{operate,jdbcType=VARCHAR},
       </if>
-      <if test="hrid != null">
-        #{hrid,jdbcType=INTEGER},
+      <if test="hrId != null">
+        #{hrId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="fun.mizhuo.hrserver.model.OpLog">
     update oplog
     <set>
-      <if test="adddate != null">
-        addDate = #{adddate,jdbcType=DATE},
+      <if test="addDate != null">
+        addDate = #{addDate,jdbcType=DATE},
       </if>
       <if test="operate != null">
         operate = #{operate,jdbcType=VARCHAR},
       </if>
-      <if test="hrid != null">
-        hrid = #{hrid,jdbcType=INTEGER},
+      <if test="hrId != null">
+        hrId = #{hrId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.OpLog">
     update oplog
-    set addDate = #{adddate,jdbcType=DATE},
+    set addDate = #{addDate,jdbcType=DATE},
       operate = #{operate,jdbcType=VARCHAR},
-      hrid = #{hrid,jdbcType=INTEGER}
+      hrId = #{hrId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

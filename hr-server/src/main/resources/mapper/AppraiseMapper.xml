@@ -4,14 +4,15 @@
   <resultMap id="BaseResultMap" type="fun.mizhuo.hrserver.model.Appraise">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="eid" jdbcType="INTEGER" property="eid" />
-    <result column="appDate" jdbcType="DATE" property="appdate" />
-    <result column="appResult" jdbcType="VARCHAR" property="appresult" />
-    <result column="appContent" jdbcType="VARCHAR" property="appcontent" />
+    <result column="appDate" jdbcType="DATE" property="appDate" />
+    <result column="appResult" jdbcType="VARCHAR" property="appResult" />
+    <result column="appContent" jdbcType="VARCHAR" property="appContent" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
     id, eid, appDate, appResult, appContent, remark
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -26,8 +27,8 @@
     insert into appraise (id, eid, appDate, 
       appResult, appContent, remark
       )
-    values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{appdate,jdbcType=DATE}, 
-      #{appresult,jdbcType=VARCHAR}, #{appcontent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=INTEGER}, #{appDate,jdbcType=DATE}, 
+      #{appResult,jdbcType=VARCHAR}, #{appContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.Appraise">
@@ -39,13 +40,13 @@
       <if test="eid != null">
         eid,
       </if>
-      <if test="appdate != null">
+      <if test="appDate != null">
         appDate,
       </if>
-      <if test="appresult != null">
+      <if test="appResult != null">
         appResult,
       </if>
-      <if test="appcontent != null">
+      <if test="appContent != null">
         appContent,
       </if>
       <if test="remark != null">
@@ -59,14 +60,14 @@
       <if test="eid != null">
         #{eid,jdbcType=INTEGER},
       </if>
-      <if test="appdate != null">
-        #{appdate,jdbcType=DATE},
+      <if test="appDate != null">
+        #{appDate,jdbcType=DATE},
       </if>
-      <if test="appresult != null">
-        #{appresult,jdbcType=VARCHAR},
+      <if test="appResult != null">
+        #{appResult,jdbcType=VARCHAR},
       </if>
-      <if test="appcontent != null">
-        #{appcontent,jdbcType=VARCHAR},
+      <if test="appContent != null">
+        #{appContent,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -79,14 +80,14 @@
       <if test="eid != null">
         eid = #{eid,jdbcType=INTEGER},
       </if>
-      <if test="appdate != null">
-        appDate = #{appdate,jdbcType=DATE},
+      <if test="appDate != null">
+        appDate = #{appDate,jdbcType=DATE},
       </if>
-      <if test="appresult != null">
-        appResult = #{appresult,jdbcType=VARCHAR},
+      <if test="appResult != null">
+        appResult = #{appResult,jdbcType=VARCHAR},
       </if>
-      <if test="appcontent != null">
-        appContent = #{appcontent,jdbcType=VARCHAR},
+      <if test="appContent != null">
+        appContent = #{appContent,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -97,9 +98,9 @@
   <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.Appraise">
     update appraise
     set eid = #{eid,jdbcType=INTEGER},
-      appDate = #{appdate,jdbcType=DATE},
-      appResult = #{appresult,jdbcType=VARCHAR},
-      appContent = #{appcontent,jdbcType=VARCHAR},
+      appDate = #{appDate,jdbcType=DATE},
+      appResult = #{appResult,jdbcType=VARCHAR},
+      appContent = #{appContent,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

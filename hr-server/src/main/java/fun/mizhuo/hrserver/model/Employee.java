@@ -3,7 +3,12 @@ package fun.mizhuo.hrserver.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class Employee implements Serializable {
+    private static final long serialVersionUID = -5050029441401970900L;
+
     private Integer id;
 
     private String name;
@@ -12,15 +17,15 @@ public class Employee implements Serializable {
 
     private Date birthday;
 
-    private String idcard;
+    private String idCard;
 
     private String wedlock;
 
-    private Integer nationid;
+    private Integer nationId;
 
-    private String nativeplace;
+    private String nativePlace;
 
-    private Integer politicid;
+    private Integer politicId;
 
     private String email;
 
@@ -28,39 +33,37 @@ public class Employee implements Serializable {
 
     private String address;
 
-    private Integer departmentid;
+    private Integer departmentId;
 
-    private Integer joblevelid;
+    private Integer jobLevelId;
 
-    private Integer posid;
+    private Integer posId;
 
-    private String engageform;
+    private String engageForm;
 
-    private String tiptopdegree;
+    private String tipTopDegree;
 
     private String specialty;
 
     private String school;
 
-    private Date begindate;
+    private Date beginDate;
 
-    private String workstate;
+    private String workState;
 
-    private String workid;
+    private String workId;
 
-    private Double contractterm;
+    private Double contractTerm;
 
-    private Date conversiontime;
+    private Date conversionTime;
 
-    private Date notworkdate;
+    private Date notworkDate;
 
-    private Date begincontract;
+    private Date beginContract;
 
-    private Date endcontract;
+    private Date endContract;
 
-    private Integer workage;
-
-    private static final long serialVersionUID = 1L;
+    private Integer workAge;
 
     public Integer getId() {
         return id;
@@ -75,7 +78,7 @@ public class Employee implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getGender() {
@@ -83,7 +86,7 @@ public class Employee implements Serializable {
     }
 
     public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+        this.gender = gender;
     }
 
     public Date getBirthday() {
@@ -94,12 +97,12 @@ public class Employee implements Serializable {
         this.birthday = birthday;
     }
 
-    public String getIdcard() {
-        return idcard;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard(String idcard) {
-        this.idcard = idcard == null ? null : idcard.trim();
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getWedlock() {
@@ -107,31 +110,31 @@ public class Employee implements Serializable {
     }
 
     public void setWedlock(String wedlock) {
-        this.wedlock = wedlock == null ? null : wedlock.trim();
+        this.wedlock = wedlock;
     }
 
-    public Integer getNationid() {
-        return nationid;
+    public Integer getNationId() {
+        return nationId;
     }
 
-    public void setNationid(Integer nationid) {
-        this.nationid = nationid;
+    public void setNationId(Integer nationId) {
+        this.nationId = nationId;
     }
 
-    public String getNativeplace() {
-        return nativeplace;
+    public String getNativePlace() {
+        return nativePlace;
     }
 
-    public void setNativeplace(String nativeplace) {
-        this.nativeplace = nativeplace == null ? null : nativeplace.trim();
+    public void setNativePlace(String nativePlace) {
+        this.nativePlace = nativePlace;
     }
 
-    public Integer getPoliticid() {
-        return politicid;
+    public Integer getPoliticId() {
+        return politicId;
     }
 
-    public void setPoliticid(Integer politicid) {
-        this.politicid = politicid;
+    public void setPoliticId(Integer politicId) {
+        this.politicId = politicId;
     }
 
     public String getEmail() {
@@ -139,7 +142,7 @@ public class Employee implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
     }
 
     public String getPhone() {
@@ -147,7 +150,7 @@ public class Employee implements Serializable {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
     public String getAddress() {
@@ -155,47 +158,47 @@ public class Employee implements Serializable {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
-    public Integer getDepartmentid() {
-        return departmentid;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentid(Integer departmentid) {
-        this.departmentid = departmentid;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public Integer getJoblevelid() {
-        return joblevelid;
+    public Integer getJobLevelId() {
+        return jobLevelId;
     }
 
-    public void setJoblevelid(Integer joblevelid) {
-        this.joblevelid = joblevelid;
+    public void setJobLevelId(Integer jobLevelId) {
+        this.jobLevelId = jobLevelId;
     }
 
-    public Integer getPosid() {
-        return posid;
+    public Integer getPosId() {
+        return posId;
     }
 
-    public void setPosid(Integer posid) {
-        this.posid = posid;
+    public void setPosId(Integer posId) {
+        this.posId = posId;
     }
 
-    public String getEngageform() {
-        return engageform;
+    public String getEngageForm() {
+        return engageForm;
     }
 
-    public void setEngageform(String engageform) {
-        this.engageform = engageform == null ? null : engageform.trim();
+    public void setEngageForm(String engageForm) {
+        this.engageForm = engageForm;
     }
 
-    public String getTiptopdegree() {
-        return tiptopdegree;
+    public String getTipTopDegree() {
+        return tipTopDegree;
     }
 
-    public void setTiptopdegree(String tiptopdegree) {
-        this.tiptopdegree = tiptopdegree == null ? null : tiptopdegree.trim();
+    public void setTipTopDegree(String tipTopDegree) {
+        this.tipTopDegree = tipTopDegree;
     }
 
     public String getSpecialty() {
@@ -203,7 +206,7 @@ public class Employee implements Serializable {
     }
 
     public void setSpecialty(String specialty) {
-        this.specialty = specialty == null ? null : specialty.trim();
+        this.specialty = specialty;
     }
 
     public String getSchool() {
@@ -211,194 +214,78 @@ public class Employee implements Serializable {
     }
 
     public void setSchool(String school) {
-        this.school = school == null ? null : school.trim();
+        this.school = school;
     }
 
-    public Date getBegindate() {
-        return begindate;
+    public Date getBeginDate() {
+        return beginDate;
     }
 
-    public void setBegindate(Date begindate) {
-        this.begindate = begindate;
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
     }
 
-    public String getWorkstate() {
-        return workstate;
+    public String getWorkState() {
+        return workState;
     }
 
-    public void setWorkstate(String workstate) {
-        this.workstate = workstate == null ? null : workstate.trim();
+    public void setWorkState(String workState) {
+        this.workState = workState;
     }
 
-    public String getWorkid() {
-        return workid;
+    public String getWorkId() {
+        return workId;
     }
 
-    public void setWorkid(String workid) {
-        this.workid = workid == null ? null : workid.trim();
+    public void setWorkId(String workId) {
+        this.workId = workId;
     }
 
-    public Double getContractterm() {
-        return contractterm;
+    public Double getContractTerm() {
+        return contractTerm;
     }
 
-    public void setContractterm(Double contractterm) {
-        this.contractterm = contractterm;
+    public void setContractTerm(Double contractTerm) {
+        this.contractTerm = contractTerm;
     }
 
-    public Date getConversiontime() {
-        return conversiontime;
+    public Date getConversionTime() {
+        return conversionTime;
     }
 
-    public void setConversiontime(Date conversiontime) {
-        this.conversiontime = conversiontime;
+    public void setConversionTime(Date conversionTime) {
+        this.conversionTime = conversionTime;
     }
 
-    public Date getNotworkdate() {
-        return notworkdate;
+    public Date getNotworkDate() {
+        return notworkDate;
     }
 
-    public void setNotworkdate(Date notworkdate) {
-        this.notworkdate = notworkdate;
+    public void setNotworkDate(Date notworkDate) {
+        this.notworkDate = notworkDate;
     }
 
-    public Date getBegincontract() {
-        return begincontract;
+    public Date getBeginContract() {
+        return beginContract;
     }
 
-    public void setBegincontract(Date begincontract) {
-        this.begincontract = begincontract;
+    public void setBeginContract(Date beginContract) {
+        this.beginContract = beginContract;
     }
 
-    public Date getEndcontract() {
-        return endcontract;
+    public Date getEndContract() {
+        return endContract;
     }
 
-    public void setEndcontract(Date endcontract) {
-        this.endcontract = endcontract;
+    public void setEndContract(Date endContract) {
+        this.endContract = endContract;
     }
 
-    public Integer getWorkage() {
-        return workage;
+    public Integer getWorkAge() {
+        return workAge;
     }
 
-    public void setWorkage(Integer workage) {
-        this.workage = workage;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Employee other = (Employee) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getGender() == null ? other.getGender() == null : this.getGender().equals(other.getGender()))
-            && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
-            && (this.getIdcard() == null ? other.getIdcard() == null : this.getIdcard().equals(other.getIdcard()))
-            && (this.getWedlock() == null ? other.getWedlock() == null : this.getWedlock().equals(other.getWedlock()))
-            && (this.getNationid() == null ? other.getNationid() == null : this.getNationid().equals(other.getNationid()))
-            && (this.getNativeplace() == null ? other.getNativeplace() == null : this.getNativeplace().equals(other.getNativeplace()))
-            && (this.getPoliticid() == null ? other.getPoliticid() == null : this.getPoliticid().equals(other.getPoliticid()))
-            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
-            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
-            && (this.getJoblevelid() == null ? other.getJoblevelid() == null : this.getJoblevelid().equals(other.getJoblevelid()))
-            && (this.getPosid() == null ? other.getPosid() == null : this.getPosid().equals(other.getPosid()))
-            && (this.getEngageform() == null ? other.getEngageform() == null : this.getEngageform().equals(other.getEngageform()))
-            && (this.getTiptopdegree() == null ? other.getTiptopdegree() == null : this.getTiptopdegree().equals(other.getTiptopdegree()))
-            && (this.getSpecialty() == null ? other.getSpecialty() == null : this.getSpecialty().equals(other.getSpecialty()))
-            && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
-            && (this.getBegindate() == null ? other.getBegindate() == null : this.getBegindate().equals(other.getBegindate()))
-            && (this.getWorkstate() == null ? other.getWorkstate() == null : this.getWorkstate().equals(other.getWorkstate()))
-            && (this.getWorkid() == null ? other.getWorkid() == null : this.getWorkid().equals(other.getWorkid()))
-            && (this.getContractterm() == null ? other.getContractterm() == null : this.getContractterm().equals(other.getContractterm()))
-            && (this.getConversiontime() == null ? other.getConversiontime() == null : this.getConversiontime().equals(other.getConversiontime()))
-            && (this.getNotworkdate() == null ? other.getNotworkdate() == null : this.getNotworkdate().equals(other.getNotworkdate()))
-            && (this.getBegincontract() == null ? other.getBegincontract() == null : this.getBegincontract().equals(other.getBegincontract()))
-            && (this.getEndcontract() == null ? other.getEndcontract() == null : this.getEndcontract().equals(other.getEndcontract()))
-            && (this.getWorkage() == null ? other.getWorkage() == null : this.getWorkage().equals(other.getWorkage()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
-        result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
-        result = prime * result + ((getIdcard() == null) ? 0 : getIdcard().hashCode());
-        result = prime * result + ((getWedlock() == null) ? 0 : getWedlock().hashCode());
-        result = prime * result + ((getNationid() == null) ? 0 : getNationid().hashCode());
-        result = prime * result + ((getNativeplace() == null) ? 0 : getNativeplace().hashCode());
-        result = prime * result + ((getPoliticid() == null) ? 0 : getPoliticid().hashCode());
-        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
-        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
-        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
-        result = prime * result + ((getJoblevelid() == null) ? 0 : getJoblevelid().hashCode());
-        result = prime * result + ((getPosid() == null) ? 0 : getPosid().hashCode());
-        result = prime * result + ((getEngageform() == null) ? 0 : getEngageform().hashCode());
-        result = prime * result + ((getTiptopdegree() == null) ? 0 : getTiptopdegree().hashCode());
-        result = prime * result + ((getSpecialty() == null) ? 0 : getSpecialty().hashCode());
-        result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
-        result = prime * result + ((getBegindate() == null) ? 0 : getBegindate().hashCode());
-        result = prime * result + ((getWorkstate() == null) ? 0 : getWorkstate().hashCode());
-        result = prime * result + ((getWorkid() == null) ? 0 : getWorkid().hashCode());
-        result = prime * result + ((getContractterm() == null) ? 0 : getContractterm().hashCode());
-        result = prime * result + ((getConversiontime() == null) ? 0 : getConversiontime().hashCode());
-        result = prime * result + ((getNotworkdate() == null) ? 0 : getNotworkdate().hashCode());
-        result = prime * result + ((getBegincontract() == null) ? 0 : getBegincontract().hashCode());
-        result = prime * result + ((getEndcontract() == null) ? 0 : getEndcontract().hashCode());
-        result = prime * result + ((getWorkage() == null) ? 0 : getWorkage().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", gender=").append(gender);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", idcard=").append(idcard);
-        sb.append(", wedlock=").append(wedlock);
-        sb.append(", nationid=").append(nationid);
-        sb.append(", nativeplace=").append(nativeplace);
-        sb.append(", politicid=").append(politicid);
-        sb.append(", email=").append(email);
-        sb.append(", phone=").append(phone);
-        sb.append(", address=").append(address);
-        sb.append(", departmentid=").append(departmentid);
-        sb.append(", joblevelid=").append(joblevelid);
-        sb.append(", posid=").append(posid);
-        sb.append(", engageform=").append(engageform);
-        sb.append(", tiptopdegree=").append(tiptopdegree);
-        sb.append(", specialty=").append(specialty);
-        sb.append(", school=").append(school);
-        sb.append(", begindate=").append(begindate);
-        sb.append(", workstate=").append(workstate);
-        sb.append(", workid=").append(workid);
-        sb.append(", contractterm=").append(contractterm);
-        sb.append(", conversiontime=").append(conversiontime);
-        sb.append(", notworkdate=").append(notworkdate);
-        sb.append(", begincontract=").append(begincontract);
-        sb.append(", endcontract=").append(endcontract);
-        sb.append(", workage=").append(workage);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public void setWorkAge(Integer workAge) {
+        this.workAge = workAge;
     }
 }

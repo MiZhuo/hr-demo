@@ -3,6 +3,9 @@ package fun.mizhuo.hrserver.model;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author mizhuo
+ */
 public class Menu implements Serializable {
     private static final long serialVersionUID = 683943602245488523L;
 

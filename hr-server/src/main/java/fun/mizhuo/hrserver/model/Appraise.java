@@ -3,20 +3,23 @@ package fun.mizhuo.hrserver.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class Appraise implements Serializable {
+    private static final long serialVersionUID = 5127569351863705845L;
+
     private Integer id;
 
     private Integer eid;
 
-    private Date appdate;
+    private Date appDate;
 
-    private String appresult;
+    private String appResult;
 
-    private String appcontent;
+    private String appContent;
 
     private String remark;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -34,28 +37,28 @@ public class Appraise implements Serializable {
         this.eid = eid;
     }
 
-    public Date getAppdate() {
-        return appdate;
+    public Date getAppDate() {
+        return appDate;
     }
 
-    public void setAppdate(Date appdate) {
-        this.appdate = appdate;
+    public void setAppDate(Date appDate) {
+        this.appDate = appDate;
     }
 
-    public String getAppresult() {
-        return appresult;
+    public String getAppResult() {
+        return appResult;
     }
 
-    public void setAppresult(String appresult) {
-        this.appresult = appresult == null ? null : appresult.trim();
+    public void setAppResult(String appResult) {
+        this.appResult = appResult;
     }
 
-    public String getAppcontent() {
-        return appcontent;
+    public String getAppContent() {
+        return appContent;
     }
 
-    public void setAppcontent(String appcontent) {
-        this.appcontent = appcontent == null ? null : appcontent.trim();
+    public void setAppContent(String appContent) {
+        this.appContent = appContent;
     }
 
     public String getRemark() {
@@ -63,56 +66,6 @@ public class Appraise implements Serializable {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Appraise other = (Appraise) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getEid() == null ? other.getEid() == null : this.getEid().equals(other.getEid()))
-            && (this.getAppdate() == null ? other.getAppdate() == null : this.getAppdate().equals(other.getAppdate()))
-            && (this.getAppresult() == null ? other.getAppresult() == null : this.getAppresult().equals(other.getAppresult()))
-            && (this.getAppcontent() == null ? other.getAppcontent() == null : this.getAppcontent().equals(other.getAppcontent()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getEid() == null) ? 0 : getEid().hashCode());
-        result = prime * result + ((getAppdate() == null) ? 0 : getAppdate().hashCode());
-        result = prime * result + ((getAppresult() == null) ? 0 : getAppresult().hashCode());
-        result = prime * result + ((getAppcontent() == null) ? 0 : getAppcontent().hashCode());
-        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", eid=").append(eid);
-        sb.append(", appdate=").append(appdate);
-        sb.append(", appresult=").append(appresult);
-        sb.append(", appcontent=").append(appcontent);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        this.remark = remark;
     }
 }

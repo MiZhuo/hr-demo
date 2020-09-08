@@ -3,22 +3,26 @@ package fun.mizhuo.hrserver.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class EmployeeEc implements Serializable {
+
+    private static final long serialVersionUID = -5366309222170644163L;
+
     private Integer id;
 
     private Integer eid;
 
-    private Date ecdate;
+    private Date ecDate;
 
-    private String ecreason;
+    private String ecReason;
 
-    private Integer ecpoint;
+    private Integer ecPoint;
 
-    private Integer ectype;
+    private Integer ecType;
 
     private String remark;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -36,36 +40,36 @@ public class EmployeeEc implements Serializable {
         this.eid = eid;
     }
 
-    public Date getEcdate() {
-        return ecdate;
+    public Date getEcDate() {
+        return ecDate;
     }
 
-    public void setEcdate(Date ecdate) {
-        this.ecdate = ecdate;
+    public void setEcDate(Date ecDate) {
+        this.ecDate = ecDate;
     }
 
-    public String getEcreason() {
-        return ecreason;
+    public String getEcReason() {
+        return ecReason;
     }
 
-    public void setEcreason(String ecreason) {
-        this.ecreason = ecreason == null ? null : ecreason.trim();
+    public void setEcReason(String ecReason) {
+        this.ecReason = ecReason;
     }
 
-    public Integer getEcpoint() {
-        return ecpoint;
+    public Integer getEcPoint() {
+        return ecPoint;
     }
 
-    public void setEcpoint(Integer ecpoint) {
-        this.ecpoint = ecpoint;
+    public void setEcPoint(Integer ecPoint) {
+        this.ecPoint = ecPoint;
     }
 
-    public Integer getEctype() {
-        return ectype;
+    public Integer getEcType() {
+        return ecType;
     }
 
-    public void setEctype(Integer ectype) {
-        this.ectype = ectype;
+    public void setEcType(Integer ecType) {
+        this.ecType = ecType;
     }
 
     public String getRemark() {
@@ -73,59 +77,6 @@ public class EmployeeEc implements Serializable {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        EmployeeEc other = (EmployeeEc) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getEid() == null ? other.getEid() == null : this.getEid().equals(other.getEid()))
-            && (this.getEcdate() == null ? other.getEcdate() == null : this.getEcdate().equals(other.getEcdate()))
-            && (this.getEcreason() == null ? other.getEcreason() == null : this.getEcreason().equals(other.getEcreason()))
-            && (this.getEcpoint() == null ? other.getEcpoint() == null : this.getEcpoint().equals(other.getEcpoint()))
-            && (this.getEctype() == null ? other.getEctype() == null : this.getEctype().equals(other.getEctype()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getEid() == null) ? 0 : getEid().hashCode());
-        result = prime * result + ((getEcdate() == null) ? 0 : getEcdate().hashCode());
-        result = prime * result + ((getEcreason() == null) ? 0 : getEcreason().hashCode());
-        result = prime * result + ((getEcpoint() == null) ? 0 : getEcpoint().hashCode());
-        result = prime * result + ((getEctype() == null) ? 0 : getEctype().hashCode());
-        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", eid=").append(eid);
-        sb.append(", ecdate=").append(ecdate);
-        sb.append(", ecreason=").append(ecreason);
-        sb.append(", ecpoint=").append(ecpoint);
-        sb.append(", ectype=").append(ectype);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        this.remark = remark;
     }
 }

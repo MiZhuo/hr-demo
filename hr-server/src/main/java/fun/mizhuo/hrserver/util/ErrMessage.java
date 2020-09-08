@@ -15,6 +15,8 @@ public class ErrMessage {
     public static final String SYSTEM_ERROR_MESSAGE4 = "账户被禁用!请联系管理员.";
     public static final String SYSTEM_ERROR_MESSAGE5 = "密码过期!请联系管理员.";
     public static final String SYSTEM_ERROR_MESSAGE6 = "账户被锁定!请联系管理员解锁.";
+    public static final String SYSTEM_ERROR_MESSAGE7 = "权限不足，请联系管理员！";
+    public static final String SYSTEM_ERROR_MESSAGE8 = "尚未登录,请登录！";
 
     /**
      * --------------------系统管理(职位管理)错误信息-------------------------

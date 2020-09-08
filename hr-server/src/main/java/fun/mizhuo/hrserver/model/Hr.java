@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author mizhuo
+ */
 public class Hr implements UserDetails,Serializable {
+
     private static final long serialVersionUID = 2741264419873369457L;
 
     private Integer id;

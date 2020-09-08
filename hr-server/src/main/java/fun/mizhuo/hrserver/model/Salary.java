@@ -3,36 +3,40 @@ package fun.mizhuo.hrserver.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class Salary implements Serializable {
+
+    private static final long serialVersionUID = -4204470739768839354L;
+
     private Integer id;
 
-    private Integer basicsalary;
+    private Integer basicSalary;
 
     private Integer bonus;
 
-    private Integer lunchsalary;
+    private Integer lunchSalary;
 
-    private Integer trafficsalary;
+    private Integer trafficSalary;
 
-    private Integer allsalary;
+    private Integer allSalary;
 
-    private Integer pensionbase;
+    private Integer pensionBase;
 
-    private Float pensionper;
+    private Float pensionPer;
 
-    private Date createdate;
+    private Date createDate;
 
-    private Integer medicalbase;
+    private Integer medicalBase;
 
-    private Float medicalper;
+    private Float medicalPer;
 
-    private Integer accumulationfundbase;
+    private Integer accumulationFundBase;
 
-    private Float accumulationfundper;
+    private Float accumulationFundPer;
 
     private String name;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -42,12 +46,12 @@ public class Salary implements Serializable {
         this.id = id;
     }
 
-    public Integer getBasicsalary() {
-        return basicsalary;
+    public Integer getBasicSalary() {
+        return basicSalary;
     }
 
-    public void setBasicsalary(Integer basicsalary) {
-        this.basicsalary = basicsalary;
+    public void setBasicSalary(Integer basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public Integer getBonus() {
@@ -58,84 +62,84 @@ public class Salary implements Serializable {
         this.bonus = bonus;
     }
 
-    public Integer getLunchsalary() {
-        return lunchsalary;
+    public Integer getLunchSalary() {
+        return lunchSalary;
     }
 
-    public void setLunchsalary(Integer lunchsalary) {
-        this.lunchsalary = lunchsalary;
+    public void setLunchSalary(Integer lunchSalary) {
+        this.lunchSalary = lunchSalary;
     }
 
-    public Integer getTrafficsalary() {
-        return trafficsalary;
+    public Integer getTrafficSalary() {
+        return trafficSalary;
     }
 
-    public void setTrafficsalary(Integer trafficsalary) {
-        this.trafficsalary = trafficsalary;
+    public void setTrafficSalary(Integer trafficSalary) {
+        this.trafficSalary = trafficSalary;
     }
 
-    public Integer getAllsalary() {
-        return allsalary;
+    public Integer getAllSalary() {
+        return allSalary;
     }
 
-    public void setAllsalary(Integer allsalary) {
-        this.allsalary = allsalary;
+    public void setAllSalary(Integer allSalary) {
+        this.allSalary = allSalary;
     }
 
-    public Integer getPensionbase() {
-        return pensionbase;
+    public Integer getPensionBase() {
+        return pensionBase;
     }
 
-    public void setPensionbase(Integer pensionbase) {
-        this.pensionbase = pensionbase;
+    public void setPensionBase(Integer pensionBase) {
+        this.pensionBase = pensionBase;
     }
 
-    public Float getPensionper() {
-        return pensionper;
+    public Float getPensionPer() {
+        return pensionPer;
     }
 
-    public void setPensionper(Float pensionper) {
-        this.pensionper = pensionper;
+    public void setPensionPer(Float pensionPer) {
+        this.pensionPer = pensionPer;
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public Integer getMedicalbase() {
-        return medicalbase;
+    public Integer getMedicalBase() {
+        return medicalBase;
     }
 
-    public void setMedicalbase(Integer medicalbase) {
-        this.medicalbase = medicalbase;
+    public void setMedicalBase(Integer medicalBase) {
+        this.medicalBase = medicalBase;
     }
 
-    public Float getMedicalper() {
-        return medicalper;
+    public Float getMedicalPer() {
+        return medicalPer;
     }
 
-    public void setMedicalper(Float medicalper) {
-        this.medicalper = medicalper;
+    public void setMedicalPer(Float medicalPer) {
+        this.medicalPer = medicalPer;
     }
 
-    public Integer getAccumulationfundbase() {
-        return accumulationfundbase;
+    public Integer getAccumulationFundBase() {
+        return accumulationFundBase;
     }
 
-    public void setAccumulationfundbase(Integer accumulationfundbase) {
-        this.accumulationfundbase = accumulationfundbase;
+    public void setAccumulationFundBase(Integer accumulationFundBase) {
+        this.accumulationFundBase = accumulationFundBase;
     }
 
-    public Float getAccumulationfundper() {
-        return accumulationfundper;
+    public Float getAccumulationFundPer() {
+        return accumulationFundPer;
     }
 
-    public void setAccumulationfundper(Float accumulationfundper) {
-        this.accumulationfundper = accumulationfundper;
+    public void setAccumulationFundPer(Float accumulationFundPer) {
+        this.accumulationFundPer = accumulationFundPer;
     }
 
     public String getName() {
@@ -143,80 +147,6 @@ public class Salary implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Salary other = (Salary) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getBasicsalary() == null ? other.getBasicsalary() == null : this.getBasicsalary().equals(other.getBasicsalary()))
-            && (this.getBonus() == null ? other.getBonus() == null : this.getBonus().equals(other.getBonus()))
-            && (this.getLunchsalary() == null ? other.getLunchsalary() == null : this.getLunchsalary().equals(other.getLunchsalary()))
-            && (this.getTrafficsalary() == null ? other.getTrafficsalary() == null : this.getTrafficsalary().equals(other.getTrafficsalary()))
-            && (this.getAllsalary() == null ? other.getAllsalary() == null : this.getAllsalary().equals(other.getAllsalary()))
-            && (this.getPensionbase() == null ? other.getPensionbase() == null : this.getPensionbase().equals(other.getPensionbase()))
-            && (this.getPensionper() == null ? other.getPensionper() == null : this.getPensionper().equals(other.getPensionper()))
-            && (this.getCreatedate() == null ? other.getCreatedate() == null : this.getCreatedate().equals(other.getCreatedate()))
-            && (this.getMedicalbase() == null ? other.getMedicalbase() == null : this.getMedicalbase().equals(other.getMedicalbase()))
-            && (this.getMedicalper() == null ? other.getMedicalper() == null : this.getMedicalper().equals(other.getMedicalper()))
-            && (this.getAccumulationfundbase() == null ? other.getAccumulationfundbase() == null : this.getAccumulationfundbase().equals(other.getAccumulationfundbase()))
-            && (this.getAccumulationfundper() == null ? other.getAccumulationfundper() == null : this.getAccumulationfundper().equals(other.getAccumulationfundper()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getBasicsalary() == null) ? 0 : getBasicsalary().hashCode());
-        result = prime * result + ((getBonus() == null) ? 0 : getBonus().hashCode());
-        result = prime * result + ((getLunchsalary() == null) ? 0 : getLunchsalary().hashCode());
-        result = prime * result + ((getTrafficsalary() == null) ? 0 : getTrafficsalary().hashCode());
-        result = prime * result + ((getAllsalary() == null) ? 0 : getAllsalary().hashCode());
-        result = prime * result + ((getPensionbase() == null) ? 0 : getPensionbase().hashCode());
-        result = prime * result + ((getPensionper() == null) ? 0 : getPensionper().hashCode());
-        result = prime * result + ((getCreatedate() == null) ? 0 : getCreatedate().hashCode());
-        result = prime * result + ((getMedicalbase() == null) ? 0 : getMedicalbase().hashCode());
-        result = prime * result + ((getMedicalper() == null) ? 0 : getMedicalper().hashCode());
-        result = prime * result + ((getAccumulationfundbase() == null) ? 0 : getAccumulationfundbase().hashCode());
-        result = prime * result + ((getAccumulationfundper() == null) ? 0 : getAccumulationfundper().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", basicsalary=").append(basicsalary);
-        sb.append(", bonus=").append(bonus);
-        sb.append(", lunchsalary=").append(lunchsalary);
-        sb.append(", trafficsalary=").append(trafficsalary);
-        sb.append(", allsalary=").append(allsalary);
-        sb.append(", pensionbase=").append(pensionbase);
-        sb.append(", pensionper=").append(pensionper);
-        sb.append(", createdate=").append(createdate);
-        sb.append(", medicalbase=").append(medicalbase);
-        sb.append(", medicalper=").append(medicalper);
-        sb.append(", accumulationfundbase=").append(accumulationfundbase);
-        sb.append(", accumulationfundper=").append(accumulationfundper);
-        sb.append(", name=").append(name);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        this.name = name;
     }
 }

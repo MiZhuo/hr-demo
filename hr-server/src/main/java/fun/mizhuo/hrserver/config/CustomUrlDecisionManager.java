@@ -1,5 +1,6 @@
 package fun.mizhuo.hrserver.config;
 
+import fun.mizhuo.hrserver.util.ErrMessage;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -24,7 +25,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
             String needRole = configAttribute.getAttribute();
             if("ROLE_LOGIN".equals(needRole)){
                 if(authentication instanceof AnonymousAuthenticationToken){
-                    throw new AccessDeniedException("尚未登录,请登录！");
+                    throw new AccessDeniedException(ErrMessage.SYSTEM_ERROR_MESSAGE8);
                 }else{
                     return;
                 }
@@ -36,7 +37,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
                 }
             }
         }
-        throw new AccessDeniedException("权限不足，请联系管理员！");
+        throw new AccessDeniedException(ErrMessage.SYSTEM_ERROR_MESSAGE7);
     }
 
     @Override

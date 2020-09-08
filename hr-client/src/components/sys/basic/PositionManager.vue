@@ -10,13 +10,25 @@
         </div>
         <div style="margin-top: 10px">
             <el-table :data="positionData" size="mini" class="component-table"
-                    border stripe style="width: 65%"
+                    border stripe style="width: 55%"
                     @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column prop="id" label="编号" width="80"></el-table-column>
-                <el-table-column prop="name" label="职位名称" width="200"></el-table-column>
-                <el-table-column prop="createDate" label="创建日期" width="200"></el-table-column>
-                <el-table-column prop="enabled" label="操作">
+                <el-table-column prop="id" label="编号" width="60"></el-table-column>
+                <el-table-column prop="name" label="职位名称" width="100"></el-table-column>
+                <el-table-column prop="createDate" label="创建日期" width="150"></el-table-column>
+                <el-table-column label="是否启用" width="100">
+                    <template slot-scope="scope">
+                        <el-switch
+                                v-model="scope.row.enabled"
+                                active-color="#13ce66"
+                                inactive-color="#ff4949"
+                                :active-value="true"
+                                :inactive-value="false"
+                                @change="handleEnabledChange(scope.row)">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
@@ -66,7 +78,8 @@
                 positionForm:{
                     id : "",
                     name : "",
-                    createDate : ""
+                    createDate : "",
+                    enabled: "",
                 },
                 batchBtnDisabled: true,
                 multipleSelection: []
@@ -77,6 +90,7 @@
                 this.getRequest("/system/basic/position/").then(res=>{
                     if(res){
                         this.positionData = res.result;
+                        console.log(res.result)
                     }
                 })
             },
@@ -130,6 +144,9 @@
                         this.initPositionTable();
                     });
                 });
+            },
+            handleEnabledChange(row){
+                this.putRequest("/system/basic/position/" + row.id + "/" + row.enabled);
             }
         },
         mounted() {

@@ -58,4 +58,19 @@ public class JobTitleController {
         }
         return ResponseVo.error("删除失败!");
     }
+
+    @PutMapping("/{id}/{enabled}")
+    public ResponseVo updateJobTitle(@PathVariable Integer id, @PathVariable Boolean enabled){
+        JobLevel jobTitle = new JobLevel();
+        jobTitle.setId(id);
+        jobTitle.setEnabled(enabled);
+        if(jobLevelService.updateJobTitle(jobTitle) == 1){
+            if(enabled){
+                return ResponseVo.ok("启用成功!");
+            }else{
+                return ResponseVo.ok("禁用成功!");
+            }
+        }
+        return ResponseVo.error("更新失败!");
+    }
 }

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author mizhuo
+ */
 public class JobLevel implements Serializable {
     private static final long serialVersionUID = -8605002712224563781L;
 

@@ -1,5 +1,6 @@
 package fun.mizhuo.hrserver.controller.system.basic;
 
+import fun.mizhuo.hrserver.model.JobLevel;
 import fun.mizhuo.hrserver.model.Position;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.system.basic.PositionService;
@@ -56,5 +57,20 @@ public class PositionController {
             return ResponseVo.ok("删除成功!");
         }
         return ResponseVo.error("删除失败!");
+    }
+
+    @PutMapping("/{id}/{enabled}")
+    public ResponseVo updateJobTitle(@PathVariable Integer id, @PathVariable Boolean enabled){
+        Position position = new Position();
+        position.setId(id);
+        position.setEnabled(enabled);
+        if(positionService.updatePosition(position) == 1){
+            if(enabled){
+                return ResponseVo.ok("启用成功!");
+            }else{
+                return ResponseVo.ok("禁用成功!");
+            }
+        }
+        return ResponseVo.error("更新失败!");
     }
 }

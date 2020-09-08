@@ -1,9 +1,17 @@
 <template>
     <div>
         <div>
-            <el-input placeholder="添加职称..." size="mini" style="width: 300px"
+            <el-input placeholder="添加职称..." size="mini" style="width: 200px"
                       prefix-icon="el-icon-plus" v-model="jobTitle.name" @keydown.enter.native="addJobTitle">
             </el-input>
+            <el-select v-model="jobTitle.titleLevel" style="margin-left: 10px"  placeholder="请选择职称等级" size="mini">
+                <el-option
+                        v-for="item in titleLevels"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
             <el-button type="primary" size="mini"
                        icon="el-icon-plus" style="margin-left: 10px" @click="addJobTitle">添加
             </el-button>
@@ -14,10 +22,22 @@
                       @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="编号" width="60"></el-table-column>
-                <el-table-column prop="name" label="职称名称" width="150"></el-table-column>
-                <el-table-column prop="titleLevel" label="职称等级" width="150"></el-table-column>
+                <el-table-column prop="name" label="职称名称" width="100"></el-table-column>
+                <el-table-column prop="titleLevel" label="职称等级" width="100"></el-table-column>
                 <el-table-column prop="createDate" label="创建日期" width="150"></el-table-column>
-                <el-table-column prop="enabled" label="操作">
+                <el-table-column prop="enabled" label="是否启用" width="100">
+                    <template slot-scope="scope">
+                        <el-switch
+                                v-model="scope.row.enabled"
+                                active-color="#13ce66"
+                                inactive-color="#ff4949"
+                                :active-value="true"
+                                :inactive-value="false"
+                                @change="handleEnabledChange(scope.row)">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="opera" label="操作">
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
@@ -43,7 +63,14 @@
                 </el-form-item>
                 <el-form-item>
                     <el-tag>职称等级</el-tag>
-                    <el-input class="jobTitleInput" size="mini" v-model="jobTitleForm.jobLevel"></el-input>
+                    <el-select v-model="jobTitleForm.titleLevel" class="jobTitleInput" placeholder="请选择职称等级" size="mini">
+                        <el-option
+                                v-for="item in titleLevels"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-tag type="info">创建时间</el-tag>
@@ -71,11 +98,28 @@
                 jobTitleForm:{
                     id : "",
                     name : "",
-                    jobLevel : "",
+                    titleLevel : "",
+                    enabled: "",
                     createDate : ""
                 },
                 batchBtnDisabled: true,
-                multipleSelection: []
+                multipleSelection: [],
+                titleLevels:[{
+                    value: '员级',
+                    label: '员级'
+                },{
+                    value: '初级',
+                    label: '初级'
+                }, {
+                    value: '中级',
+                    label: '中级'
+                }, {
+                    value: '副高级',
+                    label: '副高级'
+                }, {
+                    value: '正高级',
+                    label: '正高级'
+                }]
             }
         },
         methods:{
@@ -83,17 +127,19 @@
                 this.getRequest("/system/basic/jobTitle/").then(res=>{
                     if(res){
                         this.jobTitleData = res.result;
+                        console.log("jobTitleData:" + JSON.stringify(this.jobTitleData));
                     }
                 })
             },
             addJobTitle(){
-                if(this.jobTitle.name){
+                if(this.jobTitle.name && this.jobTitle.titleLevel){
                     this.postRequest("/system/basic/jobTitle/",this.jobTitle).then(()=>{
                         this.initJobTitleTable();
                         this.jobTitle.name = "";
+                        this.jobTitle.titleLevel = "";
                     });
                 }else{
-                    this.$message.error("职称名称不能为空!");
+                    this.$message.error("职称名称或职称等级不能为空!");
                 }
             },
             updateJobTitle(){
@@ -136,6 +182,9 @@
                         this.initJobTitleTable();
                     });
                 });
+            },
+            handleEnabledChange(row){
+                this.putRequest("/system/basic/jobTitle/" + row.id + "/" + row.enabled);
             }
         },
         mounted() {

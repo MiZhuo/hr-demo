@@ -18,14 +18,21 @@
         </div>
         <div style="margin-top: 10px">
             <el-table :data="jobTitleData" size="mini" class="component-table"
-                      border stripe style="width: 65%"
+                      border stripe style="width: 62%"
+                      header-cell-style="text-align:center"
+                      cell-style="text-align:center"
                       @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="编号" width="60"></el-table-column>
                 <el-table-column prop="name" label="职称名称" width="100"></el-table-column>
                 <el-table-column prop="titleLevel" label="职称等级" width="100"></el-table-column>
-                <el-table-column prop="createDate" label="创建日期" width="150"></el-table-column>
-                <el-table-column prop="enabled" label="是否启用" width="100">
+                <el-table-column label="创建日期" width="130">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.createDate }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="enabled" label="是否启用" width="80">
                     <template slot-scope="scope">
                         <el-switch
                                 v-model="scope.row.enabled"

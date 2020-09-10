@@ -4,6 +4,8 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import {initMenu} from "./utils/menu";
 import 'font-awesome/css/font-awesome.min.css'
 
@@ -22,8 +24,11 @@ Vue.prototype.postKeyValueRequest = postKeyValueRequest;
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+NProgress.configure({ ease: 'ease', speed: 500 })
 
 router.beforeEach((to,from,next)=>{
+  // NProgress开始进度条
+  NProgress.start();
   if(to.path == '/'){
     next();
   }else{
@@ -34,6 +39,11 @@ router.beforeEach((to,from,next)=>{
       next('/?redirect=' + to.path);
     }
   }
+})
+
+router.afterEach(transition => {
+  // NProgress结束进度条
+  NProgress.done();
 })
 
 new Vue({

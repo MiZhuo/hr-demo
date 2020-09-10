@@ -17,7 +17,7 @@ public class JobLevel implements Serializable {
 
     private String titleLevel;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Shanghai")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date createDate;
 
     private Boolean enabled;

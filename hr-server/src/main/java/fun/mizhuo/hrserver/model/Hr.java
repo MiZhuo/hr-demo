@@ -32,7 +32,7 @@ public class Hr implements UserDetails,Serializable {
 
     private String password;
 
-    private String userface;
+    private String userFace;
 
     private String remark;
 
@@ -137,12 +137,12 @@ public class Hr implements UserDetails,Serializable {
         this.password = password;
     }
 
-    public String getUserface() {
-        return userface;
+    public String getUserFace() {
+        return userFace;
     }
 
-    public void setUserface(String userface) {
-        this.userface = userface;
+    public void setUserFace(String userFace) {
+        this.userFace = userFace;
     }
 
     public String getRemark() {

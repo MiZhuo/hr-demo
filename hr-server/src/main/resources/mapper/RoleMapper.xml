@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="fun.mizhuo.hrserver.model.Role">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="nameZh" jdbcType="VARCHAR" property="namezh" />
+    <result column="nameZh" jdbcType="VARCHAR" property="nameZh" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, nameZh
@@ -22,7 +22,7 @@
   <insert id="insert" parameterType="fun.mizhuo.hrserver.model.Role">
     insert into role (id, name, nameZh
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{namezh,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.Role">
@@ -34,7 +34,7 @@
       <if test="name != null">
         name,
       </if>
-      <if test="namezh != null">
+      <if test="nameZh != null">
         nameZh,
       </if>
     </trim>
@@ -45,8 +45,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="namezh != null">
-        #{namezh,jdbcType=VARCHAR},
+      <if test="nameZh != null">
+        #{nameZh,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -56,8 +56,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="namezh != null">
-        nameZh = #{namezh,jdbcType=VARCHAR},
+      <if test="nameZh != null">
+        nameZh = #{nameZh,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

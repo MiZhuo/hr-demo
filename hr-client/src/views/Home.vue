@@ -5,7 +5,7 @@
                 <div class="title">微人事</div>
                 <el-dropdown class="userInfo" @command="commandHandler">
                   <span class="el-dropdown-link">
-                      <img :src="user.userface">{{user.name}}
+                      <img :src="user.userFace">{{user.name}}
                       <i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">

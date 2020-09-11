@@ -37,7 +37,7 @@
       <collection property="roles" ofType="fun.mizhuo.hrserver.model.Role">
           <id column="rid" property="id"></id>
           <result column="rname" property="name"/>
-          <result column="rnameZh" property="namezh"/>
+          <result column="rnameZh" property="nameZh"/>
       </collection>
   </resultMap>
 
@@ -73,7 +73,7 @@
           A.*,
           B.id AS RID,
           C.`name` AS "rname",
-          C.nameZh AS "rnamezh"
+          C.nameZh AS "rnameZh"
       FROM
         menu A
       LEFT JOIN menu_role B ON A.ID = B.MID

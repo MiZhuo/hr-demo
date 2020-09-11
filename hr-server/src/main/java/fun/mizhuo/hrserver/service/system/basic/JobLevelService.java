@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author: Mizhuo
  * @time: 2020/9/7 22:45 下午
- * @description:
+ * @description: 职称服务接口类
  */
 public interface JobLevelService {
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author: Mizhuo
  * @time: 2020/8/19 10:06 下午
- * @description:
+ * @description: 用户服务实现类
  */
 @Service
 public class UserServiceImpl implements UserDetailsService {

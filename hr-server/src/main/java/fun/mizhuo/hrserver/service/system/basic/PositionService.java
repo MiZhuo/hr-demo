@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author: Mizhuo
  * @time: 2020/9/6 3:17 下午
- * @description:
+ * @description: 职位服务接口类
  */
 public interface PositionService {
     /**

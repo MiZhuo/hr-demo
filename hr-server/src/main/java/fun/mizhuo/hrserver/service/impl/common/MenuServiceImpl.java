@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author: Mizhuo
  * @time: 2020/8/23 11:11 上午
- * @description:
+ * @description: 菜单服务实现类
  */
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -28,8 +28,13 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-//    @Cacheable
     public List<Menu> getMenuWithRole(){
         return menuMapper.getMenuWithRole();
     }
+
+    @Override
+    public List<Menu> getMenuTree() {
+        return menuMapper.getMenuTree();
+    }
+
 }

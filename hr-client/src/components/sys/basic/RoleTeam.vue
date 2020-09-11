@@ -10,10 +10,23 @@
             </el-button>
         </div>
         <div class="role_info_div">
-            <el-collapse v-model="activeName" accordion>
-                <el-collapse-item title="一致性 Consistency" name="1">
-                    <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-                    <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+            <el-collapse accordion @change="changeRoleMenu">
+                <el-collapse-item :title="role.nameZh" :name="role.id" v-for="(role,index) in roles">
+                    <el-card class="box-card" shadow="hover">
+                        <div slot="header" class="clearfix">
+                            <span>可访问资源</span>
+                            <el-button style="float: right; padding: 3px 0;color:red" icon="el-icon-delete" type="text"></el-button>
+                        </div>
+                        <div>
+                            <el-tree
+                                :data="menuTreeData"
+                                show-checkbox
+                                node-key="id"
+                                :default-checked-keys="checkedMenu"
+                                :props="menuTreeProps">
+                            </el-tree>
+                        </div>
+                    </el-card>
                 </el-collapse-item>
             </el-collapse>
         </div>
@@ -25,8 +38,47 @@
         name: "RoleTeam",
         data(){
             return{
-                role:{}
+                role:{},
+                roles:[],
+                menuTreeData:[],
+                menuTreeProps: {
+                    children: 'children',
+                    label: 'name'
+                },
+                checkedMenu:[]
             }
+        },
+        methods:{
+            initRoles(){
+                this.getRequest("/system/basic/roleTeam/").then(res=>{
+                    if(res) {
+                        this.roles = res.result;
+                    }
+                });
+            },
+            initMenuTreeData(){
+                this.getRequest("/system/basic/roleTeam/menuTree").then(res=>{
+                    if(res) {
+                        this.menuTreeData = res.result;
+                    }
+                });
+            },
+            initMenuTreeChecked(roleId){
+                this.getRequest("/system/basic/roleTeam/menuTree/checked/" + roleId).then(res=>{
+                    if(res) {
+                        this.checkedMenu = res.result;
+                    }
+                });
+            },
+            changeRoleMenu(roleId){
+                if(roleId){
+                    this.initMenuTreeData();
+                    this.initMenuTreeChecked(roleId);
+                }
+            }
+        },
+        mounted() {
+            this.initRoles();
         }
     }
 </script>

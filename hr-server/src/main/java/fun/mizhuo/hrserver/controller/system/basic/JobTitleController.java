@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author: Mizhuo
  * @time: 2020/9/7 22:42 下午
- * @description:
+ * @description: 职称Controller
  */
 @RestController
 @RequestMapping("/system/basic/jobTitle")

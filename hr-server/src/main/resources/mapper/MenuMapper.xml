@@ -33,14 +33,6 @@
     </collection>
   </resultMap>
 
-  <resultMap id="MenuMapWithRole" type="fun.mizhuo.hrserver.model.Menu" extends="BaseResultMap">
-      <collection property="roles" ofType="fun.mizhuo.hrserver.model.Role">
-          <id column="rid" property="id"></id>
-          <result column="rname" property="name"/>
-          <result column="rnameZh" property="nameZh"/>
-      </collection>
-  </resultMap>
-
   <select id="initMenuByUserId" resultMap="MenuMap">
         SELECT
           DISTINCT
@@ -67,6 +59,13 @@
           AND E.ENABLED = TRUE
   </select>
 
+  <resultMap id="MenuMapWithRole" type="fun.mizhuo.hrserver.model.Menu" extends="BaseResultMap">
+       <collection property="roles" ofType="fun.mizhuo.hrserver.model.Role">
+            <id column="rid" property="id"></id>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+  </resultMap>
 
   <select id="getMenuWithRole" resultMap="MenuMapWithRole">
       SELECT
@@ -84,141 +83,34 @@
           AND parentId IS NOT NULL
   </select>
 
+  <resultMap id="MenuTree" type="fun.mizhuo.hrserver.model.Menu" extends="BaseResultMap">
+      <id column="id1" property="id"></id>
+      <result column="name1" property="name"/>
+      <collection property="children" ofType="fun.mizhuo.hrserver.model.Menu">
+          <id column="id2" property="id"></id>
+          <result column="name2" property="name"></result>
+          <collection property="children" ofType="fun.mizhuo.hrserver.model.Menu">
+              <id column="id3" property="id"></id>
+              <result column="name3" property="name"></result>
+          </collection>
+      </collection>
+  </resultMap>
 
-  <sql id="Base_Column_List">
-    id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from menu
-    where id = #{id,jdbcType=INTEGER}
+  <select id="getMenuTree" resultMap="MenuTree">
+    SELECT
+        m1.id AS id1,
+        m1.NAME AS name1,
+        m2.id AS id2,
+        m2.NAME AS name2,
+        m3.id AS id3,
+        m3.NAME AS name3
+    FROM
+        menu m1
+        LEFT JOIN menu m2 ON m1.id = m2.parentId
+        LEFT JOIN menu m3 ON m2.id = m3.parentId
+    WHERE
+        m3.enabled = TRUE
+    ORDER BY m1.id,m2.id,m3.id
   </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from menu
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="fun.mizhuo.hrserver.model.Menu">
-    insert into menu (id, url, path, 
-      component, name, iconCls, 
-      keepAlive, requireAuth, parentId, 
-      enabled)
-    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{component,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{iconcls,jdbcType=VARCHAR}, 
-      #{keepalive,jdbcType=BIT}, #{requireauth,jdbcType=BIT}, #{parentid,jdbcType=INTEGER}, 
-      #{enabled,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.Menu">
-    insert into menu
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="url != null">
-        url,
-      </if>
-      <if test="path != null">
-        path,
-      </if>
-      <if test="component != null">
-        component,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="iconcls != null">
-        iconCls,
-      </if>
-      <if test="keepalive != null">
-        keepAlive,
-      </if>
-      <if test="requireauth != null">
-        requireAuth,
-      </if>
-      <if test="parentid != null">
-        parentId,
-      </if>
-      <if test="enabled != null">
-        enabled,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="path != null">
-        #{path,jdbcType=VARCHAR},
-      </if>
-      <if test="component != null">
-        #{component,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="iconcls != null">
-        #{iconcls,jdbcType=VARCHAR},
-      </if>
-      <if test="keepalive != null">
-        #{keepalive,jdbcType=BIT},
-      </if>
-      <if test="requireauth != null">
-        #{requireauth,jdbcType=BIT},
-      </if>
-      <if test="parentid != null">
-        #{parentid,jdbcType=INTEGER},
-      </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="fun.mizhuo.hrserver.model.Menu">
-    update menu
-    <set>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="path != null">
-        path = #{path,jdbcType=VARCHAR},
-      </if>
-      <if test="component != null">
-        component = #{component,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="iconcls != null">
-        iconCls = #{iconcls,jdbcType=VARCHAR},
-      </if>
-      <if test="keepalive != null">
-        keepAlive = #{keepalive,jdbcType=BIT},
-      </if>
-      <if test="requireauth != null">
-        requireAuth = #{requireauth,jdbcType=BIT},
-      </if>
-      <if test="parentid != null">
-        parentId = #{parentid,jdbcType=INTEGER},
-      </if>
-      <if test="enabled != null">
-        enabled = #{enabled,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.Menu">
-    update menu
-    set url = #{url,jdbcType=VARCHAR},
-      path = #{path,jdbcType=VARCHAR},
-      component = #{component,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      iconCls = #{iconcls,jdbcType=VARCHAR},
-      keepAlive = #{keepalive,jdbcType=BIT},
-      requireAuth = #{requireauth,jdbcType=BIT},
-      parentId = #{parentid,jdbcType=INTEGER},
-      enabled = #{enabled,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

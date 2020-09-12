@@ -1,12 +1,14 @@
 <template>
     <div>
         <div>
-            <el-input placeholder="输入部门名称搜索部门..." size="mini" style="width: 400px"
-                      prefix-icon="el-icon-search" v-model="dept.name" @keydown.enter.native="searchDept">
+            <el-input placeholder="输入部门名称搜索部门..." size="mini" style="width: 400px"  v-model="filterText"
+                      prefix-icon="el-icon-search">
             </el-input>
         </div>
-        <div>
-            <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+        <div style="margin-top: 10px">
+            <el-tree class="filter-tree" :data="deptTreeData" :props="deptTreeProps"
+                     :filter-node-method="filterNode" ref="deptTree">
+            </el-tree>
         </div>
     </div>
 </template>
@@ -16,13 +18,35 @@
         name: "DepManager",
         data(){
             return {
-                dept:{}
+                deptTreeData:[],
+                deptTreeProps: {
+                    children: 'children',
+                    label: 'name'
+                },
+                filterText: ''
+
             }
         },
         methods:{
-            searchDept(){
-
+            initDepTree(){
+                this.getRequest("/system/basic/dept/deptTree").then(res=>{
+                    if(res){
+                        this.deptTreeData = res.result;
+                    }
+                });
+            },
+            filterNode(value, data) {
+                if (!value) return true;
+                return data.name.indexOf(value) !== -1;
             }
+        },
+        watch: {
+            filterText(val) {
+                this.$refs.deptTree.filter(val);
+            }
+        },
+        mounted() {
+            this.initDepTree();
         }
 
     }

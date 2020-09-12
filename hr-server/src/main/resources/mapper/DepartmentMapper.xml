@@ -9,96 +9,14 @@
     <result column="enabled" jdbcType="BIT" property="enabled" />
     <result column="isParent" jdbcType="BIT" property="isParent" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, parentId, depPath, enabled, isParent
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from department
-    where id = #{id,jdbcType=INTEGER}
+
+  <resultMap id="deptTreeMap" type="fun.mizhuo.hrserver.model.Department" extends="BaseResultMap">
+    <collection property="children" ofType="fun.mizhuo.hrserver.model.Department"
+                select="getDeptTree" column="id"></collection>
+  </resultMap>
+
+  <select id="getDeptTree" resultMap="deptTreeMap">
+    select * from department where parentId = #{parentId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from department
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="fun.mizhuo.hrserver.model.Department">
-    insert into department (id, name, parentId, 
-      depPath, enabled, isParent)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{depPath,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{isParent,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.Department">
-    insert into department
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="parentId != null">
-        parentId,
-      </if>
-      <if test="depPath != null">
-        depPath,
-      </if>
-      <if test="enabled != null">
-        enabled,
-      </if>
-      <if test="isParent != null">
-        isParent,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="depPath != null">
-        #{depPath,jdbcType=VARCHAR},
-      </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=BIT},
-      </if>
-      <if test="isParent != null">
-        #{isParent,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="fun.mizhuo.hrserver.model.Department">
-    update department
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        parentId = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="depPath != null">
-        depPath = #{depPath,jdbcType=VARCHAR},
-      </if>
-      <if test="enabled != null">
-        enabled = #{enabled,jdbcType=BIT},
-      </if>
-      <if test="isParent != null">
-        isParent = #{isParent,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.Department">
-    update department
-    set name = #{name,jdbcType=VARCHAR},
-      parentId = #{parentId,jdbcType=INTEGER},
-      depPath = #{depPath,jdbcType=VARCHAR},
-      enabled = #{enabled,jdbcType=BIT},
-      isParent = #{isParent,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author mizhuo
@@ -20,6 +21,8 @@ public class Department implements Serializable {
     private Boolean enabled;
 
     private Boolean isParent;
+
+    private List<Department> children;
 
     public Integer getId() {
         return id;
@@ -67,5 +70,13 @@ public class Department implements Serializable {
 
     public void setParent(Boolean parent) {
         isParent = parent;
+    }
+
+    public List<Department> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Department> children) {
+        this.children = children;
     }
 }

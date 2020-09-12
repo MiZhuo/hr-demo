@@ -4,6 +4,9 @@ import fun.mizhuo.hrserver.model.Position;
 
 import java.util.List;
 
+/**
+ * @author mizhuo
+ */
 public interface PositionMapper {
 
     List<Position> getAllPosition();

@@ -7,10 +7,7 @@ import fun.mizhuo.hrserver.service.common.MenuRoleService;
 import fun.mizhuo.hrserver.service.common.MenuService;
 import fun.mizhuo.hrserver.service.system.basic.RoleTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,22 @@ public class RoleTeamController {
         return ResponseVo.ok("",roles);
     }
 
+    @PostMapping("/")
+    public ResponseVo addRole(@RequestBody Role role){
+        if(roleTeamService.addRole(role) == 1){
+            return ResponseVo.ok("添加角色成功!");
+        }
+        return ResponseVo.error("添加角色失败!");
+    }
+
+    @DeleteMapping("/{roleId}")
+    public ResponseVo deleteRoleByRoleId(@PathVariable Integer roleId){
+        if(roleTeamService.deleteRoleByRoleId(roleId) == 1){
+            return ResponseVo.ok("删除成功!");
+        }
+        return ResponseVo.error("");
+    }
+
     @GetMapping("/menuTree")
     public ResponseVo getMenuTree(){
         List<Menu> menus = menuService.getMenuTree();
@@ -48,5 +61,13 @@ public class RoleTeamController {
     public ResponseVo getMenuTreeCheckedByRoleId(@PathVariable Integer id){
         Integer[] menuRoles = menuRoleService.getMenuIdsByRoleId(id);
         return ResponseVo.ok("",menuRoles);
+    }
+
+    @PutMapping("/modify/menu/{roleId}")
+    public ResponseVo modifyMenuByRoleId(@PathVariable int roleId, @RequestBody Integer[] menuIds){
+        if(menuRoleService.modifyMenuByRoleId(roleId,menuIds) >= 0){
+            return ResponseVo.ok("更新成功!");
+        }
+        return ResponseVo.error("更新失败!");
     }
 }

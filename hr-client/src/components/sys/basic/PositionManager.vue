@@ -97,7 +97,6 @@
                 this.getRequest("/system/basic/position/").then(res=>{
                     if(res){
                         this.positionData = res.result;
-                        console.log(res.result)
                     }
                 })
             },

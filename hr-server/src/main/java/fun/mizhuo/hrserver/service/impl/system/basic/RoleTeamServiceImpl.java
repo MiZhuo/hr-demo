@@ -24,5 +24,15 @@ public class RoleTeamServiceImpl implements RoleTeamService {
         return roleMapper.getAllRoles();
     }
 
+    @Override
+    public Integer addRole(Role role) {
+        String roleName = role.getName();
+        role.setName(roleName.startsWith("ROLE_") ? roleName : "ROLE_" + roleName);
+        return roleMapper.addRole(role);
+    }
 
+    @Override
+    public Integer deleteRoleByRoleId(Integer roleId) {
+        return roleMapper.deleteRoleByRoleId(roleId);
+    }
 }

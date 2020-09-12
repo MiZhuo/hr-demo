@@ -134,7 +134,6 @@
                 this.getRequest("/system/basic/jobTitle/").then(res=>{
                     if(res){
                         this.jobTitleData = res.result;
-                        console.log("jobTitleData:" + JSON.stringify(this.jobTitleData));
                     }
                 })
             },

@@ -12,4 +12,7 @@ import java.util.List;
 public interface RoleTeamService {
     List<Role> getAllRoles();
 
+    Integer addRole(Role role);
+
+    Integer deleteRoleByRoleId(Integer roleId);
 }

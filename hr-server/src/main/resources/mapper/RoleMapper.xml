@@ -14,65 +14,12 @@
     select * from role
   </select>
 
+  <insert id="addRole" parameterType="fun.mizhuo.hrserver.model.Role">
+    insert into role (name, nameZh)
+    values (#{name,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR})
+  </insert>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from role
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteRoleByRoleId" parameterType="int">
+    delete from role where id = #{roleId}
   </delete>
-  <insert id="insert" parameterType="fun.mizhuo.hrserver.model.Role">
-    insert into role (id, name, nameZh
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="fun.mizhuo.hrserver.model.Role">
-    insert into role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="nameZh != null">
-        nameZh,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nameZh != null">
-        #{nameZh,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="fun.mizhuo.hrserver.model.Role">
-    update role
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="nameZh != null">
-        nameZh = #{nameZh,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="fun.mizhuo.hrserver.model.Role">
-    update role
-    set name = #{name,jdbcType=VARCHAR},
-      nameZh = #{namezh,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

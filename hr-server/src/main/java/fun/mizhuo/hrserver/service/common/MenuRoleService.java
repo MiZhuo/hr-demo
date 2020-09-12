@@ -8,4 +8,6 @@ package fun.mizhuo.hrserver.service.common;
  */
 public interface MenuRoleService {
     Integer[] getMenuIdsByRoleId(Integer id);
+
+    Integer modifyMenuByRoleId(int roleId,Integer[] menuIds);
 }

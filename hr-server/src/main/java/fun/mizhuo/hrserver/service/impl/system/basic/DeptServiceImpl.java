@@ -22,4 +22,10 @@ public class DeptServiceImpl implements DeptService {
     public List<Department> getDeptTree() {
         return departmentMapper.getDeptTree(-1);
     }
+
+    @Override
+    public void addDept(Department department) {
+        department.setEnabled(true);
+        departmentMapper.addDept(department);
+    }
 }

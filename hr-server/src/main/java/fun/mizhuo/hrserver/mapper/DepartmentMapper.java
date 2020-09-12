@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface DepartmentMapper {
     List<Department> getDeptTree(int i);
+
+    void addDept(Department department);
 }

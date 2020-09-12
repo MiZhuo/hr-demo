@@ -4,9 +4,7 @@ import fun.mizhuo.hrserver.model.Department;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.system.basic.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +24,14 @@ public class DeptController {
     public ResponseVo getDeptTree(){
         List<Department> departments = deptService.getDeptTree();
         return ResponseVo.ok("",departments);
+    }
+
+    @PostMapping("/")
+    public ResponseVo addDept(@RequestBody Department department){
+        deptService.addDept(department);
+        if( department.getResult()== 1){
+            return ResponseVo.ok("添加成功",department);
+        }
+        return ResponseVo.error("添加失败!");
     }
 }

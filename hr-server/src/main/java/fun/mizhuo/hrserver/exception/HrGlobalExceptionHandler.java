@@ -16,11 +16,11 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class HrGlobalExceptionHandler{
 
-    @ExceptionHandler(SQLException.class)
-    public ResponseVo sqlException(SQLException e){
-        if(e instanceof MySQLIntegrityConstraintViolationException){
-            return ResponseVo.error(ErrMessage.POSITION_ERROR_MESSAGE1);
-        }
-        return ResponseVo.error(ErrMessage.SQL_ERROR_MESSAGE1);
-    }
+//    @ExceptionHandler(SQLException.class)
+//    public ResponseVo sqlException(SQLException e){
+//        if(e instanceof MySQLIntegrityConstraintViolationException){
+//            return ResponseVo.error(ErrMessage.POSITION_ERROR_MESSAGE1);
+//        }
+//        return ResponseVo.error(ErrMessage.SQL_ERROR_MESSAGE1);
+//    }
 }

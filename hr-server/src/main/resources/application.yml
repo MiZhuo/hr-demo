@@ -10,3 +10,7 @@ spring:
     url: jdbc:mysql://localhost:3306/hr?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: mizhuo
+
+logging:
+  level:
+    fun.mizhuo.hrserver.mapper: DEBUG

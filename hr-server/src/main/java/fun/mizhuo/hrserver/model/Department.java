@@ -24,6 +24,8 @@ public class Department implements Serializable {
 
     private List<Department> children;
 
+    private Integer result;
+
     public Integer getId() {
         return id;
     }
@@ -78,5 +80,13 @@ public class Department implements Serializable {
 
     public void setChildren(List<Department> children) {
         this.children = children;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
     }
 }

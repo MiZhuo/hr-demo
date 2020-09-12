@@ -168,7 +168,6 @@
                         this.initJobTitleTable();
                     });
                 });
-
             },
             handleSelectionChange(val){
                 this.multipleSelection = val;

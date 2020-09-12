@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class Department implements Serializable {
 
     private Boolean isParent;
 
-    private List<Department> children;
+    private List<Department> children = new ArrayList<>();
 
     private Integer result;
 

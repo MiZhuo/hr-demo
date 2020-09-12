@@ -34,4 +34,19 @@ public class DeptController {
         }
         return ResponseVo.error("添加失败!");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseVo deleteDept(@PathVariable Integer id){
+        Department department = new Department();
+        department.setId(id);
+        deptService.deleteDept(department);
+        if( department.getResult() == -2){
+            return ResponseVo.error("该部门下有子部门,删除失败!");
+        }else if( department.getResult() == -1){
+            return ResponseVo.error("该部门下有员工,删除失败!");
+        }else if( department.getResult() == 1){
+            return ResponseVo.ok("删除成功!");
+        }
+        return ResponseVo.error("删除失败!");
+    }
 }

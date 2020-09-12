@@ -13,4 +13,6 @@ public interface DeptService {
     List<Department> getDeptTree();
 
     void addDept(Department department);
+
+    void deleteDept(Department department);
 }

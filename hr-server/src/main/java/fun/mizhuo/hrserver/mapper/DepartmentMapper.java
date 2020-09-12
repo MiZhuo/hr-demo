@@ -11,4 +11,6 @@ public interface DepartmentMapper {
     List<Department> getDeptTree(int i);
 
     void addDept(Department department);
+
+    void deleteDept(Department department);
 }

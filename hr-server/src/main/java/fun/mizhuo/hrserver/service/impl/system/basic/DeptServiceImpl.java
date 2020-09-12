@@ -28,4 +28,9 @@ public class DeptServiceImpl implements DeptService {
         department.setEnabled(true);
         departmentMapper.addDept(department);
     }
+
+    @Override
+    public void deleteDept(Department department) {
+        departmentMapper.deleteDept(department);
+    }
 }

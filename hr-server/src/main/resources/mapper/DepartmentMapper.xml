@@ -25,4 +25,8 @@
         #{id,mode=OUT,jdbcType=INTEGER})
   </select>
 
+  <select id="deleteDept" parameterType="fun.mizhuo.hrserver.model.Department" statementType="CALLABLE">
+    call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+  </select>
+
 </mapper>

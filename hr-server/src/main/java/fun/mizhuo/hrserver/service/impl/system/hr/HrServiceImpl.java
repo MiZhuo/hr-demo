@@ -1,7 +1,9 @@
 package fun.mizhuo.hrserver.service.impl.system.hr;
 
 import fun.mizhuo.hrserver.mapper.HrMapper;
+import fun.mizhuo.hrserver.mapper.RoleMapper;
 import fun.mizhuo.hrserver.model.Hr;
+import fun.mizhuo.hrserver.model.Role;
 import fun.mizhuo.hrserver.service.system.hr.HrService;
 import fun.mizhuo.hrserver.util.HrUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +26,10 @@ public class HrServiceImpl implements HrService {
     public List<Hr> getAllHrs() {
         return hrMapper.getAllHrsWithOutCurrentHr(HrUtils.getCurrentHr().getId());
     }
+
+    @Override
+    public Integer enabledHrById(Hr hr) {
+        return hrMapper.enabledHrById(hr);
+    }
+
 }

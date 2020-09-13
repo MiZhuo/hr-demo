@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.service.system.hr;
 
 import fun.mizhuo.hrserver.model.Hr;
+import fun.mizhuo.hrserver.model.Role;
 
 import java.util.List;
 
@@ -11,4 +12,7 @@ import java.util.List;
  */
 public interface HrService {
     List<Hr> getAllHrs();
+
+    Integer enabledHrById(Hr hr);
+
 }

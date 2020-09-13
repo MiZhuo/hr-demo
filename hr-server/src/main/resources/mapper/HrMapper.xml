@@ -22,7 +22,7 @@
     </collection>
   </resultMap>
 
-  <select id="getAllHrsWithOutCurrentHr" resultMap="HrWithRoleMap">
+    <select id="getAllHrsWithOutCurrentHr" resultMap="HrWithRoleMap">
        SELECT
           a.id,
           a.NAME,
@@ -41,6 +41,10 @@
           LEFT JOIN hr_role b ON a.id = b.hrid
           LEFT JOIN role c ON b.rid = c.id
       WHERE a.id &lt;&gt; #{id};
-   </select>
+    </select>
+
+    <update id="enabledHrById" parameterType="fun.mizhuo.hrserver.model.Hr">
+        update hr set enabled = #{enabled} where id = #{id}
+    </update>
 
 </mapper>

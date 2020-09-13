@@ -12,4 +12,6 @@ public interface HrMapper {
     Hr loadUserByUserName(@Param("username") String username);
 
     List<Hr> getAllHrsWithOutCurrentHr(Integer id);
+
+    Integer enabledHrById(Hr hr);
 }

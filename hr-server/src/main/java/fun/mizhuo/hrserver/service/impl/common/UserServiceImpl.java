@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.service.impl.common;
 
 import fun.mizhuo.hrserver.mapper.HrMapper;
+import fun.mizhuo.hrserver.mapper.RoleMapper;
 import fun.mizhuo.hrserver.model.Hr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,13 +20,16 @@ public class UserServiceImpl implements UserDetailsService {
     @Autowired
     HrMapper hrMapper;
 
+    @Autowired
+    RoleMapper roleMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Hr hr = hrMapper.loadUserByUserName(username);
         if(hr == null){
             throw new UsernameNotFoundException("用户不存在,请检查!");
         }
-        hr.setRoles(hrMapper.getRolesByHrId(hr.getId()));
+        hr.setRoles(roleMapper.getRolesByHrId(hr.getId()));
         return hr;
     }
 }

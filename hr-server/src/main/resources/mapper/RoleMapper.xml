@@ -6,9 +6,10 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="nameZh" jdbcType="VARCHAR" property="nameZh" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, nameZh
-  </sql>
+
+  <select id="getRolesByHrId" resultType="fun.mizhuo.hrserver.model.Role">
+       select b.* from hr_role a left join role b on a.rid = b.id where a.hrid = #{id}
+  </select>
 
   <select id="getAllRoles" resultType="fun.mizhuo.hrserver.model.Role">
     select * from role
@@ -22,4 +23,5 @@
   <delete id="deleteRoleByRoleId" parameterType="int">
     delete from role where id = #{roleId}
   </delete>
+
 </mapper>

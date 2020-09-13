@@ -13,13 +13,34 @@
     <result column="userface" jdbcType="VARCHAR" property="userFace" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, phone, telephone, address, enabled, username, password, userface, remark
-  </sql>
 
+  <resultMap id="HrWithRoleMap" type="fun.mizhuo.hrserver.model.Hr" extends="BaseResultMap">
+    <collection property="roles" ofType="fun.mizhuo.hrserver.model.Role">
+        <id column="rid" property="id"></id>
+        <result column="rname" property="name"></result>
+        <result column="rnameZh" property="nameZh"></result>
+    </collection>
+  </resultMap>
 
-  <select id="getRolesByHrId" resultType="fun.mizhuo.hrserver.model.Role">
-       select * from hr_role a left join role b on a.rid = b.id where a.hrid = #{id}
-  </select>
-  
+  <select id="getAllHrsWithOutCurrentHr" resultMap="HrWithRoleMap">
+       SELECT
+          a.id,
+          a.NAME,
+          a.phone,
+          a.telephone,
+          a.address,
+          a.enabled,
+          a.username,
+          a.userface,
+          a.remark,
+          c.id AS 'rid',
+          c.NAME AS 'rname',
+          c.nameZh AS 'rnameZh'
+      FROM
+          hr a
+          LEFT JOIN hr_role b ON a.id = b.hrid
+          LEFT JOIN role c ON b.rid = c.id
+      WHERE a.id &lt;&gt; #{id};
+   </select>
+
 </mapper>

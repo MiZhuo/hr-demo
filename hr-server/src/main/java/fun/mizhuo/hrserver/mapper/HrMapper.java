@@ -11,5 +11,5 @@ public interface HrMapper {
     @Select("select * from hr where username = #{username}")
     Hr loadUserByUserName(@Param("username") String username);
 
-    List<Role> getRolesByHrId(Integer id);
+    List<Hr> getAllHrsWithOutCurrentHr(Integer id);
 }

@@ -130,17 +130,21 @@
                 this.getRequest('/system/hr/').then(res=>{
                     if(res){
                         let hrRes = res.result;
-                        let index =0;
-                        let count = 3;
-                        for(let i = 0;i < hrRes.length;i++){
-                            index = parseInt(i/count);
-                            if (this.hrs.length <= index) {
-                                this.hrs.push([]);
-                            }
-                            this.hrs[index].push(hrRes[i])
-                        }
+                        this.hrs2hrsArr(hrRes);
                     }
                 });
+            },
+            hrs2hrsArr(hrRes){
+                this.hrs = [];
+                let index =0;
+                let count = 3;
+                for(let i = 0;i < hrRes.length;i++){
+                    index = parseInt(i/count);
+                    if (this.hrs.length <= index) {
+                        this.hrs.push([]);
+                    }
+                    this.hrs[index].push(hrRes[i])
+                }
             },
             initRoleList(){
                 this.getRequest('/system/hr/roleList').then(res=>{
@@ -169,7 +173,12 @@
                 }
             },
             searchHr(){
-
+                this.getRequest('/system/hr/' + this.keyWord).then(res=>{
+                    if(res){
+                        let hrRes = res.result;
+                        this.hrs2hrsArr(hrRes);
+                    }
+                });
             },
             deleteHr(id,index1,index2){
                 this.$confirm('此操作将永久删除操作员【'+ this.hrs[index1][index2].name +'】, 是否继续?', '提示', {

@@ -18,4 +18,6 @@ public interface HrService {
     List<Role> updateRolesById(Integer id, Integer[] roles);
 
     Integer deleteHrById(Integer id);
+
+    List<Hr> searchHrByKeyWord(String keyWord);
 }

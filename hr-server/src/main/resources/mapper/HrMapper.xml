@@ -22,7 +22,7 @@
     </collection>
   </resultMap>
 
-    <select id="getAllHrsWithOutCurrentHr" resultMap="HrWithRoleMap">
+    <select id="getAllHrsWithOutCurrentHr" parameterType="map" resultMap="HrWithRoleMap">
        SELECT
           a.id,
           a.NAME,
@@ -38,9 +38,12 @@
           c.nameZh AS 'rnameZh'
       FROM
           hr a
-          LEFT JOIN hr_role b ON a.id = b.hrid
-          LEFT JOIN role c ON b.rid = c.id
+      LEFT JOIN hr_role b ON a.id = b.hrid
+      LEFT JOIN role c ON b.rid = c.id
       WHERE a.id &lt;&gt; #{id}
+      <if test="keyWord != null and keyWord != ''">
+          and (a.NAME like CONCAT('%', #{keyWord},'%') or a.username like CONCAT('%', #{keyWord},'%'))
+      </if>
       ORDER by a.id
     </select>
 
@@ -51,4 +54,5 @@
     <delete id="deleteHrById">
         delete from hr where id = #{id}
     </delete>
+
 </mapper>

@@ -31,7 +31,9 @@ public class HrServiceImpl implements HrService {
 
     @Override
     public List<Hr> getAllHrs() {
-        return hrMapper.getAllHrsWithOutCurrentHr(HrUtils.getCurrentHr().getId());
+        Map<String, Object> params = new HashMap<>();
+        params.put("id",HrUtils.getCurrentHr().getId());
+        return hrMapper.getAllHrsWithOutCurrentHr(params);
     }
 
     @Override
@@ -56,5 +58,13 @@ public class HrServiceImpl implements HrService {
     @Override
     public Integer deleteHrById(Integer id) {
         return hrMapper.deleteHrById(id);
+    }
+
+    @Override
+    public List<Hr> searchHrByKeyWord(String keyWord) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id",HrUtils.getCurrentHr().getId());
+        params.put("keyWord",keyWord);
+        return hrMapper.getAllHrsWithOutCurrentHr(params);
     }
 }

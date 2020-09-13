@@ -65,4 +65,10 @@ public class HrController {
         }
         return ResponseVo.error("删除失败!");
     }
+
+    @GetMapping("/{keyWord}")
+    public ResponseVo searchHrByKeyWord(@PathVariable String keyWord){
+        List<Hr> hrs = hrService.searchHrByKeyWord(keyWord);
+        return ResponseVo.ok("",hrs);
+    }
 }

@@ -40,11 +40,15 @@
           hr a
           LEFT JOIN hr_role b ON a.id = b.hrid
           LEFT JOIN role c ON b.rid = c.id
-      WHERE a.id &lt;&gt; #{id};
+      WHERE a.id &lt;&gt; #{id}
+      ORDER by a.id
     </select>
 
     <update id="enabledHrById" parameterType="fun.mizhuo.hrserver.model.Hr">
         update hr set enabled = #{enabled} where id = #{id}
     </update>
 
+    <delete id="deleteHrById">
+        delete from hr where id = #{id}
+    </delete>
 </mapper>

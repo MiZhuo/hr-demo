@@ -15,4 +15,7 @@ public interface HrService {
 
     Integer enabledHrById(Hr hr);
 
+    List<Role> updateRolesById(Integer id, Integer[] roles);
+
+    Integer deleteHrById(Integer id);
 }

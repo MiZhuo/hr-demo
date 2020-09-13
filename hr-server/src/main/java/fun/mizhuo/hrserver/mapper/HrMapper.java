@@ -14,4 +14,6 @@ public interface HrMapper {
     List<Hr> getAllHrsWithOutCurrentHr(Integer id);
 
     Integer enabledHrById(Hr hr);
+
+    Integer deleteHrById(Integer id);
 }

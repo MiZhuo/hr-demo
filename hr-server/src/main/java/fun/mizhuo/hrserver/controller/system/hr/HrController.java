@@ -43,12 +43,26 @@ public class HrController {
                 return ResponseVo.ok("禁用成功!");
             }
         }
-        return ResponseVo.error("更新失败!");
+        return ResponseVo.error("操作失败!");
     }
 
     @GetMapping("/roleList")
     public ResponseVo getRoleList(){
         List<Role> roleList = roleTeamService.getAllRoles();
         return ResponseVo.ok("",roleList);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseVo updateRolesById(@PathVariable Integer id,@RequestBody Integer[] roles){
+        List<Role> roleList = hrService.updateRolesById(id,roles);
+        return ResponseVo.ok("更新成功!",roleList);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseVo deleteHrById(@PathVariable Integer id){
+        if(hrService.deleteHrById(id) == 1){
+            return ResponseVo.ok("删除成功!");
+        }
+        return ResponseVo.error("删除失败!");
     }
 }

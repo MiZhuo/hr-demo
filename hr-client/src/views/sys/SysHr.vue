@@ -15,7 +15,7 @@
                         <div slot="header" class="clearfix">
                             <span>{{hr.name}}</span>
                             <el-button style="float: right; padding: 3px 0;color: red" type="text"
-                                       icon="el-icon-delete" @click="deleteHr(hr.id)"></el-button>
+                                       icon="el-icon-delete" @click="deleteHr(hr.id,index1,index2)"></el-button>
                         </div>
                         <div class="hrDivClass">
                             <el-avatar :size="70" :src="hr.userFace"></el-avatar>
@@ -59,28 +59,32 @@
                                <tr>
                                    <td>
                                        <span>用户角色:
-                                           <el-tag size="mini" closable
+                                           <el-tag size="mini"
                                                    v-for="(role,index3) in hr.roles"
                                                    v-if="index3 <= 1"
                                                    style="margin-right: 4px"
-                                                   type="success">{{role.nameZh}}</el-tag>
-                                            <el-dropdown v-if="hr.roles.length > 2">
-                                                  <el-button class="el-dropdown-link" icon="el-icon-more"
-                                                             type="text" size="mini"></el-button>
-                                                  <el-dropdown-menu slot="dropdown">
-                                                    <el-dropdown-item>
-                                                        <el-tag size="mini" closable
-                                                                v-for="(role,index4) in hr.roles.slice(2,hr.roles.length)"
-                                                                style="margin-right: 4px"
-                                                                type="success">{{role.nameZh}}</el-tag>
-                                                    </el-dropdown-item>
-                                                  </el-dropdown-menu>
-                                                </el-dropdown>
+                                                   type="success">{{role.nameZh}}
+                                           </el-tag>
                                            <el-popover
-                                                   placement="bottom-end"
+                                                   v-if="hr.roles.length > 2"
+                                                   placement="bottom-start"
+                                                   title=""
+                                                   width="200"
+                                                   trigger="click">
+                                               <el-tag size="mini"
+                                                       v-for="(role,index4) in hr.roles.slice(2,hr.roles.length)"
+                                                       style="margin-right: 4px;margin-bottom: 4px"
+                                                       type="success">{{role.nameZh}}
+                                                    </el-tag>
+                                                <el-button slot="reference" icon="el-icon-more"
+                                                           type="text" size="mini"></el-button>
+                                           </el-popover>
+                                           <el-popover
+                                                   placement="bottom"
                                                    title="角色列表"
                                                    width="150"
-                                                   trigger="click">
+                                                   trigger="click"
+                                                   @hide="updateRolesById(hr.id,index1,index2)">
                                                 <el-select v-model="chooseRoles" multiple placeholder="请选择">
                                                     <el-option
                                                             v-for="item in roleList"
@@ -91,7 +95,7 @@
                                                 </el-select>
                                                 <el-button slot="reference" icon="el-icon-edit" style="margin-left: 10px"
                                                            type="text" size="mini" @click="toChooseRoles(hr.roles)"></el-button>
-                                              </el-popover>
+                                           </el-popover>
                                        </span>
                                    </td>
                                </tr>
@@ -105,7 +109,6 @@
                     </el-card>
                 </el-col>
             </el-row>
-
         </div>
     </div>
 </template>
@@ -118,6 +121,7 @@
                 keyWord:'',
                 hrs:[],
                 chooseRoles:[],
+                chooseRolesTmp: [],
                 roleList:[]
             }
         },
@@ -146,20 +150,40 @@
                 });
             },
             toChooseRoles(roles){
-                console.log(roles);
                 this.chooseRoles = [];
                 roles.forEach(r=>{
                     this.chooseRoles.push(r.id);
                 })
+                this.chooseRolesTmp = this.chooseRoles;
             },
             handleEnabledChange(id,enabled){
                 this.putRequest('/system/hr/' + id + '/' + enabled);
             },
+            updateRolesById(id,index1,index2){
+                if(this.chooseRolesTmp != this.chooseRoles) {
+                    this.putRequest('/system/hr/' + id, this.chooseRoles).then(res => {
+                        if (res) {
+                            this.hrs[index1][index2].roles = res.result;
+                        }
+                    });
+                }
+            },
             searchHr(){
 
             },
-            deleteHr(){
-
+            deleteHr(id,index1,index2){
+                this.$confirm('此操作将永久删除操作员【'+ this.hrs[index1][index2].name +'】, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest("/system/hr/" + id).then(res=>{
+                        if(res){
+                            this.hrs = [];
+                            this.initHrs();
+                        }
+                    });
+                });
             }
         },
         mounted() {
@@ -184,6 +208,9 @@
     color: coral;
 }
 .el-switch__label *{
+    font-size: 5px;
+}
+.el-popover__title{
     font-size: 5px;
 }
 </style>

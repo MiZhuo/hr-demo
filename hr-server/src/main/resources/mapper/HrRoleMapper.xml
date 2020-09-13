@@ -6,4 +6,19 @@
     <result column="hrid" jdbcType="INTEGER" property="hrid" />
     <result column="rid" jdbcType="INTEGER" property="rid" />
   </resultMap>
+
+  <insert id="addRolesById" parameterType="map">
+        insert into hr_role(hrid,rid) values
+        <foreach collection="roles" item="role" separator=",">
+          (#{id},#{role})
+        </foreach>
+  </insert>
+
+  <delete id="deleteRolesById">
+      delete from hr_role where hrid = #{id}
+    </delete>
+
+  <select id="getRolesById" resultType="fun.mizhuo.hrserver.model.Role">
+    select * from role where id in (select rid from hr_role where hrid = #{id})
+  </select>
 </mapper>

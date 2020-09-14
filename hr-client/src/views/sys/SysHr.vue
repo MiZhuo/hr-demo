@@ -8,7 +8,7 @@
                        icon="el-icon-search" style="margin-left: 10px" @click="searchHr">搜索
             </el-button>
         </div>
-        <div>
+        <div v-loading="loading" element-loading-text="加载中...">
             <el-row v-for="(item,index1) in hrs">
                 <el-col :span="8" v-for="(hr,index2) in item" :key="index1">
                     <el-card class="box-card" :key="index2">
@@ -70,7 +70,7 @@
                                                    placement="bottom-start"
                                                    title=""
                                                    width="200"
-                                                   trigger="click">
+                                                   trigger="hover">
                                                <el-tag size="mini"
                                                        v-for="(role,index4) in hr.roles.slice(2,hr.roles.length)"
                                                        style="margin-right: 4px;margin-bottom: 4px"
@@ -82,10 +82,10 @@
                                            <el-popover
                                                    placement="bottom"
                                                    title="角色列表"
-                                                   width="150"
+                                                   width="250"
                                                    trigger="click"
                                                    @hide="updateRolesById(hr.id,index1,index2)">
-                                                <el-select v-model="chooseRoles" multiple placeholder="请选择">
+                                                <el-select v-model="chooseRoles" multiple placeholder="请选择" style="width: 250px">
                                                     <el-option
                                                             v-for="item in roleList"
                                                             :key="item.id"
@@ -122,13 +122,15 @@
                 hrs:[],
                 chooseRoles:[],
                 chooseRolesTmp: [],
-                roleList:[]
+                roleList:[],
+                loading: true
             }
         },
         methods:{
             initHrs(){
                 this.getRequest('/system/hr/').then(res=>{
                     if(res){
+                        this.loading = false;
                         let hrRes = res.result;
                         this.hrs2hrsArr(hrRes);
                     }

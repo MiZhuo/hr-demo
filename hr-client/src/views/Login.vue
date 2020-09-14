@@ -10,7 +10,7 @@
                     @keydown.enter.native="submitLogin"></el-input>
           </el-form-item>
           <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>
-          <el-button type="primary" style="width:100%" @click="submitLogin">登录</el-button>
+          <el-button type="primary" style="width:100%" :loading="this.loading" @click="submitLogin">{{loginBtnText}}</el-button>
       </el-form>
   </div>
 </template> 
@@ -28,18 +28,25 @@
                 rules:{
                     username:[{required:true,message:'请输入用户名',trigger:'blur'}],
                     password:[{required:true,message:'请输入密码',trigger:'blur'}]
-                }
+                },
+                loading: false,
+                loginBtnText: '登录'
             }
         },
         methods:{
             submitLogin(){
                 this.$refs.loginForm.validate((valid)=>{
                     if(valid){
+                        this.loading = true;
+                        this.loginBtnText = '正在登录...';
                         this.postKeyValueRequest('/doLogin',this.loginForm).then(resp=>{
                             if(resp){
                                 window.sessionStorage.setItem("user",JSON.stringify(resp.result));
                                 let path = this.$route.query.redirect;
                                 this.$router.replace((path == '/' || path == undefined) ? '/home' : path);
+                            }else{
+                                this.loading = false;
+                                this.loginBtnText = '登录';
                             }
                         });
                     }else{

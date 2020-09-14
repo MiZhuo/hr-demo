@@ -22,6 +22,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.security:spring-security-test'
+    compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.3.0'
 }
 
 test {

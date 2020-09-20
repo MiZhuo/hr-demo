@@ -40,6 +40,9 @@
 
   <select id="getAllEmp" resultMap="BaseResultMap">
     select * from employee
+    <if test="keyWord != null and keyWord != ''">
+      where ( name like CONCAT('%', #{keyWord},'%') or workID like CONCAT('%', #{keyWord},'%') )
+    </if>
   </select>
 
 </mapper>

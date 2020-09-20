@@ -5,10 +5,9 @@ import fun.mizhuo.hrserver.model.Employee;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author: Mizhuo
@@ -22,9 +21,10 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/")
-    public ResponseVo getAllEmp(@RequestParam(defaultValue = "1") Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize){
-        PageInfo<Employee> data = employeeService.getAllEmp(pageNum,pageSize);
+    @PostMapping("/")
+    public ResponseVo getAllEmp(@RequestParam Map<String,Object> params){
+        PageInfo<Employee> data = employeeService.getAllEmp(params);
         return ResponseVo.ok("",data);
     }
+
 }

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import fun.mizhuo.hrserver.model.Employee;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Mizhuo
@@ -11,5 +12,5 @@ import java.util.List;
  * @description: 员工服务接口类
  */
 public interface EmployeeService {
-    PageInfo<Employee> getAllEmp(Integer pageNum, Integer pageSize);
+    PageInfo<Employee> getAllEmp(Map<String,Object> params);
 }

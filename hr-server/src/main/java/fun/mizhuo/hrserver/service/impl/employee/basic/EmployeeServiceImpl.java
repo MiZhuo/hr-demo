@@ -5,10 +5,11 @@ import com.github.pagehelper.PageInfo;
 import fun.mizhuo.hrserver.mapper.EmployeeMapper;
 import fun.mizhuo.hrserver.model.Employee;
 import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
+import fun.mizhuo.hrserver.util.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Mizhuo
@@ -22,7 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeMapper employeeMapper;
 
     @Override
-    public PageInfo<Employee> getAllEmp(Integer pageNum, Integer pageSize) {
-        return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.getAllEmp());
+    public PageInfo<Employee> getAllEmp(Map<String,Object> params) {
+        Integer pageNum = MapUtils.getIntegerValue(params,"pageNum",10);
+        Integer pageSize = MapUtils.getIntegerValue(params,"pageSize",10);
+        return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.getAllEmp(params));
     }
 }

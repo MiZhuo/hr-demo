@@ -28,4 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Integer pageSize = MapUtils.getIntegerValue(params,"pageSize",10);
         return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.getAllEmp(params));
     }
+
+    @Override
+    public String getNewWorkId() {
+        return employeeMapper.getNewWorkId();
+    }
 }

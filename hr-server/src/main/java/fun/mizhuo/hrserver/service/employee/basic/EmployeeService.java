@@ -13,4 +13,6 @@ import java.util.Map;
  */
 public interface EmployeeService {
     PageInfo<Employee> getAllEmp(Map<String,Object> params);
+
+    String getNewWorkId();
 }

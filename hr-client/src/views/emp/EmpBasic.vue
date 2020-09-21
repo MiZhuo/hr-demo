@@ -156,7 +156,7 @@
             </el-pagination>
         </div>
         <el-dialog title="员工建档" :visible.sync="dialogFormVisible" width="80%">
-            <el-form :model="employee" :rules="rules" size="mini">
+            <el-form :model="employee" :rules="rules" size="mini" ref="employeeForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="工号:" prop="workId" size="mini" class="form-item-class">
@@ -184,6 +184,7 @@
                                     style="width: 180px"
                                     type="date"
                                     value-format="yyyy-MM-dd"
+                                    format="yyyy-MM-dd"
                                     placeholder="选择日期">
                             </el-date-picker>
                         </el-form-item>
@@ -290,8 +291,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="学历:" prop="tiptopDegree" size="mini" class="form-item-class">
-                            <el-select style="width: 180px" v-model="employee.tiptopDegree"
+                        <el-form-item label="学历:" prop="tipTopDegree" size="mini" class="form-item-class">
+                            <el-select style="width: 180px" v-model="employee.tipTopDegree"
                                        size="mini" placeholder="最高学历">
                                 <el-option key="博士" label="博士" value="博士"></el-option>
                                 <el-option key="硕士" label="硕士" value="硕士"></el-option>
@@ -314,6 +315,7 @@
                                     style="width: 170px"
                                     type="date"
                                     value-format="yyyy-MM-dd"
+                                    format="yyyy-MM-dd"
                                     placeholder="选择日期">
                             </el-date-picker>
                         </el-form-item>
@@ -326,6 +328,7 @@
                                     style="width: 170px"
                                     type="date"
                                     value-format="yyyy-MM-dd"
+                                    format="yyyy-MM-dd"
                                     placeholder="选择日期">
                             </el-date-picker>
                         </el-form-item>
@@ -359,7 +362,7 @@
                     <el-col :span="18">
                         <el-form-item label="合同日期:" prop="contract" size="mini">
                             <el-date-picker
-                                    v-model="contract"
+                                    v-model="employee.contract"
                                     type="daterange"
                                     align="right"
                                     unlink-panels
@@ -367,6 +370,8 @@
                                     start-placeholder="开始日期"
                                     end-placeholder="结束日期"
                                     style="width: 430px"
+                                    value-format="yyyy-MM-dd"
+                                    format="yyyy-MM-dd"
                                     :picker-options="pickerOptions">
                             </el-date-picker>
                         </el-form-item>
@@ -375,7 +380,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button size="mini" @click="dialogFormVisible = false">取 消</el-button>
-                <el-button size="mini" type="primary" @click="addDept">确 定</el-button>
+                <el-button size="mini" type="primary" @click="addEmployee">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -406,14 +411,14 @@
                         { required: true, message: '请选择员工性别', trigger: 'change' }
                     ],
                     birthday: [
-                        { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                        { required: true, message: '请选择日期', trigger: 'change' }
                     ],
                     nativePlace: [
-                        { required: true, message: '请输入员工籍贯', trigger: 'blur' },
+                        { required: true, message: '请输入员工籍贯', trigger: 'blur' }
                     ],
                     email: [
                         { required: true, message: '请输入员工邮箱', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur' }
+                        { pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/, message: '邮箱格式错误', trigger: 'blur' }
                     ],
                     phone: [
                         { required: true, message: '请输入员工联系电话', trigger: 'blur' },
@@ -448,25 +453,60 @@
                         { required: true, message: '请输入员工专业名称', trigger: 'blur' },
                         { min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur' }
                     ],
-                    tiptopDegree: [
+                    tipTopDegree: [
                         { required: true, message: '请选择一项', trigger: 'change' }
                     ],
                     beginDate: [
-                        { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                        { required: true, message: '请选择时间', trigger: 'change' }
                     ],
                     conversionTime: [
-                        { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                        { required: true, message: '请选择时间', trigger: 'change' }
                     ],
                     wedlock: [
                         { required: true, message: '请选择一项', trigger: 'change' }
                     ],
                     idCard: [
                         { required: true, message: '请输入员工证件号码', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在2到10个字符', trigger: 'blur' }
+                        { pattern: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/, message: '证件号码格式错误', trigger: 'blur' }
                     ],
                     contract: [
-                        { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                        { required: true, message: '请填写合同日期', trigger: 'change' }
                     ]
+                },
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '一年',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '两年',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 2);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '五年',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 5);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '十年',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 10);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
                 }
             }
         },
@@ -477,7 +517,7 @@
                 formData.append("pageSize",this.pageSize);
                 formData.append("keyWord",this.keyWord);
                 this.loading = true;
-                this.postRequest('/employee/basic/',formData).then((res)=>{
+                this.postRequest('/employee/basic/getAll',formData).then((res)=>{
                     if(res){
                         this.employeeTableData = res.result;
                     }
@@ -512,7 +552,27 @@
                 this.initEmployeeTable();
             },
             toAddEmployee(){
-                this.dialogFormVisible = true;
+                this.getRequest('/employee/basic/getWorkId').then((res)=>{
+                    if(res){
+                        this.employee.workId = res.result;
+                        this.dialogFormVisible = true;
+                    }
+                });
+            },
+            addEmployee(){
+                this.$refs['employeeForm'].validate((valid) => {
+                    if (valid) {
+                        this.postRequest('/employee/basic/',this.employee).then((res)=>{
+                            if(res){
+                                this.employee = {};
+                                this.dialogFormVisible = false;
+                                this.initEmployeeTable();
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         created() {

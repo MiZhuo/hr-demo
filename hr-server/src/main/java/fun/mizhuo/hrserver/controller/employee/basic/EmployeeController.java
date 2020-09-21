@@ -21,10 +21,22 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @PostMapping("/")
+    @PostMapping("/getAll")
     public ResponseVo getAllEmp(@RequestParam Map<String,Object> params){
         PageInfo<Employee> data = employeeService.getAllEmp(params);
         return ResponseVo.ok("",data);
+    }
+
+    @GetMapping("/getWorkId")
+    public ResponseVo getNewWorkId(){
+        String workId = employeeService.getNewWorkId();
+        return ResponseVo.ok("",workId);
+    }
+
+    @PostMapping("/")
+    public ResponseVo addEmployee(@RequestBody Employee employee){
+        System.out.println(employee);
+        return ResponseVo.ok("");
     }
 
 }

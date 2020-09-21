@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface EmployeeMapper {
     List<Employee> getAllEmp(Map<String,Object> params);
+
+    String getNewWorkId();
 }

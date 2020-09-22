@@ -562,6 +562,8 @@
             addEmployee(){
                 this.$refs['employeeForm'].validate((valid) => {
                     if (valid) {
+                        this.employee.beginContract = this.employee.contract[0];
+                        this.employee.endContract = this.employee.contract[1];
                         this.postRequest('/employee/basic/',this.employee).then((res)=>{
                             if(res){
                                 this.employee = {};

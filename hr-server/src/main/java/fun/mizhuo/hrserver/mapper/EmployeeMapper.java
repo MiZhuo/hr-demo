@@ -9,4 +9,6 @@ public interface EmployeeMapper {
     List<Employee> getAllEmp(Map<String,Object> params);
 
     String getNewWorkId();
+
+    void addEmployee(Employee employee);
 }

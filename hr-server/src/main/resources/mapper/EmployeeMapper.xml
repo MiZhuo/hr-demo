@@ -33,10 +33,19 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, 
-    phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, 
-    school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, 
+    phone, address, departmentId, jobLevelId, posId, engageForm, tipTopDegree, specialty,
+    school, beginDate, workState, workId, contractTerm, conversionTime, notWorkDate,
     beginContract, endContract, workAge
   </sql>
+
+  <insert id="addEmployee" parameterType="fun.mizhuo.hrserver.model.Employee">
+    insert into employee values(
+        #{id}, #{name}, #{gender}, #{birthday}, #{idCard}, #{wedlock}, #{nationId}, #{nativePlace}, #{politicId}, #{email},
+        #{phone}, #{address}, #{departmentId}, #{jobLevelId}, #{posId}, #{engageForm}, #{tipTopDegree}, #{specialty},
+        #{school}, #{beginDate}, #{workState}, #{workId}, #{contractTerm}, #{conversionTime}, null,
+        #{beginContract}, #{endContract}, null
+    )
+  </insert>
 
   <select id="getAllEmp" resultMap="BaseResultMap">
     select * from employee

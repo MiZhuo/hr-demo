@@ -15,4 +15,6 @@ public interface EmployeeService {
     PageInfo<Employee> getAllEmp(Map<String,Object> params);
 
     String getNewWorkId();
+
+    void addEmployee(Employee employee);
 }

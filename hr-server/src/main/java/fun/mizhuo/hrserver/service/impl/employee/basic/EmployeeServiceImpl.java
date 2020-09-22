@@ -33,4 +33,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String getNewWorkId() {
         return employeeMapper.getNewWorkId();
     }
+
+    @Override
+    public void addEmployee(Employee employee) {
+        employeeMapper.addEmployee(employee);
+    }
 }

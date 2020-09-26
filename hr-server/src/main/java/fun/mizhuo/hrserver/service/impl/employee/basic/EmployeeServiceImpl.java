@@ -38,4 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void addEmployee(Employee employee) {
         employeeMapper.addEmployee(employee);
     }
+
+    @Override
+    public int deleteEmployee(String id) {
+        return employeeMapper.deleteEmployee(id);
+    }
 }

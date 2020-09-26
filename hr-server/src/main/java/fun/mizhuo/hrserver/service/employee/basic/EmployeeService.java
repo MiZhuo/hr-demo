@@ -17,4 +17,6 @@ public interface EmployeeService {
     String getNewWorkId();
 
     void addEmployee(Employee employee);
+
+    int deleteEmployee(String id);
 }

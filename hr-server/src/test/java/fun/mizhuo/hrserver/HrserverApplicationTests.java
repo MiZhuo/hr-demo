@@ -12,11 +12,11 @@ class HrserverApplicationTests {
 
     @Test
     void contextLoads() throws ParseException {
-        SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
 
-        java.util.Date begin=dfs.parse("2022-01-02 11:30:24");
+        java.util.Date begin=dfs.parse("2022-01-02");
 
-        java.util.Date end = dfs.parse("2022-12-26 13:31:40");
+        java.util.Date end = dfs.parse("2022-12-26");
 
         long between=(end.getTime()-begin.getTime())/ (1000 * 60 * 60 *24);//除以1000是为了转换成秒
 

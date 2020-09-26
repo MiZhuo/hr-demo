@@ -47,6 +47,10 @@
     )
   </insert>
 
+  <delete id="deleteEmployee">
+    delete from employee where id = #{id}
+  </delete>
+
   <select id="getAllEmp" resultMap="BaseResultMap">
     select * from employee
     <if test="keyWord != null and keyWord != ''">

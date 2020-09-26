@@ -31,17 +31,18 @@
                       border stripe
                       style="width: 100%;height: 100%"
                       max-height="500"
-                      header-cell-style="text-align:center"
-                      cell-style="text-align:center"
+                      :header-cell-style="getTableStyle"
+                      :cell-style="getTableStyle"
                       v-loading="loading"
                       element-loading-text="正在加载..."
-                      @selection-change="handleSelectionChange">
+                      @selection-change="handleSelectionChange"
+                      @sort-change="handleSortChange">
                 <el-table-column type="selection" width="40" fixed></el-table-column>
                 <el-table-column prop="id" label="编号" width="0" v-if="false"></el-table-column>
                 <el-table-column prop="workId" label="工号" width="100" fixed></el-table-column>
                 <el-table-column prop="name" label="员工姓名" width="100" fixed></el-table-column>
                 <el-table-column prop="gender" label="性别" width="60"></el-table-column>
-                <el-table-column prop="birthday" label="出生年月" width="100"></el-table-column>
+                <el-table-column prop="birthday" label="出生年月" width="100" sortable="custom"></el-table-column>
                 <el-table-column prop="idCard" label="身份证号" width="150"></el-table-column>
                 <el-table-column prop="wedlock" label="婚姻状况" width="80"></el-table-column>
                 <el-table-column prop="nationId" label="民族" width="100">
@@ -58,7 +59,7 @@
                 <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
                 <el-table-column prop="phone" label="电话号码" width="100"></el-table-column>
                 <el-table-column prop="address" label="联系地址" width="200"></el-table-column>
-                <el-table-column prop="departmentId" label="所属部门" width="90">
+                <el-table-column prop="departmentId" label="所属部门" width="100">
                     <template slot-scope="scope">
                         {{getTableValueByKey('department',scope.row.departmentId)}}
                     </template>
@@ -228,15 +229,25 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="所属部门:" prop="departmentId" size="mini">
-                            <el-select style="width: 170px" v-model="employee.departmentId"
-                                       size="mini" placeholder="选择部门">
-                                <el-option
-                                        v-for="item in this.dropDowns.get('department')"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
+                            <el-popover
+                                    ref="departPopver"
+                                    placement="right"
+                                    title="选择部门"
+                                    trigger="manual"
+                                    v-model="departTreeVisible"
+                                    width="200">
+                                    <el-tree :data="deptTreeData" :expand-on-click-node="false"
+                                             style="font-size: 10px"
+                                             :default-expand-all="true" :props="defaultProps"
+                                             :highlight-current="true"
+                                             @node-click="handleNodeClick"></el-tree>
+                                <div style="width: 170px;display:inline-flex;
+                                        border:1px solid #dedede;height: 26px;
+                                        border-radius: 5px;
+                                        cursor: pointer"
+                                          slot="reference" placeholder="选择部门"
+                                     @click="showDepTree"><span style="margin-left: 18px;height: 18px;font-size:10px;">{{employee.departmentName}}</span></div>
+                            </el-popover>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -379,7 +390,7 @@
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button size="mini" @click="dialogFormVisible = false">取 消</el-button>
+                <el-button size="mini" @click="cancelAddEmployee">取 消</el-button>
                 <el-button size="mini" type="primary" @click="addEmployee">确 定</el-button>
             </div>
         </el-dialog>
@@ -390,6 +401,18 @@
     export default {
         name: "EmpBasic",
         data(){
+            let validateDate = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请选择日期'));
+                } else {
+                    let date1 = new Date(this.employee.beginDate);
+                    let date2 = new Date(this.employee.conversionTime);
+                    if( date1 > date2){
+                        callback(new Error('转正日期不能早于入职日期'));
+                    }
+                    callback();
+                }
+            };
             return{
                 keyWord:'',
                 loading:false,
@@ -457,10 +480,10 @@
                         { required: true, message: '请选择一项', trigger: 'change' }
                     ],
                     beginDate: [
-                        { required: true, message: '请选择时间', trigger: 'change' }
+                        { validator:validateDate,required: true, trigger: 'change' }
                     ],
                     conversionTime: [
-                        { required: true, message: '请选择时间', trigger: 'change' }
+                        { validator:validateDate,required: true, trigger: 'change' }
                     ],
                     wedlock: [
                         { required: true, message: '请选择一项', trigger: 'change' }
@@ -479,7 +502,7 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 365);
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
@@ -487,7 +510,7 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 2);
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 365 * 2);
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
@@ -503,11 +526,17 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 10);
+                            end.setTime(start.getTime() + 3600 * 1000 * 24 * 365 * 10);
                             picker.$emit('pick', [start, end]);
                         }
                     }]
-                }
+                },
+                deptTreeData:[],
+                defaultProps:{
+                    children: 'children',
+                    label: 'name'
+                },
+                departTreeVisible:false
             }
         },
         methods:{
@@ -524,10 +553,13 @@
                     this.loading = false;
                 });
             },
-            initDropDown(code){
-                this.getRequest('/common/dropDown/' + code).then((res)=>{
+            initDropDown(arr){
+                this.getRequest('/common/dropDown/' + arr).then((res)=>{
                     if(res){
-                        this.dropDowns.set(code,res.result);
+                        let obj = res.result;
+                        for(let code in obj){
+                           this.dropDowns.set(code,obj[code]);
+                        }
                     }
                 });
             },
@@ -541,6 +573,9 @@
             },
             handleSelectionChange(){
 
+            },
+            handleSortChange(column){
+                console.log(column)
             },
             handleSizeChange(val){
                 this.pageSize = val;
@@ -575,14 +610,60 @@
                         return false;
                     }
                 });
+            },
+            cancelAddEmployee(){
+                this.dialogFormVisible = false;
+            },
+            handleEdit(index,row){
+                this.employee = row;
+                let array = [];
+                array.push( row.beginContract );
+                array.push( row.endContract );
+                this.employee.contract = array;
+                this.dialogFormVisible = true;
+            },
+            handleDelete(index,row){
+                this.$confirm('此操作将永久删除【'+ row.name +'】员工, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest('/employee/basic/' + row.id).then(res=>{
+                        if(res){
+                            this.initEmployeeTable();
+                        }
+                    });
+                });
+
+            },
+            handleNodeClick(node){
+                this.employee.departmentId = node.id;
+                this.employee.departmentName = node.name;
+                this.departTreeVisible = false;
+            },
+            showDepTree(){
+                this.departTreeVisible = true;
+            },
+            initDepTree(){
+                this.getRequest("/system/basic/dept/deptTree").then(res=>{
+                    if(res){
+                        this.deptTreeData = res.result;
+                    }
+                });
+            },
+            getTableStyle(){
+                return 'text-align:center';
             }
         },
         created() {
-            this.initDropDown("nation");
-            this.initDropDown("politicsstatus");
-            this.initDropDown("department");
-            this.initDropDown("joblevel");
-            this.initDropDown("position");
+            let arr = [];
+            arr.push("nation");
+            arr.push("politicsstatus");
+            arr.push("department");
+            arr.push("joblevel");
+            arr.push("position");
+            this.initDropDown(arr);
+            this.initDepTree();
         },
         mounted() {
             this.initEmployeeTable();
@@ -602,5 +683,8 @@
     }
     .el-form-item__error{
         margin-left: 100px;
+    }
+    .el-tree-node__label{
+        font-size: 10px;
     }
 </style>

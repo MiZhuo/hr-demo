@@ -35,11 +35,18 @@ public class EmployeeController {
 
     @PostMapping("/")
     public ResponseVo addEmployee(@RequestBody Employee employee){
-        Long contract = (employee.getEndContract().getTime() - employee.getBeginContract().getTime()) / (1000 * 60 * 60 * 24);
+        Long contract = Math.abs(employee.getEndContract().getTime() - employee.getBeginContract().getTime()) / (1000 * 60 * 60 * 24);
         employee.setContractTerm(contract * 1.00 / 365);
         employee.setWorkState("在职");
         employeeService.addEmployee(employee);
         return ResponseVo.ok("建档成功,员工号为" + employee.getWorkId());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseVo deleteEmployee(@PathVariable String id){
+        if(employeeService.deleteEmployee(id) > 0){
+            return ResponseVo.ok("删除成功!");
+        }
+        return ResponseVo.error("删除失败!");
+    }
 }

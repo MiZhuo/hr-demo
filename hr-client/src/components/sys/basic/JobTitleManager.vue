@@ -19,8 +19,8 @@
         <div style="margin-top: 10px">
             <el-table :data="jobTitleData" size="mini" class="component-table"
                       border stripe style="width: 62%"
-                      header-cell-style="text-align:center"
-                      cell-style="text-align:center"
+                      :header-cell-style="getTableStyle"
+                      :cell-style="getTableStyle"
                       @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="编号" width="60"></el-table-column>
@@ -190,6 +190,9 @@
             },
             handleEnabledChange(row){
                 this.putRequest("/system/basic/jobTitle/" + row.id + "/" + row.enabled);
+            },
+            getTableStyle(){
+                return 'text-align:center';
             }
         },
         mounted() {

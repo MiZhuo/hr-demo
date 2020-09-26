@@ -11,4 +11,6 @@ public interface EmployeeMapper {
     String getNewWorkId();
 
     void addEmployee(Employee employee);
+
+    int deleteEmployee(String id);
 }

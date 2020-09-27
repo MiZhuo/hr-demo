@@ -14,9 +14,15 @@ import java.util.Map;
 public interface EmployeeService {
     PageInfo<Employee> getAllEmp(Map<String,Object> params);
 
+    List<Employee> getAllEmp();
+
     String getNewWorkId();
 
     void addEmployee(Employee employee);
 
     int deleteEmployee(String id);
+
+    boolean checkEmployeeIsExist(Employee employee);
+
+    int updateEmployee(Employee employee);
 }

@@ -13,4 +13,8 @@ public interface EmployeeMapper {
     void addEmployee(Employee employee);
 
     int deleteEmployee(String id);
+
+    int checkEmployeeIsExist(Employee employee);
+
+    int updateEmployee(Employee employee);
 }

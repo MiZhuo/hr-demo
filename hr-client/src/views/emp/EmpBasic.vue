@@ -156,7 +156,7 @@
                     :total="employeeTableData.total">
             </el-pagination>
         </div>
-        <el-dialog title="员工建档" :visible.sync="dialogFormVisible" width="80%">
+        <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" width="80%">
             <el-form :model="employee" :rules="rules" size="mini" ref="employeeForm">
                 <el-row>
                     <el-col :span="6">
@@ -230,7 +230,6 @@
                     <el-col :span="6">
                         <el-form-item label="所属部门:" prop="departmentId" size="mini">
                             <el-popover
-                                    ref="departPopver"
                                     placement="right"
                                     title="选择部门"
                                     trigger="manual"
@@ -421,7 +420,32 @@
                 pageNum: 1,
                 pageSize: 10,
                 dialogFormVisible: false,
-                employee:{},
+                employee:{
+                    workId:'',
+                    name:'',
+                    gender: '',
+                    birthday:'',
+                    nativePlace:'',
+                    email:'',
+                    phone:'',
+                    address:'',
+                    engageForm:'',
+                    nationId:'',
+                    departmentId:'',
+                    jobLevelId:'',
+                    posId:'',
+                    politicId:'',
+                    school:'',
+                    specialty:'',
+                    tipTopDegree:'',
+                    beginDate:'',
+                    conversionTime:'',
+                    wedlock:'',
+                    idCard:'',
+                    contract:'',
+                    beginContract:'',
+                    endContract:''
+                },
                 rules:{
                     workId: [
                         { required: true, message: '员工号不能为空', trigger: 'change' }
@@ -536,7 +560,8 @@
                     children: 'children',
                     label: 'name'
                 },
-                departTreeVisible:false
+                departTreeVisible:false,
+                dialogTitle:'员工建档'
             }
         },
         methods:{
@@ -590,6 +615,7 @@
                 this.getRequest('/employee/basic/getWorkId').then((res)=>{
                     if(res){
                         this.employee.workId = res.result;
+                        this.dialogTitle = '员工建档';
                         this.dialogFormVisible = true;
                     }
                 });
@@ -601,7 +627,7 @@
                         this.employee.endContract = this.employee.contract[1];
                         this.postRequest('/employee/basic/',this.employee).then((res)=>{
                             if(res){
-                                this.employee = {};
+                                this.$refs['employeeForm'].resetFields();
                                 this.dialogFormVisible = false;
                                 this.initEmployeeTable();
                             }
@@ -613,17 +639,22 @@
             },
             cancelAddEmployee(){
                 this.dialogFormVisible = false;
+                this.departTreeVisible = false;
+                this.$refs['employeeForm'].resetFields();
             },
             handleEdit(index,row){
-                this.employee = row;
+                Object.assign(this.employee,row);
+                console.log(this.employee);
                 let array = [];
-                array.push( row.beginContract );
-                array.push( row.endContract );
+                array.push( this.employee.beginContract );
+                array.push( this.employee.endContract );
                 this.employee.contract = array;
+                this.getDepartNameInTree(this.deptTreeData);
+                this.dialogTitle = '更新员工资料';
                 this.dialogFormVisible = true;
             },
             handleDelete(index,row){
-                this.$confirm('此操作将永久删除【'+ row.name +'】员工, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除员工【'+ row.name +'】, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -634,7 +665,6 @@
                         }
                     });
                 });
-
             },
             handleNodeClick(node){
                 this.employee.departmentId = node.id;
@@ -653,6 +683,17 @@
             },
             getTableStyle(){
                 return 'text-align:center';
+            },
+            getDepartNameInTree(data){
+                for(let i = 0 ;i < data.length;i++){
+                    if(data[i].id == this.employee.departmentId){
+                        this.employee.departmentName = data[i].name;
+                        return;
+                    }
+                    if(data[i].children){
+                        this.getDepartNameInTree(data[i].children);
+                    }
+                }
             }
         },
         created() {

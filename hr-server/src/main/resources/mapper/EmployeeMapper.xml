@@ -47,6 +47,85 @@
     )
   </insert>
 
+  <update id="updateEmployee" parameterType="fun.mizhuo.hrserver.model.Employee">
+        update employee
+        <set>
+          <if test="name != null">
+            name = #{name},
+          </if>
+          <if test="gender != null">
+            gender = #{gender},
+          </if>
+          <if test="birthday != null">
+            birthday = #{birthday},
+          </if>
+          <if test="idCard != null">
+            idCard = #{idCard},
+          </if>
+          <if test="wedlock != null">
+            wedlock = #{wedlock},
+          </if>
+          <if test="nationId != null">
+            nationId = #{nationId},
+          </if>
+          <if test="nativePlace != null">
+            nativePlace = #{nativePlace},
+          </if>
+          <if test="politicId != null">
+            politicId = #{politicId},
+          </if>
+          <if test="email != null">
+            email = #{email},
+          </if>
+          <if test="phone != null">
+            phone = #{phone},
+          </if>
+          <if test="address != null">
+            address = #{address},
+          </if>
+          <if test="departmentId != null">
+            departmentId = #{departmentId},
+          </if>
+          <if test="jobLevelId != null">
+            jobLevelId = #{jobLevelId},
+          </if>
+          <if test="posId != null">
+            posId = #{posId},
+          </if>
+          <if test="engageForm != null">
+            engageForm = #{engageForm},
+          </if>
+          <if test="tipTopDegree != null">
+            tipTopDegree = #{tipTopDegree},
+          </if>
+          <if test="specialty != null">
+            specialty = #{specialty},
+          </if>
+          <if test="school != null">
+            school = #{school},
+          </if>
+          <if test="beginDate != null">
+            beginDate = #{beginDate},
+          </if>
+          <if test="workState != null">
+            workState = #{workState},
+          </if>
+          <if test="contractTerm != null">
+            contractTerm = #{contractTerm},
+          </if>
+          <if test="conversionTime != null">
+            conversionTime = #{conversionTime},
+          </if>
+          <if test="beginContract != null">
+            beginContract = #{beginContract},
+          </if>
+          <if test="endContract != null">
+            endContract = #{endContract},
+          </if>
+        </set>
+        where id = #{id}
+  </update>
+
   <delete id="deleteEmployee">
     delete from employee where id = #{id}
   </delete>
@@ -60,6 +139,10 @@
 
   <select id="getNewWorkId" resultType="string">
         select LPAD(max(workId)+1,8,0) from employee
+  </select>
+
+  <select id="checkEmployeeIsExist" resultType="_int" parameterType="fun.mizhuo.hrserver.model.Employee">
+    select count(1) from employee where id = #{id}
   </select>
 
 </mapper>

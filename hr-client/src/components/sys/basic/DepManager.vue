@@ -112,7 +112,7 @@
                 }
             },
             deleteDept(data){
-                if(data.parent){
+                if(data.children.length){
                     this.$message.error("不能删除父部门");
                     return;
                 }

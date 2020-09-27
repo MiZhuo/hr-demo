@@ -9,6 +9,8 @@ import fun.mizhuo.hrserver.util.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +32,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAllEmp() {
+        return employeeMapper.getAllEmp(new HashMap<>());
+    }
+
+    @Override
     public String getNewWorkId() {
         return employeeMapper.getNewWorkId();
     }
@@ -42,5 +49,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public int deleteEmployee(String id) {
         return employeeMapper.deleteEmployee(id);
+    }
+
+    @Override
+    public boolean checkEmployeeIsExist(Employee employee) {
+        return employeeMapper.checkEmployeeIsExist(employee) > 0;
+    }
+
+    @Override
+    public int updateEmployee(Employee employee) {
+        return employeeMapper.updateEmployee(employee);
     }
 }

@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import fun.mizhuo.hrserver.anno.Field;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,66 +12,94 @@ import java.util.Date;
 public class Employee implements Serializable {
     private static final long serialVersionUID = -5050029441401970900L;
 
+    @Field("编号")
     private Integer id;
 
+    @Field("姓名")
     private String name;
 
+    @Field("性别")
     private String gender;
 
+    @Field("出生年月")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date birthday;
 
+    @Field("证件号码")
     private String idCard;
 
+    @Field("婚姻状态")
     private String wedlock;
 
+    @Field("民族")
     private Integer nationId;
 
+    @Field("籍贯")
     private String nativePlace;
 
+    @Field("政治面貌")
     private Integer politicId;
 
+    @Field("邮箱")
     private String email;
 
+    @Field("电话号码")
     private String phone;
 
+    @Field("住址")
     private String address;
 
+    @Field("部门")
     private Integer departmentId;
 
+    @Field("职称")
     private Integer jobLevelId;
 
+    @Field("职位")
     private Integer posId;
 
+    @Field("聘用形式")
     private String engageForm;
 
+    @Field("最高学历")
     private String tipTopDegree;
 
+    @Field("专业")
     private String specialty;
 
+    @Field("毕业院校")
     private String school;
 
+    @Field("入职日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date beginDate;
 
+    @Field("工作状态")
     private String workState;
 
+    @Field("工号")
     private String workId;
 
+    @Field("合同年限")
     private Double contractTerm;
 
+    @Field("转正时间")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date conversionTime;
 
+    @Field("离职日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date notworkDate;
 
+    @Field("合同开始时间")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date beginContract;
 
+    @Field("合同结束时间")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date endContract;
 
+    @Field("工龄")
     private Integer workAge;
 
     public Integer getId() {

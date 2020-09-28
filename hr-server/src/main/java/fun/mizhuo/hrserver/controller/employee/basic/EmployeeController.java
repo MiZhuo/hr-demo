@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -63,8 +63,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<byte[]> exportEmployeeData(){
+    public ResponseEntity<byte[]> exportEmployeeData() throws IOException, IllegalAccessException {
         List<Employee> emps = employeeService.getAllEmp();
-        return PoiUtils.list2Excel(emps);
+        return PoiUtils.list2Excel(emps,Employee.class,"员工信息表");
     }
 }

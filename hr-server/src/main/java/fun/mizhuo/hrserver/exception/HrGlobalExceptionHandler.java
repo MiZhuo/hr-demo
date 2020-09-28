@@ -16,11 +16,26 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class HrGlobalExceptionHandler{
 
+    /**
+     * 抓取数据库异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(SQLException.class)
     public ResponseVo sqlException(SQLException e){
         if(e instanceof MySQLIntegrityConstraintViolationException){
             return ResponseVo.error(ErrMessage.POSITION_ERROR_MESSAGE1);
         }
         return ResponseVo.error(ErrMessage.SQL_ERROR_MESSAGE1);
+    }
+
+    /**
+     * 抓取Hr自定义异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(HrException.class)
+    public ResponseVo hrException(HrException e){
+        return ResponseVo.error(e.getMsg());
     }
 }

@@ -14,11 +14,20 @@
                 </el-button>
             </div>
             <div>
+                <el-upload style="display: inline-flex;margin-right: 8px"
+                        action="/employee/basic/import"
+                        :before-upload = "beforeUpload"
+                        :on-success="uploadSuccess"
+                        :on-error="uploadError"
+                        :disabled="uploadDisabled"
+                        show-file-list="false">
+                    <el-button type="success" size="mini" :disabled="uploadDisabled"
+                               :icon="uploadIcon" @click="importEmployee"> {{uploadTitle}}
+                    </el-button>
+                </el-upload>
+
                 <el-button type="success" size="mini"
-                           icon="fa fa-level-up" @click=""> 导入数据
-                </el-button>
-                <el-button type="success" size="mini"
-                           icon="fa fa-level-down" @click=""> 导出数据
+                           icon="el-icon-download" @click="exportEmployee"> 导出数据
                 </el-button>
                 <el-button type="primary" size="mini"
                            icon="el-icon-plus" @click="toAddEmployee">员工建档
@@ -561,7 +570,10 @@
                     label: 'name'
                 },
                 departTreeVisible:false,
-                dialogTitle:'员工建档'
+                dialogTitle:'员工建档',
+                uploadDisabled:false,
+                uploadTitle:'导入数据',
+                uploadIcon: 'el-icon-upload2'
             }
         },
         methods:{
@@ -694,6 +706,27 @@
                         this.getDepartNameInTree(data[i].children);
                     }
                 }
+            },
+            importEmployee(){
+
+            },
+            exportEmployee(){
+                window.open("/employee/basic/export");
+            },
+            beforeUpload(file){
+                this.uploadTitle = '正在导入';
+                this.uploadDisabled = true;
+                this.uploadIcon = 'el-icon-loading';
+            },
+            uploadSuccess(response, file, fileList){
+                this.uploadTitle = '导入数据';
+                this.uploadDisabled = false;
+                this.uploadIcon = 'el-icon-upload2';
+            },
+            uploadError(err, file, fileList){
+                this.uploadTitle = '导入数据';
+                this.uploadDisabled = false;
+                this.uploadIcon = 'el-icon-upload2';
             }
         },
         created() {

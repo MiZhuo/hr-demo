@@ -15,5 +15,7 @@ public @interface Field {
 
     String value();
 
+    boolean export() default true;
+
     String desc() default "";
 }

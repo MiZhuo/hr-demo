@@ -1,6 +1,7 @@
 package fun.mizhuo.hrserver.controller.employee.basic;
 
 import com.github.pagehelper.PageInfo;
+import fun.mizhuo.hrserver.exception.HrException;
 import fun.mizhuo.hrserver.model.Employee;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
@@ -8,8 +9,8 @@ import fun.mizhuo.hrserver.util.PoiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -63,8 +64,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<byte[]> exportEmployeeData() throws IOException, IllegalAccessException {
-        List<Employee> emps = employeeService.getAllEmp();
-        return PoiUtils.list2Excel(emps,Employee.class,"员工信息表");
+    public ResponseEntity<byte[]> exportEmployeeData() throws HrException {
+        List<Employee> employees = employeeService.getAllEmp();
+        return PoiUtils.list2Excel(employees,Employee.class,"员工信息表");
+    }
+
+    @PostMapping("/import")
+    public ResponseVo importEmployeeData(MultipartFile file) throws HrException {
+        List<Employee> employees = (List<Employee>) PoiUtils.excel2List(file,Employee.class);
+        return ResponseVo.error("");
     }
 }

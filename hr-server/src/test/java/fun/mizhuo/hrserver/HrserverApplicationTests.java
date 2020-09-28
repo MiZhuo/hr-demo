@@ -62,6 +62,12 @@ class HrserverApplicationTests {
             fields[i].setAccessible(true);
             System.out.println(annotation.value());
             System.out.println(fields[i].get(employee));
+            System.out.println(fields[i].getType());
         }
     }
+
+    @Test
+    void test4(){
+    }
+
 }

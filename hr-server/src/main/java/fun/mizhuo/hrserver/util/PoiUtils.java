@@ -1,21 +1,23 @@
 package fun.mizhuo.hrserver.util;
 
+import fun.mizhuo.hrserver.exception.HrException;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ import java.util.List;
  */
 public class PoiUtils {
 
-    private static HSSFWorkbook workbook = new HSSFWorkbook();
+    private static HSSFWorkbook workbook;
 
     /**
      * 初始化POI工具
@@ -94,14 +96,17 @@ public class PoiUtils {
         style.setFont(font);
         // 写入第一行各列的数据
         Row head = sheet.createRow(0);
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0,index = 0; i < fields.length; i++,index++) {
             if( Modifier.isStatic(fields[i].getModifiers())) {
+                index --;
                 continue;
             }
             fun.mizhuo.hrserver.anno.Field annotation = fields[i].getAnnotation(fun.mizhuo.hrserver.anno.Field.class);
-            Cell cell = head.createCell(i);
-            cell.setCellValue(annotation.value());
-            cell.setCellStyle(style);
+            if(annotation.export()) {
+                Cell cell = head.createCell(index);
+                cell.setCellValue(annotation.value());
+                cell.setCellStyle(style);
+            }
         }
     }
     /**
@@ -122,24 +127,129 @@ public class PoiUtils {
      * @param list
      * @return
      */
-    public static ResponseEntity<byte[]> list2Excel(List<?> list,Class clazz,String fileName) throws IOException, IllegalAccessException {
-        initPOI();
-        //创建Sheet页
-        HSSFSheet sheet = workbook.createSheet(fileName);
-        //初始化sheet表头
-        initSheetHead(clazz,sheet);
-        Field[] fields = clazz.getDeclaredFields();
-        //写数据
-        for (int i = 0; i < list.size(); i++) {
-            //表头占一行,从第二行开始创建
-            HSSFRow row = sheet.createRow(i + 1);
-            for(int j = 0;j < fields.length;j++){
-                HSSFCell cell = row.createCell(j);
-                fields[i].setAccessible(true);
-                cell.setCellValue(String.valueOf(fields[j].get(list.get(i))));
+    public static ResponseEntity<byte[]> list2Excel(List<?> list,Class clazz,String fileName) throws HrException {
+        try {
+            initPOI();
+            //创建列日期格式
+            HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+            HSSFDataFormat dataFormat = workbook.createDataFormat();
+            dateCellStyle.setDataFormat(dataFormat.getFormat("yyyy-MM-dd"));
+            //创建列double格式
+            HSSFCellStyle doubleCellStyle = workbook.createCellStyle();
+            doubleCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+            //创建列int格式
+            HSSFCellStyle intCellStyle = workbook.createCellStyle();
+            intCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
+            //创建Sheet页
+            HSSFSheet sheet = workbook.createSheet(fileName);
+            //初始化sheet表头
+            initSheetHead(clazz, sheet);
+            Field[] fields = clazz.getDeclaredFields();
+            //写数据
+            for (int i = 0; i < list.size(); i++) {
+                //表头占一行,从第二行开始创建
+                HSSFRow row = sheet.createRow(i + 1);
+                for (int j = 0, index = 0; j < fields.length; j++, index++) {
+                    if (Modifier.isStatic(fields[j].getModifiers())) {
+                        index--;
+                        continue;
+                    }
+                    fun.mizhuo.hrserver.anno.Field annotation = fields[j].getAnnotation(fun.mizhuo.hrserver.anno.Field.class);
+                    if (annotation != null && annotation.export()) {
+                        HSSFCell cell = row.createCell(index);
+                        fields[j].setAccessible(true);
+                        Class<?> filedType = fields[j].getType();
+                        Object fieldValue = fields[j].get(list.get(i));
+                        if (Integer.class == filedType || Integer.TYPE == filedType) {
+                            cell.setCellValue(fieldValue == null ? 0 : Integer.valueOf(String.valueOf(fieldValue)));
+                            cell.setCellStyle(intCellStyle);
+                        } else if (Long.class == filedType || Long.TYPE == filedType) {
+                            cell.setCellValue(fieldValue == null ? 0 : Long.valueOf(String.valueOf(fieldValue)));
+                            cell.setCellStyle(intCellStyle);
+                        } else if (Short.class == filedType || Short.TYPE == filedType) {
+                            cell.setCellValue(fieldValue == null ? 0 : Short.valueOf(String.valueOf(fieldValue)));
+                            cell.setCellStyle(intCellStyle);
+                        } else if (Double.class == filedType || Double.TYPE == filedType) {
+                            cell.setCellValue(fieldValue == null ? 0 : Double.valueOf(String.valueOf(fieldValue)));
+                            cell.setCellStyle(doubleCellStyle);
+                        } else if (Float.class == filedType || Float.TYPE == filedType) {
+                            cell.setCellValue(fieldValue == null ? 0 : Float.valueOf(String.valueOf(fieldValue)));
+                            cell.setCellStyle(doubleCellStyle);
+                        } else if (Date.class == filedType) {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            cell.setCellValue(fieldValue == null ? "" : dateFormat.format((Date) fieldValue));
+                            cell.setCellStyle(dateCellStyle);
+                        } else {
+                            cell.setCellValue(String.valueOf(fieldValue));
+                        }
+                    }
+                }
             }
+            return outExcelStream(new String(fileName.getBytes("GBK"), "iso-8859-1"));
+        }catch (Exception e){
+            throw new HrException("导出Excel异常!请联系管理员!");
         }
-        return outExcelStream(new String(fileName.getBytes("GBK"),"iso-8859-1"));
     }
 
+    /**
+     * 导入Excel文件
+     * @param file
+     * @param clazz
+     * @return
+     * @throws HrException
+     */
+    public static List<?> excel2List(MultipartFile file, Class clazz) throws HrException {
+        try {
+            List<Object> data = new ArrayList<>();
+            //读取Excel对象
+            HSSFWorkbook workbook = new HSSFWorkbook(file.getInputStream());
+            //获取Sheet数量
+            int sheetsSize = workbook.getNumberOfSheets();
+            for (int sheetIndex = 0; sheetIndex < sheetsSize; sheetIndex++) {
+                //获取Sheet
+                HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+                //获取行数
+                int rowsSize = sheet.getPhysicalNumberOfRows();
+                //第0行为表头,从第一行开始遍历
+                for (int rowIndex = 1; rowIndex < rowsSize; rowIndex++) {
+                    Object obj = clazz.newInstance();
+                    //获取行数据
+                    HSSFRow row = sheet.getRow(rowIndex);
+                    //获取列数
+                    int cellSize = row.getPhysicalNumberOfCells();
+                    for (int cellIndex = 0; cellIndex < cellSize; cellIndex++) {
+                        HSSFCell cell = row.getCell(cellIndex);
+                        CellType cellType = cell.getCellType();
+                        Object cellValue = null;
+                        switch (cellType){
+                            case NUMERIC:
+                                cellValue = cell.getNumericCellValue();
+                                break;
+                            default:
+                                cellValue = cell.getStringCellValue();
+                                break;
+                        }
+                        Field[] fields = clazz.getDeclaredFields();
+                        for (int fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
+                            if (Modifier.isStatic(fields[fieldIndex].getModifiers())) {
+                                continue;
+                            }
+                            fun.mizhuo.hrserver.anno.Field annotation = fields[fieldIndex].getAnnotation(fun.mizhuo.hrserver.anno.Field.class);
+                            if (annotation != null) {
+                                fields[fieldIndex].setAccessible(true);
+                                String fieldName = annotation.value();
+                                if(fieldName.equals(sheet.getRow(0).getCell(cellIndex).getStringCellValue())){
+                                    fields[fieldIndex].set(obj,cellValue);
+                                }
+                            }
+                        }
+                    }
+                    data.add(obj);
+                }
+            }
+            return data;
+        }catch (Exception e){
+            throw new HrException("解析文件失败!");
+        }
+    }
 }

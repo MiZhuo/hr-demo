@@ -17,4 +17,6 @@ public interface EmployeeMapper {
     int checkEmployeeIsExist(Employee employee);
 
     int updateEmployee(Employee employee);
+
+    Integer saveEmployees(List<Employee> employees);
 }

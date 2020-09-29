@@ -20,7 +20,7 @@
                         :on-success="uploadSuccess"
                         :on-error="uploadError"
                         :disabled="uploadDisabled"
-                        show-file-list="false">
+                        :show-file-list="false">
                     <el-button type="success" size="mini" :disabled="uploadDisabled"
                                :icon="uploadIcon" @click="importEmployee"> {{uploadTitle}}
                     </el-button>

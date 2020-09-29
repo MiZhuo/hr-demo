@@ -72,6 +72,13 @@ public class EmployeeController {
     @PostMapping("/import")
     public ResponseVo importEmployeeData(MultipartFile file) throws HrException {
         List<Employee> employees = (List<Employee>) PoiUtils.excel2List(file,Employee.class);
-        return ResponseVo.error("");
+        if(employees.isEmpty()){
+            return ResponseVo.error("解析无数据,请检查!");
+        }
+        Integer count = employeeService.saveEmployees(employees);
+        if(count > 0){
+            return ResponseVo.ok("导入成功!");
+        }
+        return ResponseVo.error("导入失败!");
     }
 }

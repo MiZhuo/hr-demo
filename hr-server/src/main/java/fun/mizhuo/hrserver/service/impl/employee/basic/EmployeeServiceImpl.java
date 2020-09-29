@@ -60,4 +60,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int updateEmployee(Employee employee) {
         return employeeMapper.updateEmployee(employee);
     }
+
+    @Override
+    public Integer saveEmployees(List<Employee> employees) {
+        return employeeMapper.saveEmployees(employees);
+    }
 }

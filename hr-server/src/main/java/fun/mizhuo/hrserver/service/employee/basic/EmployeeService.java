@@ -25,4 +25,6 @@ public interface EmployeeService {
     boolean checkEmployeeIsExist(Employee employee);
 
     int updateEmployee(Employee employee);
+
+    Integer saveEmployees(List<Employee> employees);
 }

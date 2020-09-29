@@ -9,12 +9,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -187,7 +191,7 @@ public class PoiUtils {
             }
             return outExcelStream(new String(fileName.getBytes("GBK"), "iso-8859-1"));
         }catch (Exception e){
-            throw new HrException("导出Excel异常!请联系管理员!");
+            throw new HrException("导出Excel异常!请联系管理员!",e);
         }
     }
 
@@ -239,7 +243,39 @@ public class PoiUtils {
                                 fields[fieldIndex].setAccessible(true);
                                 String fieldName = annotation.value();
                                 if(fieldName.equals(sheet.getRow(0).getCell(cellIndex).getStringCellValue())){
-                                    fields[fieldIndex].set(obj,cellValue);
+                                    //获取字段类型
+                                    Class<?> type = fields[fieldIndex].getType();
+                                    String replace = fields[fieldIndex].getName().substring(0, 1).toUpperCase()
+                                            + fields[fieldIndex].getName().substring(1);
+                                    //获取setter方法
+                                    Method setMethod = clazz.getMethod("set" + replace, type);
+                                    // ---判断读取数据的类型
+                                    if (type.isAssignableFrom(String.class)) {
+                                        setMethod.invoke(obj, String.valueOf(cellValue));
+                                    } else if (type.isAssignableFrom(int.class)
+                                            || type.isAssignableFrom(Integer.class)) {
+                                        DecimalFormat decimalFormat = new DecimalFormat("###");
+                                        setMethod.invoke(obj, Integer.valueOf(decimalFormat.format((StringUtils.isEmpty(cellValue) || "".equals(cellValue)) ? 0 : cellValue )));
+                                    } else if (type.isAssignableFrom(Double.class)
+                                            || type.isAssignableFrom(double.class)) {
+                                        DecimalFormat decimalFormat = new DecimalFormat("###.##");
+                                        setMethod.invoke(obj, Double.valueOf(decimalFormat.format((StringUtils.isEmpty(cellValue) || "".equals(cellValue)) ? 0 : cellValue )));
+                                    } else if (type.isAssignableFrom(Boolean.class)
+                                            || type.isAssignableFrom(boolean.class)) {
+                                        setMethod.invoke(obj, Boolean.parseBoolean(StringUtils.isEmpty(cellValue) ? null : String.valueOf(cellValue)));
+                                    } else if (type.isAssignableFrom(Date.class)) {
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                        if(StringUtils.isEmpty(cellValue)){
+                                            continue;
+                                        }
+                                        setMethod.invoke(obj, dateFormat.parse(String.valueOf(cellValue)));
+                                    } else if (type.isAssignableFrom(Timestamp.class)) {
+                                        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        if(StringUtils.isEmpty(cellValue)){
+                                            continue;
+                                        }
+                                        setMethod.invoke(obj, new Timestamp(dateFormat.parse(String.valueOf(cellValue)).getTime()));
+                                    }
                                 }
                             }
                         }
@@ -249,7 +285,7 @@ public class PoiUtils {
             }
             return data;
         }catch (Exception e){
-            throw new HrException("解析文件失败!");
+            throw new HrException("解析文件失败!",e);
         }
     }
 }

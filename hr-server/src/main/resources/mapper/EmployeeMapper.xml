@@ -47,7 +47,18 @@
     )
   </insert>
 
-  <update id="updateEmployee" parameterType="fun.mizhuo.hrserver.model.Employee">
+  <insert id="saveEmployees" parameterType="list">
+      insert into employee values
+      <foreach collection="list" close=";" item="employee" separator=",">
+         ( #{employee.id}, #{employee.name}, #{employee.gender}, #{employee.birthday}, #{employee.idCard}, #{employee.wedlock}, #{employee.nationId},
+          #{employee.nativePlace}, #{employee.politicId}, #{employee.email},#{employee.phone}, #{employee.address}, #{employee.departmentId},
+          #{employee.jobLevelId}, #{employee.posId}, #{employee.engageForm}, #{employee.tipTopDegree}, #{employee.specialty},
+          #{employee.school}, #{employee.beginDate}, #{employee.workState}, #{employee.workId}, #{employee.contractTerm}, #{employee.conversionTime}, null,
+          #{employee.beginContract}, #{employee.endContract}, null )
+      </foreach>
+  </insert>
+
+    <update id="updateEmployee" parameterType="fun.mizhuo.hrserver.model.Employee">
         update employee
         <set>
           <if test="name != null">

@@ -14,15 +14,17 @@
                 </el-button>
             </div>
             <div>
+                <el-button type="text" size="mini" style="margin-right: 8px;text-decoration:underline" @click="downloadFileTemplate">下载导入文件模板</el-button>
                 <el-upload style="display: inline-flex;margin-right: 8px"
                         action="/employee/basic/import"
                         :before-upload = "beforeUpload"
                         :on-success="uploadSuccess"
                         :on-error="uploadError"
                         :disabled="uploadDisabled"
+                        accept=".xls,.xlsx"
                         :show-file-list="false">
                     <el-button type="success" size="mini" :disabled="uploadDisabled"
-                               :icon="uploadIcon" @click="importEmployee"> {{uploadTitle}}
+                               :icon="uploadIcon"> {{uploadTitle}}
                     </el-button>
                 </el-upload>
 
@@ -406,6 +408,8 @@
 </template>
 
 <script>
+    import {Message} from "element-ui";
+
     export default {
         name: "EmpBasic",
         data(){
@@ -707,9 +711,6 @@
                     }
                 }
             },
-            importEmployee(){
-
-            },
             exportEmployee(){
                 window.open("/employee/basic/export");
             },
@@ -722,11 +723,21 @@
                 this.uploadTitle = '导入数据';
                 this.uploadDisabled = false;
                 this.uploadIcon = 'el-icon-upload2';
+                if(response){
+                    Message.success({message : response.msg});
+                    this.initEmployeeTable();
+                }
             },
             uploadError(err, file, fileList){
                 this.uploadTitle = '导入数据';
                 this.uploadDisabled = false;
                 this.uploadIcon = 'el-icon-upload2';
+                if(err){
+                    Message.error({message : err.msg});
+                }
+            },
+            downloadFileTemplate(){
+                window.open("/common/downloadFile/" + "0001");
             }
         },
         created() {

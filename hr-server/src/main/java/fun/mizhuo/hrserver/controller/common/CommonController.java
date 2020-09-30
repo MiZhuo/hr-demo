@@ -1,13 +1,22 @@
 package fun.mizhuo.hrserver.controller.common;
 
+import fun.mizhuo.hrserver.enums.FileEnum;
+import fun.mizhuo.hrserver.exception.HrException;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.common.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +40,28 @@ public class CommonController {
             data.put(code,codeData);
         }
         return ResponseVo.ok("",data);
+    }
+
+    @GetMapping("/downloadFile/{fileCode}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileCode) throws HrException {
+        try {
+            FileEnum fileEnum = FileEnum.getFileEnumByCode(fileCode);
+            if (fileEnum != null) {
+                //获取文件路径
+                String path = fileEnum.getFilePath() + fileEnum.getFileName();
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentDispositionFormData("attachment", new String(fileEnum.getFileName().getBytes("GBK"), "iso-8859-1"));
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                //获取文件输入流
+                ClassPathResource classPathResource = new ClassPathResource(path);
+                InputStream in = classPathResource.getInputStream();
+                byte[] data = new byte[in.available()];
+                in.read(data);
+                return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+            }
+            return null;
+        }catch (Exception e){
+            throw new HrException("下载文件失败!",e);
+        }
     }
 } 

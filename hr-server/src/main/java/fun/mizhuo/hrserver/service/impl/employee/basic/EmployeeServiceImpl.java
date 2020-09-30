@@ -8,6 +8,7 @@ import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
 import fun.mizhuo.hrserver.util.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void addEmployee(Employee employee) {
+        if(StringUtils.isEmpty(employee.getWorkId())){
+            employee.setWorkId(this.getNewWorkId());
+        }
         employeeMapper.addEmployee(employee);
     }
 

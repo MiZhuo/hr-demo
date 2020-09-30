@@ -41,14 +41,14 @@ public class EmployeeController {
     @PostMapping("/")
     public ResponseVo saveEmployee(@RequestBody Employee employee){
         boolean flag = employeeService.checkEmployeeIsExist(employee);
+        Long contract = Math.abs(employee.getEndContract().getTime() - employee.getBeginContract().getTime()) / (1000 * 60 * 60 * 24);
+        employee.setContractTerm(contract * 1.00 / 365);
         if(flag){
             if(employeeService.updateEmployee(employee) > 0) {
                 return ResponseVo.ok("更新员工资料成功");
             }
             return ResponseVo.error("更新员工资料失败");
         }else {
-            Long contract = Math.abs(employee.getEndContract().getTime() - employee.getBeginContract().getTime()) / (1000 * 60 * 60 * 24);
-            employee.setContractTerm(contract * 1.00 / 365);
             employee.setWorkState("在职");
             employeeService.addEmployee(employee);
             return ResponseVo.ok("建档成功,员工号为" + employee.getWorkId());

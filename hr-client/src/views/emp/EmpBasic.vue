@@ -86,16 +86,16 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="engageForm" label="聘用形式" width="80"></el-table-column>
-                <el-table-column prop="tipTopDegree" label="最高学历" width="100"></el-table-column>
+                <el-table-column prop="tipTopDegree" label="最高学历" width="100" sortable="custom"></el-table-column>
                 <el-table-column prop="specialty" label="所属专业" width="140"></el-table-column>
                 <el-table-column prop="school" label="毕业院校" width="120"></el-table-column>
-                <el-table-column prop="workState" label="在职状态" width="100">
+                <el-table-column prop="workState" label="在职状态" width="100" sortable="custom">
                     <template slot-scope="scope">
                         <el-tag :type="scope.row.workState === '在职' ? 'success' : 'danger'"
                                 disable-transitions>{{scope.row.workState}}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="workAge" label="工龄" width="90">
+                <el-table-column prop="workAge" label="工龄" width="90" sortable="custom">
                     <template slot-scope="scope">
                         <el-tag size="medium">{{ scope.row.workAge }}年</el-tag>
                     </template>
@@ -432,6 +432,8 @@
                 dropDowns: new Map(),
                 pageNum: 1,
                 pageSize: 10,
+                orderField:'',
+                sortType:'',
                 dialogFormVisible: false,
                 employee:{
                     workId:'',
@@ -586,6 +588,8 @@
                 formData.append("pageNum",this.pageNum);
                 formData.append("pageSize",this.pageSize);
                 formData.append("keyWord",this.keyWord);
+                formData.append("orderField",this.orderField);
+                formData.append("sortType",this.sortType);
                 this.loading = true;
                 this.postRequest('/employee/basic/getAll',formData).then((res)=>{
                     if(res){
@@ -617,6 +621,15 @@
             },
             handleSortChange(column){
                 console.log(column)
+                this.orderField = column.prop;
+                if(column.order == "ascending"){
+                    this.sortType = "asc";
+                }else if(column.order == "descending"){
+                    this.sortType = "desc";
+                }else{
+                    this.sortType = "";
+                }
+                this.initEmployeeTable();
             },
             handleSizeChange(val){
                 this.pageSize = val;
@@ -737,7 +750,7 @@
                 }
             },
             downloadFileTemplate(){
-                window.open("/common/downloadFile/" + "0001");
+                window.open("/common/downloadFile/0001");
             }
         },
         created() {

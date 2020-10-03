@@ -29,7 +29,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public PageInfo<Employee> getAllEmp(Map<String,Object> params) {
         Integer pageNum = MapUtils.getIntegerValue(params,"pageNum",10);
         Integer pageSize = MapUtils.getIntegerValue(params,"pageSize",10);
-        return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.getAllEmp(params));
+        String orderField = MapUtils.getStringValue(params,"orderField","");
+        String sortType = MapUtils.getStringValue(params,"sortType","");
+        if(StringUtils.isEmpty(orderField) || StringUtils.isEmpty(sortType)){
+            return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.getAllEmp(params));
+        }else {
+            String orderBy = orderField + " " + sortType;
+            return PageHelper.startPage(pageNum, pageSize, orderBy).doSelectPageInfo(() -> employeeMapper.getAllEmp(params));
+        }
     }
 
     @Override

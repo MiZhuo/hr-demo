@@ -19,4 +19,6 @@ public interface EmployeeMapper {
     int updateEmployee(Employee employee);
 
     Integer saveEmployees(List<Employee> employees);
+
+    List<Employee> advSearch(Map<String, Object> params);
 }

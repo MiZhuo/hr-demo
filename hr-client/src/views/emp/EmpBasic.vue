@@ -1,40 +1,151 @@
 <template>
     <div>
-        <div style="display:flex;justify-content: space-between">
-            <div>
-                <el-input size="mini" placeholder="通过员工姓名搜索员工" v-model="keyWord"
-                          style="width: 300px" prefix-icon="el-icon-search" clearable
-                          @clear="initEmployeeTable"
-                          @keydown.enter.native="initEmployeeTable"></el-input>
-                <el-button type="primary" size="mini"
-                           icon="el-icon-search" style="margin-left: 10px" @click="initEmployeeTable">搜索
-                </el-button>
-                <el-button type="primary" size="mini"  style="margin-left: 10px" @click="">
-                           <i class="fa fa-angle-double-down" aria-hidden="true" style="margin-right: 5px"/>高级搜索
-                </el-button>
-            </div>
-            <div>
-                <el-button type="text" size="mini" style="margin-right: 8px;text-decoration:underline" @click="downloadFileTemplate">下载导入文件模板</el-button>
-                <el-upload style="display: inline-flex;margin-right: 8px"
-                        action="/employee/basic/import"
-                        :before-upload = "beforeUpload"
-                        :on-success="uploadSuccess"
-                        :on-error="uploadError"
-                        :disabled="uploadDisabled"
-                        accept=".xls,.xlsx"
-                        :show-file-list="false">
-                    <el-button type="success" size="mini" :disabled="uploadDisabled"
-                               :icon="uploadIcon"> {{uploadTitle}}
+        <div>
+            <div style="display:flex;justify-content: space-between">
+                <div>
+                    <el-input size="mini" placeholder="通过员工姓名搜索员工" v-model="keyWord"
+                              style="width: 300px" prefix-icon="el-icon-search" clearable
+                              @clear="initEmployeeTable"
+                              @keydown.enter.native="initEmployeeTable"></el-input>
+                    <el-button type="primary" size="mini" :disabled="advDisabled"
+                               icon="el-icon-search" style="margin-left: 10px" @click="initEmployeeTable">搜索
                     </el-button>
-                </el-upload>
-
-                <el-button type="success" size="mini"
-                           icon="el-icon-download" @click="exportEmployee"> 导出数据
-                </el-button>
-                <el-button type="primary" size="mini"
-                           icon="el-icon-plus" @click="toAddEmployee">员工建档
-                </el-button>
+                    <el-button type="primary" size="mini"  style="margin-left: 10px" @click="showAdvSearch" :disabled="advDisabled">
+                               <i :class="advSearchIcon" aria-hidden="true" style="margin-right: 5px"/>高级搜索
+                    </el-button>
+                </div>
+                <div>
+                    <el-button type="text" size="mini" style="margin-right: 8px;text-decoration:underline" @click="downloadFileTemplate">下载导入文件模板</el-button>
+                    <el-upload style="display: inline-flex;margin-right: 8px"
+                            action="/employee/basic/import"
+                            :before-upload = "beforeUpload"
+                            :on-success="uploadSuccess"
+                            :on-error="uploadError"
+                            :disabled="uploadDisabled"
+                            accept=".xls,.xlsx"
+                            :show-file-list="false">
+                        <el-button type="success" size="mini" :disabled="uploadDisabled"
+                                   :icon="uploadIcon"> {{uploadTitle}}
+                        </el-button>
+                    </el-upload>
+                    <el-button type="success" size="mini"
+                               icon="el-icon-download" @click="exportEmployee"> 导出数据
+                    </el-button>
+                    <el-button type="primary" size="mini"
+                               icon="el-icon-plus" @click="toAddEmployee">员工建档
+                    </el-button>
+                </div>
             </div>
+            <el-collapse-transition>
+                <div style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;" v-show="showDiv">
+                    <el-form :model="advSearchCondition" size="mini" ref="advSearchForm">
+                        <el-row style="margin-left: 20px">
+                            <el-col :span="5">
+                                政治面貌:
+                                <el-select style="width: 120px"  v-model="advSearchCondition.politicId"
+                                           size="mini" placeholder="政治面貌">
+                                    <el-option
+                                            v-for="item in this.dropDowns.get('politicsstatus')"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4">
+                               民族:
+                                <el-select style="width: 120px" v-model="advSearchCondition.nationId"
+                                           size="mini" placeholder="选择民族">
+                                    <el-option
+                                            v-for="item in this.dropDowns.get('nation')"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4">
+                                职位:
+                                <el-select style="width: 120px" v-model="advSearchCondition.posId"
+                                           size="mini" placeholder="选择职位">
+                                    <el-option
+                                            v-for="item in this.dropDowns.get('position')"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4">
+                                职称:
+                                <el-select style="width: 120px" v-model="advSearchCondition.jobLevelId"
+                                           size="mini" placeholder="选择职称">
+                                    <el-option
+                                            v-for="item in this.dropDowns.get('joblevel')"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="7">
+                                聘用形式:
+                                <el-radio-group v-model="advSearchCondition.engageForm" size="mini">
+                                    <el-radio label="劳动合同">劳动合同</el-radio>
+                                    <el-radio label="劳务合同" style="margin-left: -10px">劳务合同</el-radio>
+                                </el-radio-group>
+                            </el-col>
+                        </el-row>
+                        <el-row style="margin-left: 20px;margin-top: 10px">
+                        <el-col :span="5">
+                           所属部门:
+                            <el-popover
+                                    placement="right"
+                                    title="选择部门"
+                                    trigger="manual"
+                                    v-model="departTreeVisible2"
+                                    width="200">
+                                <el-tree :data="deptTreeData" :expand-on-click-node="false"
+                                         style="font-size: 10px"
+                                         :default-expand-all="true" :props="defaultProps"
+                                         :highlight-current="true"
+                                         @node-click="handleNodeClick2"></el-tree>
+                                <div style="width: 120px;display:inline-flex;
+                                    border:1px solid #dedede;height: 26px;
+                                    border-radius: 5px;
+                                    cursor: pointer"
+                                     slot="reference" placeholder="选择部门"
+                                     @click="showDepTree2"><span style="margin-left: 18px;height: 18px;font-size:10px;">{{advSearchCondition.departmentName}}</span></div>
+                            </el-popover>
+                        </el-col>
+                        <el-col :span="14">
+                            入职日期:
+                            <el-date-picker
+                                    size="mini"
+                                    v-model="advSearchCondition.entryDate"
+                                    type="daterange"
+                                    align="right"
+                                    unlink-panels
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期"
+                                    style="width: 445px;"
+                                    value-format="yyyy-MM-dd"
+                                    format="yyyy-MM-dd"
+                                    :picker-options="pickerOptions">
+                            </el-date-picker>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-button size="mini" style="margin-left: 10px" @click="cancelShowDiv">取消
+                            </el-button>
+                            <el-button type="primary" size="mini"
+                                       icon="el-icon-search" style="margin-left: 10px" @click="advSearch">搜索
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                    </el-form>
+                </div>
+            </el-collapse-transition>
         </div>
         <div style="margin-top: 10px">
             <el-table :data="employeeTableData.list" size="mini"
@@ -371,7 +482,6 @@
                     </el-col>
                 </el-row>
                 <el-row>
-
                     <el-col :span="6">
                         <el-form-item label="聘用形式:" prop="engageForm" size="mini">
                             <el-radio-group v-model="employee.engageForm" size="mini">
@@ -576,10 +686,25 @@
                     label: 'name'
                 },
                 departTreeVisible:false,
+                departTreeVisible2:false,
                 dialogTitle:'员工建档',
                 uploadDisabled:false,
                 uploadTitle:'导入数据',
-                uploadIcon: 'el-icon-upload2'
+                uploadIcon: 'el-icon-upload2',
+                advSearchCondition:{
+                    nationId:'',
+                    departmentId:'',
+                    departmentName:'',
+                    jobLevelId:'',
+                    posId:'',
+                    politicId:'',
+                    entryDate:'',
+                    beginDate:'',
+                    endDate:''
+                },
+                showDiv:false,
+                advDisabled:false,
+                advSearchIcon:"fa fa-angle-double-down"
             }
         },
         methods:{
@@ -669,11 +794,12 @@
             cancelAddEmployee(){
                 this.dialogFormVisible = false;
                 this.departTreeVisible = false;
+                this.employee.departmentId = '';
+                this.employee.departmentName = '';
                 this.$refs['employeeForm'].resetFields();
             },
             handleEdit(index,row){
                 Object.assign(this.employee,row);
-                console.log(this.employee);
                 let array = [];
                 array.push( this.employee.beginContract );
                 array.push( this.employee.endContract );
@@ -700,8 +826,16 @@
                 this.employee.departmentName = node.name;
                 this.departTreeVisible = false;
             },
+            handleNodeClick2(node){
+                this.advSearchCondition.departmentId = node.id;
+                this.advSearchCondition.departmentName = node.name;
+                this.departTreeVisible2 = false;
+            },
             showDepTree(){
                 this.departTreeVisible = true;
+            },
+            showDepTree2(){
+                this.departTreeVisible2 = true;
             },
             initDepTree(){
                 this.getRequest("/system/basic/dept/deptTree").then(res=>{
@@ -751,6 +885,32 @@
             },
             downloadFileTemplate(){
                 window.open("/common/downloadFile/0001");
+            },
+            showAdvSearch(){
+                this.showDiv = true;
+                this.advDisabled = true;
+                this.advSearchIcon = "fa fa-angle-double-up";
+            },
+            cancelShowDiv(){
+                this.showDiv = false;
+                this.advDisabled = false;
+                this.advSearchIcon = "fa fa-angle-double-down";
+                this.advSearchCondition.departmentId = '';
+                this.advSearchCondition.departmentName = '';
+                this.$refs['advSearchForm'].resetFields();
+            },
+            advSearch(){
+                this.loading = true;
+                if(this.advSearchCondition.entryDate.length > 0){
+                    this.advSearchCondition.beginContract = this.advSearchCondition.entryDate[0];
+                    this.advSearchCondition.endContract = this.advSearchCondition.entryDate[1];
+                }
+                this.postRequest('/employee/basic/advSearch',this.advSearchCondition).then((res)=>{
+                    if(res){
+                        this.employeeTableData = res.result;
+                    }
+                    this.loading = false;
+                });
             }
         },
         created() {

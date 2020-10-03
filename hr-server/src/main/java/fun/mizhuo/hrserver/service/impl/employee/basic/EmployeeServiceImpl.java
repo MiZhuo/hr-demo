@@ -40,6 +40,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public PageInfo<Employee> advSearch(Map<String, Object> params) {
+        Integer pageNum = MapUtils.getIntegerValue(params,"pageNum",10);
+        Integer pageSize = MapUtils.getIntegerValue(params,"pageSize",10);
+        String orderField = MapUtils.getStringValue(params,"orderField","");
+        String sortType = MapUtils.getStringValue(params,"sortType","");
+        if(StringUtils.isEmpty(orderField) || StringUtils.isEmpty(sortType)){
+            return PageHelper.startPage(pageNum,pageSize).doSelectPageInfo(()->employeeMapper.advSearch(params));
+        }else {
+            String orderBy = orderField + " " + sortType;
+            return PageHelper.startPage(pageNum, pageSize, orderBy).doSelectPageInfo(() -> employeeMapper.advSearch(params));
+        }
+    }
+
+    @Override
     public List<Employee> getAllEmp() {
         return employeeMapper.getAllEmp(new HashMap<>());
     }

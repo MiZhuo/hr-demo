@@ -32,6 +32,12 @@ public class EmployeeController {
         return ResponseVo.ok("",data);
     }
 
+    @PostMapping("/advSearch")
+    public ResponseVo advSearch(@RequestBody Map<String, Object> params){
+        PageInfo<Employee> data = employeeService.advSearch(params);
+        return ResponseVo.ok("",data);
+    }
+
     @GetMapping("/getWorkId")
     public ResponseVo getNewWorkId(){
         String workId = employeeService.getNewWorkId();

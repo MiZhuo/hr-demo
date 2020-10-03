@@ -156,4 +156,30 @@
     select count(1) from employee where id = #{id}
   </select>
 
+  <select id="advSearch" resultType="fun.mizhuo.hrserver.model.Employee">
+    select * from employee
+    where 1=1
+    <if test="politicId != null and politicId != ''">
+        and politicId = #{politicId}
+    </if>
+    <if test="nationId != null and nationId != ''">
+      and nationId = #{nationId}
+    </if>
+    <if test="posId != null and posId != ''">
+      and posId = #{posId}
+    </if>
+    <if test="jobLevelId != null and jobLevelId != ''">
+      and jobLevelId = #{jobLevelId}
+    </if>
+    <if test="engageForm != null and engageForm != ''">
+      and engageForm = #{engageForm}
+    </if>
+    <if test="departmentId != null and departmentId != ''">
+      and departmentId = #{departmentId}
+    </if>
+<!--    <if test="entryDate != null and entryDate != ''">-->
+<!--      and beginDate between #{entryDate}-->
+<!--    </if>-->
+  </select>
+
 </mapper>

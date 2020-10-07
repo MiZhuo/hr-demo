@@ -16,7 +16,7 @@ public class MapUtils {
      * @return
      */
     public static String getStringValue(Map<String,Object> map,String key,String defaultValue){
-        String value = (String) map.get(key);
+        String value = String.valueOf(map.get(key));
         return (value == null || "".equals(value)) ? defaultValue : value;
     }
 
@@ -28,7 +28,7 @@ public class MapUtils {
      * @return
      */
     public static Integer getIntegerValue(Map<String,Object> map,String key,Integer defaultValue){
-        String value = (String) map.get(key);
+        String value = String.valueOf(map.get(key));
         return (value == null || "".equals(value)) ? defaultValue : Integer.valueOf(value);
     }
 }

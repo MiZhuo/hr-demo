@@ -21,4 +21,6 @@ public interface EmployeeMapper {
     Integer saveEmployees(List<Employee> employees);
 
     List<Employee> advSearch(Map<String, Object> params);
+
+    Integer deleteMore(List<Employee> employees);
 }

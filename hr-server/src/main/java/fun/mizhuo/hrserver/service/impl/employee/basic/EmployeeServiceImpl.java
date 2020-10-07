@@ -77,6 +77,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Integer deleteMore(List<Employee> employees) {
+        return employeeMapper.deleteMore(employees);
+    }
+
+    @Override
     public boolean checkEmployeeIsExist(Employee employee) {
         return employeeMapper.checkEmployeeIsExist(employee) > 0;
     }

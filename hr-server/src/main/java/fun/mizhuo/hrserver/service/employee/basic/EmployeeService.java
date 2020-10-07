@@ -29,4 +29,6 @@ public interface EmployeeService {
     Integer saveEmployees(List<Employee> employees);
 
     PageInfo<Employee> advSearch(Map<String, Object> params);
+
+    Integer deleteMore(List<Employee> employees);
 }

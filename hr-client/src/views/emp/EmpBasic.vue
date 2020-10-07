@@ -138,6 +138,8 @@
                         <el-col :span="5">
                             <el-button size="mini" style="margin-left: 10px" @click="cancelShowDiv">取消
                             </el-button>
+                            <el-button size="mini" type="primary" style="margin-left: 10px" @click="resetBtn">重置
+                            </el-button>
                             <el-button type="primary" size="mini"
                                        icon="el-icon-search" style="margin-left: 10px" @click="advSearch">搜索
                             </el-button>
@@ -267,8 +269,14 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div style="margin-top: 10px;float: right">
-            <el-pagination
+        <div >
+            <el-button 
+                    size="mini"
+                    type="danger"
+                    :disabled="handleDisabled"
+                    style="padding: 3px;margin-top: 10px;"
+                    @click="handleBatchDelete">批量删除</el-button>
+            <el-pagination style="float: right"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pageNum"
@@ -700,15 +708,23 @@
                     politicId:'',
                     entryDate:'',
                     beginDate:'',
-                    endDate:''
+                    endDate:'',
+                    pageNum: 1,
+                    pageSize: 10,
+                    orderField:'',
+                    sortType:'',
                 },
                 showDiv:false,
                 advDisabled:false,
-                advSearchIcon:"fa fa-angle-double-down"
+                advSearchIcon:"fa fa-angle-double-down",
+                searchType:'0',
+                handleDisabled: true,
+                multipleSelection: []
             }
         },
         methods:{
             initEmployeeTable(){
+                this.searchType = '0';
                 let formData = new FormData();
                 formData.append("pageNum",this.pageNum);
                 formData.append("pageSize",this.pageSize);
@@ -741,11 +757,26 @@
                     }
                 }
             },
-            handleSelectionChange(){
-
+            handleSelectionChange(val){
+                this.multipleSelection = val;
+                if(this.multipleSelection.length > 0){
+                    this.handleDisabled = false;
+                }else{
+                    this.handleDisabled = true;
+                }
+            },
+            handleBatchDelete(){
+                this.$confirm('此操作将永久删除所有所选员工, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteRequest("/employee/basic/deleteMore",this.multipleSelection).then(()=>{
+                        this.initEmployeeTable();
+                    });
+                });
             },
             handleSortChange(column){
-                console.log(column)
                 this.orderField = column.prop;
                 if(column.order == "ascending"){
                     this.sortType = "asc";
@@ -754,16 +785,28 @@
                 }else{
                     this.sortType = "";
                 }
-                this.initEmployeeTable();
+                if(this.searchType == '0'){
+                    this.initEmployeeTable();
+                }else{
+                    this.advSearch();
+                }
             },
             handleSizeChange(val){
                 this.pageSize = val;
                 this.pageNum = 1;
-                this.initEmployeeTable();
+                if(this.searchType == '0'){
+                    this.initEmployeeTable();
+                }else{
+                    this.advSearch();
+                }
             },
             handleCurrentChange(val){
                 this.pageNum = val;
-                this.initEmployeeTable();
+                if(this.searchType == '0'){
+                    this.initEmployeeTable();
+                }else{
+                    this.advSearch();
+                }
             },
             toAddEmployee(){
                 this.getRequest('/employee/basic/getWorkId').then((res)=>{
@@ -897,20 +940,58 @@
                 this.advSearchIcon = "fa fa-angle-double-down";
                 this.advSearchCondition.departmentId = '';
                 this.advSearchCondition.departmentName = '';
+                this.advSearchCondition = {
+                    nationId:'',
+                    departmentId:'',
+                    departmentName:'',
+                    jobLevelId:'',
+                    posId:'',
+                    politicId:'',
+                    entryDate:'',
+                    beginDate:'',
+                    endDate:'',
+                    pageNum: 1,
+                    pageSize: 10,
+                    orderField:'',
+                    sortType:'',
+                };
                 this.$refs['advSearchForm'].resetFields();
             },
             advSearch(){
                 this.loading = true;
+                this.searchType = '1';
                 if(this.advSearchCondition.entryDate.length > 0){
                     this.advSearchCondition.beginContract = this.advSearchCondition.entryDate[0];
                     this.advSearchCondition.endContract = this.advSearchCondition.entryDate[1];
                 }
+                this.advSearchCondition.pageNum = this.pageNum;
+                this.advSearchCondition.pageSize = this.pageSize;
+                this.advSearchCondition.orderField = this.orderField;
+                this.advSearchCondition.sortType = this.sortType;
                 this.postRequest('/employee/basic/advSearch',this.advSearchCondition).then((res)=>{
                     if(res){
                         this.employeeTableData = res.result;
                     }
                     this.loading = false;
                 });
+            },
+            resetBtn(){
+                this.advSearchCondition = {
+                    nationId:'',
+                    departmentId:'',
+                    departmentName:'',
+                    jobLevelId:'',
+                    posId:'',
+                    politicId:'',
+                    entryDate:'',
+                    beginDate:'',
+                    endDate:'',
+                    pageNum: 1,
+                    pageSize: 10,
+                    orderField:'',
+                    sortType:'',
+                };
+                this.initEmployeeTable();
             }
         },
         created() {

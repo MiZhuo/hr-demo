@@ -69,6 +69,14 @@ public class EmployeeController {
         return ResponseVo.error("删除失败!");
     }
 
+    @DeleteMapping("/deleteMore")
+    public ResponseVo deleteMore(@RequestBody List<Employee> employees){
+        if(employeeService.deleteMore(employees) > 0){
+            return ResponseVo.ok("删除成功!");
+        }
+        return ResponseVo.error("删除失败");
+    }
+
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportEmployeeData() throws HrException {
         List<Employee> employees = employeeService.getAllEmp();

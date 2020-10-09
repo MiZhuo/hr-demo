@@ -9,6 +9,10 @@
               <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" auto-complete="off"
                     @keydown.enter.native="submitLogin"></el-input>
           </el-form-item>
+          <el-form-item prop="captcha">
+              <img :src="captchaImg" width="100px" height="30px"/>
+              <el-input type="text" v-model="loginForm.captcha" placeholder="请输入验证码" auto-complete="off" style="width: 120px;float: right"></el-input>
+          </el-form-item>
           <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>
           <el-button type="primary" style="width:100%" :loading="this.loading" @click="submitLogin">{{loginBtnText}}</el-button>
       </el-form>
@@ -22,15 +26,18 @@
             return{
                 loginForm:{
                     username:'admin',
-                    password:'123'
+                    password:'123',
+                    captcha:''
                 },
                 checked:true,
                 rules:{
                     username:[{required:true,message:'请输入用户名',trigger:'blur'}],
-                    password:[{required:true,message:'请输入密码',trigger:'blur'}]
+                    password:[{required:true,message:'请输入密码',trigger:'blur'}],
+                    captcha:[{required:true,message:'请输入验证码',trigger:'blur'}]
                 },
                 loading: false,
-                loginBtnText: '登录'
+                loginBtnText: '登录',
+                captchaImg:""
             }
         },
         methods:{
@@ -47,14 +54,25 @@
                             }else{
                                 this.loading = false;
                                 this.loginBtnText = '登录';
+                                this.loginForm.captcha = '';
+                                this.initCaptcha();
                             }
                         });
                     }else{
-                        this.$message.error("请输入所有信息!"); 
                         return false;
                     }
                 });
+            },
+            initCaptcha(){
+                this.getRequest("/auth/captcha").then((resp)=>{
+                    if(resp){
+                        this.captchaImg = resp.result.img;
+                    }
+                });
             }
+        },
+        created() {
+            this.initCaptcha();
         }
     }
 </script>

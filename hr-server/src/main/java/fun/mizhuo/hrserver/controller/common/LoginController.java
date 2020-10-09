@@ -33,7 +33,7 @@ public class LoginController {
         String result = captcha.text();
         //存入Session中
         request.getSession().setAttribute("captcha",result);
-        return ResponseVo.build("验证码",new HashMap<String,Object>(2){{put("img", captcha.toBase64());}});
+        return ResponseVo.build("",new HashMap<String,Object>(2){{put("img", captcha.toBase64());}});
     }
 
 }

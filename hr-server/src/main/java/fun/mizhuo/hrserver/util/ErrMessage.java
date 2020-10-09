@@ -17,6 +17,9 @@ public class ErrMessage {
     public static final String SYSTEM_ERROR_MESSAGE6 = "账户被锁定!请联系管理员解锁.";
     public static final String SYSTEM_ERROR_MESSAGE7 = "权限不足，请联系管理员！";
     public static final String SYSTEM_ERROR_MESSAGE8 = "尚未登录,请登录！";
+    public static final String SYSTEM_ERROR_MESSAGE9 = "验证码不存在！";
+    public static final String SYSTEM_ERROR_MESSAGE10 = "验证码过期！";
+    public static final String SYSTEM_ERROR_MESSAGE11 = "验证码不匹配！";
 
     /**
      * --------------------系统管理(职位管理)错误信息-------------------------

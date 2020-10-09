@@ -1,5 +1,6 @@
 package fun.mizhuo.hrserver;
 
+import com.wf.captcha.ArithmeticCaptcha;
 import fun.mizhuo.hrserver.model.Employee;
 import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class HrserverApplicationTests {
@@ -68,6 +71,18 @@ class HrserverApplicationTests {
 
     @Test
     void test4(){
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(100,30);
+        // 几位数运算，默认是两位
+        captcha.setLen(3);
+        // 获取运算的公式：3+2=?
+        captcha.getArithmeticString();
+        // 获取运算的结果：5
+        String result = captcha.text();
+        // 输出验证码
+        Map<String,Object> imgResult = new HashMap<String,Object>(2){{
+            put("img", captcha.toBase64());
+        }};
+        System.out.println(imgResult);
     }
 
 }

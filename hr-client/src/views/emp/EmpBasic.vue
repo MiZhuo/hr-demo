@@ -809,6 +809,33 @@
                 }
             },
             toAddEmployee(){
+                this.employee = {
+                    workId:'',
+                        name:'',
+                        gender: '',
+                        birthday:'',
+                        nativePlace:'',
+                        email:'',
+                        phone:'',
+                        address:'',
+                        engageForm:'',
+                        nationId:'',
+                        departmentId:'',
+                        jobLevelId:'',
+                        posId:'',
+                        politicId:'',
+                        school:'',
+                        specialty:'',
+                        tipTopDegree:'',
+                        beginDate:'',
+                        conversionTime:'',
+                        wedlock:'',
+                        idCard:'',
+                        contract:'',
+                        beginContract:'',
+                        endContract:''
+                };
+                this.$refs['employeeForm'].resetFields();
                 this.getRequest('/employee/basic/getWorkId').then((res)=>{
                     if(res){
                         this.employee.workId = res.result;

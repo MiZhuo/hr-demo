@@ -32,6 +32,10 @@ public class ResponseVo {
         return new ResponseVo(code,msg,result);
     }
 
+    public static ResponseVo build(String msg,Object result){
+        return build(200,msg,result);
+    }
+
     private ResponseVo() {
     }
 

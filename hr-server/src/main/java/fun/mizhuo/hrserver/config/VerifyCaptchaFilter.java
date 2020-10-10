@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fun.mizhuo.hrserver.exception.HrException;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.util.ErrMessage;
+import fun.mizhuo.hrserver.util.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,6 +26,9 @@ import java.io.PrintWriter;
 @Component
 public class VerifyCaptchaFilter extends OncePerRequestFilter {
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Bean
     public VerifyCaptchaFilter getVerifyCaptchaFilter(){
         return new VerifyCaptchaFilter();
@@ -39,11 +44,12 @@ public class VerifyCaptchaFilter extends OncePerRequestFilter {
                 if (requestCaptcha == null) {
                     throw new HrException(ErrMessage.SYSTEM_ERROR_MESSAGE9);
                 }
-                String captcha = (String) request.getSession().getAttribute("captcha");
-                if (StringUtils.isBlank(captcha)) {
+                String captchaKey = request.getParameter("captchaKey");
+                if (StringUtils.isBlank(captchaKey)) {
                     throw new HrException(ErrMessage.SYSTEM_ERROR_MESSAGE10);
                 }
-                captcha = captcha.equals("0.0") ? "0" : captcha;
+                String captcha = String.valueOf(redisUtils.get(request.getParameter("captchaKey")));
+                captcha = "0.0".equals(captcha) ? "0" : captcha;
                 logger.info("开始校验验证码，生成的验证码为：" + captcha + " ，输入的验证码为：" + requestCaptcha);
                 if (!StringUtils.equals(captcha, requestCaptcha)) {
                     throw new HrException(ErrMessage.SYSTEM_ERROR_MESSAGE11);
@@ -57,6 +63,7 @@ public class VerifyCaptchaFilter extends OncePerRequestFilter {
                 out.write(objectMapper.writeValueAsString(result));
                 out.flush();
                 out.close();
+                logger.error(e.getMsg());
             } finally {
                 filterChain.doFilter(request, response);
             }

@@ -11,7 +11,7 @@
           </el-form-item>
           <el-form-item prop="captcha">
               <img :src="captchaImg" width="100px" height="30px"/>
-              <el-input type="text" v-model="loginForm.captcha" placeholder="请输入验证码" auto-complete="off" style="width: 120px;float: right"></el-input>
+              <el-input type="text" v-model="loginForm.captcha" placeholder="请输入计算结果" auto-complete="off" style="width: 130px;float: right"></el-input>
           </el-form-item>
           <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>
           <el-button type="primary" style="width:100%" :loading="this.loading" @click="submitLogin">{{loginBtnText}}</el-button>
@@ -27,7 +27,8 @@
                 loginForm:{
                     username:'admin',
                     password:'123',
-                    captcha:''
+                    captcha:'',
+                    captchaKey:''
                 },
                 checked:true,
                 rules:{
@@ -67,6 +68,7 @@
                 this.getRequest("/auth/captcha").then((resp)=>{
                     if(resp){
                         this.captchaImg = resp.result.img;
+                        this.loginForm.captchaKey = resp.result.captchaKey;
                     }
                 });
             }

@@ -22,7 +22,10 @@ spring:
         max-wait: 30000   # 最大堵塞时间
         min-idle: 0       # 最小空闲连接
         max-idle: 20      # 最大空闲连接
+
 logging:
   level:
     fun.mizhuo.hrserver.mapper: DEBUG
 
+swagger:
+  enable: true

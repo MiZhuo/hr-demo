@@ -27,6 +27,8 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
     compile 'com.github.whvcse:easy-captcha:1.6.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 }
 
 test {

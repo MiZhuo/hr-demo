@@ -3,15 +3,15 @@
       <el-form :rules="rules" :model="loginForm" ref="loginForm" class="loginContainer">
           <h3 class="loginTitle">系统登录</h3>
           <el-form-item prop="username">
-              <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名" auto-complete="off"></el-input>
+              <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名" prefix-icon="el-icon-user" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-              <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" auto-complete="off"
+              <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" prefix-icon="el-icon-lock" auto-complete="off"
                     @keydown.enter.native="submitLogin"></el-input>
           </el-form-item>
           <el-form-item prop="captcha">
-              <img :src="captchaImg" width="100px" height="30px"/>
-              <el-input type="text" v-model="loginForm.captcha" placeholder="请输入计算结果" auto-complete="off" style="width: 130px;float: right"></el-input>
+              <img :src="captchaImg" width="100px" height="30px" @click="initCaptcha"/>
+              <el-input type="text" v-model="loginForm.captcha" placeholder="请输入验证码" prefix-icon="el-icon-view" auto-complete="off" style="width: 130px;float: right"></el-input>
           </el-form-item>
           <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>
           <el-button type="primary" style="width:100%" :loading="this.loading" @click="submitLogin">{{loginBtnText}}</el-button>

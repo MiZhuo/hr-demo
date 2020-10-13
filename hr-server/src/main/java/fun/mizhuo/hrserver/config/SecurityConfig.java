@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userServiceImpl);
@@ -70,14 +71,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/login","/auth/captcha","/favicon.ico");
+        web.ignoring().antMatchers("/login","/auth/captcha", "/favicon.ico","/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/*","/csrf","/");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(verifyCaptchaFilter,UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-//                .anyRequest().authenticated()
+                .antMatchers("/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/*","/csrf","/").permitAll()
+                .anyRequest().authenticated()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {

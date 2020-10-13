@@ -38,8 +38,8 @@ public class LoginController {
         // 获取运算的结果：5
         String result = captcha.text();
         String captchaKey = UUID.randomUUID().toString();
-        // 存入redis并设置过期时间为30分钟
-        redisUtils.set(captchaKey,result,30 * 60);
+        // 存入redis并设置过期时间为2分钟
+        redisUtils.set(captchaKey,result,2 * 60);
         return ResponseVo.build("",new HashMap<String,Object>(2){{put("captchaKey", captchaKey);put("img", captcha.toBase64());}});
     }
 

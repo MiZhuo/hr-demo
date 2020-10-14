@@ -4,14 +4,10 @@ import com.wf.captcha.ArithmeticCaptcha;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**

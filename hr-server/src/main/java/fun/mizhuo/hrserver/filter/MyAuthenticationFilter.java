@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @author: Mizhuo
  * @time: 2020/8/20 9:22 下午
- * @description:
+ * @description: 自定义验证过滤器
  */
 public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override

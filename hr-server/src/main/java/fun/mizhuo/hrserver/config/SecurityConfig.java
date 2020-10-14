@@ -71,15 +71,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/login","/auth/captcha", "/favicon.ico","/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/*","/csrf","/");
+        web.ignoring().antMatchers("/login","/auth/captcha", "/favicon.ico");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(verifyCaptchaFilter,UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/*","/csrf","/").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {

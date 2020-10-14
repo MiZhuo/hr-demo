@@ -1,5 +1,6 @@
 package fun.mizhuo.hrserver.config;
 
+import fun.mizhuo.hrserver.enums.NoneRoleURLEnum;
 import fun.mizhuo.hrserver.model.Menu;
 import fun.mizhuo.hrserver.model.Role;
 import fun.mizhuo.hrserver.service.common.MenuService;
@@ -30,6 +31,10 @@ public class RoleFilter implements FilterInvocationSecurityMetadataSource {
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        //符合放行规则的url,置为NONE权限
+        if(NoneRoleURLEnum.checkRole(requestUrl)){
+            return SecurityConfig.createList("ROLE_NONE");
+        }
         List<Menu> menus = menuService.getMenuWithRole();
         for (Menu menu : menus){
             if(matcher.match(menu.getUrl(),requestUrl)){

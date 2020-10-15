@@ -28,7 +28,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(swaggerEnable)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("fun.mizhuo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("fun.mizhuo.hrserver.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("微人事接口文档")

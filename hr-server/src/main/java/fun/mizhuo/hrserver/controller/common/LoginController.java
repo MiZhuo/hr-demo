@@ -3,6 +3,8 @@ package fun.mizhuo.hrserver.controller.common;
 import com.wf.captcha.ArithmeticCaptcha;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.util.RedisUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,17 +17,20 @@ import java.util.UUID;
  * @time: 2020/8/19 10:57 下午
  * @description:
  */
+@Api(value = "用户登录Controller",tags = {"用户登录接口"})
 @RestController
 public class LoginController {
 
     @Autowired
     private RedisUtils redisUtils;
 
+    @ApiOperation(value = "登录")
     @GetMapping("/login")
     public ResponseVo login(){
         return ResponseVo.error("尚未登录,请登录!");
     }
 
+    @ApiOperation(value = "获取验证码",notes = "已设置为3位数运算")
     @GetMapping("/auth/captcha")
     public ResponseVo initCaptcha(){
         ArithmeticCaptcha captcha = new ArithmeticCaptcha(100,30);
@@ -40,3 +45,4 @@ public class LoginController {
     }
 
 }
+

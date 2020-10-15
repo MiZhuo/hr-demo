@@ -35,7 +35,7 @@ import java.io.PrintWriter;
 /**
  * @author: Mizhuo
  * @time: 2020/8/19 10:13 下午
- * @description:
+ * @description: SpringSecurity 配置类
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

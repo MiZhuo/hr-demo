@@ -4,6 +4,8 @@ import fun.mizhuo.hrserver.enums.FileEnum;
 import fun.mizhuo.hrserver.exception.HrException;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.common.CommonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -25,12 +27,14 @@ import java.util.Map;
  * @time: 2020/9/19 9:09 下午
  * @description: 公用Controller
  */
+@Api(value = "公共Controller",tags = {"公共接口"})
 @RestController
 @RequestMapping("/common")
 public class CommonController {
     @Autowired
     private CommonService commonService;
 
+    @ApiOperation(value = "获取下拉列表")
     @GetMapping("/dropDown/{arr}")
     public ResponseVo getDropDownList(@PathVariable String[] arr){
         Map<String, Object> data = new HashMap<>();
@@ -41,6 +45,7 @@ public class CommonController {
         return ResponseVo.ok("",data);
     }
 
+    @ApiOperation(value = "下载文件")
     @GetMapping("/downloadFile/{fileCode}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable String fileCode) throws HrException {
         try {

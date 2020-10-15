@@ -1,9 +1,11 @@
 package fun.mizhuo.hrserver.model;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * @author: Mizhuo
  * @time: 2020/8/19 10:29 下午
- * @description:
+ * @description: 通用返回实体类
  */
 public class ResponseVo {
     private Integer code;

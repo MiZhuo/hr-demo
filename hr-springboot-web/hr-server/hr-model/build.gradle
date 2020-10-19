@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":hr-commons")
+}

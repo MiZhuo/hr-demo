@@ -1,0 +1,5 @@
+rootProject.name = 'mail-server'
+include ':hr-commons'
+include ':hr-model'
+project(':hr-commons').projectDir = new File(settingsDir, '../hr-server/hr-commons')
+project(':hr-model').projectDir = new File(settingsDir, '../hr-server/hr-model')

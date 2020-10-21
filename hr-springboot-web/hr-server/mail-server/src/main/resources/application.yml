@@ -15,7 +15,7 @@ spring:
             class: javax.net.ssl.SSLSocketFactory
         debug: true
   rabbitmq:
-    username: guest
-    password: guest
+    username: admin
+    password: admin
     host: localhost
     port: 5672

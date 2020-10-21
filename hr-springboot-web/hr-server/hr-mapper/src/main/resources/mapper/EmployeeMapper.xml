@@ -38,7 +38,7 @@
     beginContract, endContract, workAge
   </sql>
 
-  <insert id="addEmployee" parameterType="fun.mizhuo.hrserver.model.Employee">
+  <insert id="addEmployee" parameterType="fun.mizhuo.hrserver.model.Employee" useGeneratedKeys="true" keyProperty="id">
     insert into employee values(
         #{id}, #{name}, #{gender}, #{birthday}, #{idCard}, #{wedlock}, #{nationId}, #{nativePlace}, #{politicId}, #{email},
         #{phone}, #{address}, #{departmentId}, #{jobLevelId}, #{posId}, #{engageForm}, #{tipTopDegree}, #{specialty},

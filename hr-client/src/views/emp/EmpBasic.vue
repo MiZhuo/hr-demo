@@ -835,7 +835,6 @@
                         beginContract:'',
                         endContract:''
                 };
-                this.$refs['employeeForm'].resetFields();
                 this.getRequest('/employee/basic/getWorkId').then((res)=>{
                     if(res){
                         this.employee.workId = res.result;

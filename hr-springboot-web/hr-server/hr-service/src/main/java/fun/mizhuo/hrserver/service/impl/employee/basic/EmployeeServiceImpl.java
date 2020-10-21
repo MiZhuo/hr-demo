@@ -6,6 +6,9 @@ import fun.mizhuo.hrserver.mapper.EmployeeMapper;
 import fun.mizhuo.hrserver.model.Employee;
 import fun.mizhuo.hrserver.service.employee.basic.EmployeeService;
 import fun.mizhuo.hrserver.util.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,8 +25,13 @@ import java.util.Map;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
     @Autowired
     EmployeeMapper employeeMapper;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Override
     public PageInfo<Employee> getAllEmp(Map<String,Object> params) {
@@ -69,6 +77,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setWorkId(this.getNewWorkId());
         }
         employeeMapper.addEmployee(employee);
+        logger.info("添加员工成功,开始发送入职邮件!");
+        //发送入职邮件
+        rabbitTemplate.convertAndSend("mizhuo.mail",employee);
     }
 
     @Override

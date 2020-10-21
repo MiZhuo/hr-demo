@@ -2,9 +2,30 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="hr-model.mail-server.hr-model.main" target="11" />
+      <module name="hr-model.mail-server.hr-model.test" target="11" />
+      <module name="hr-server.mail-server.hr-model" target="11" />
       <module name="hr-springboot-web.mail-server.hr-server" target="1.8" />
+      <module name="mail-server" target="1.8" />
+      <module name="mail-server.hr-commons.main" target="11" />
+      <module name="mail-server.hr-commons.test" target="11" />
+      <module name="mail-server.hr-model" target="11" />
+      <module name="mail-server.hr-model.main" target="11" />
+      <module name="mail-server.hr-model.test" target="11" />
+      <module name="mail-server.hr-server" target="1.8" />
+      <module name="mail-server.hr-server.hr-commons" target="1.8" />
+      <module name="mail-server.hr-server.hr-commons.main" target="1.8" />
+      <module name="mail-server.hr-server.hr-commons.test" target="1.8" />
+      <module name="mail-server.hr-server.hr-model" target="1.8" />
+      <module name="mail-server.hr-server.hr-model.hr-commons" target="1.8" />
+      <module name="mail-server.hr-server.hr-model.hr-commons.main" target="1.8" />
+      <module name="mail-server.hr-server.hr-model.hr-commons.test" target="1.8" />
+      <module name="mail-server.hr-server.hr-model.main" target="1.8" />
+      <module name="mail-server.hr-server.hr-model.test" target="1.8" />
       <module name="mail-server.hr-server.main" target="1.8" />
       <module name="mail-server.hr-server.test" target="1.8" />
+      <module name="mail-server.main" target="1.8" />
+      <module name="mail-server.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

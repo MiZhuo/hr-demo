@@ -2,16 +2,17 @@ package fun.mizhuo.hrserver.mapper;
 
 import fun.mizhuo.hrserver.model.Salary;
 
+import java.util.List;
+import java.util.Map;
+
 public interface SalaryMapper {
-    int deleteByPrimaryKey(Integer id);
+    List<Salary> getAllSalaries(Map<String, Object> params);
 
-    int insert(Salary record);
+    int deleteSalaryById(Integer id);
 
-    int insertSelective(Salary record);
+    int deleteMoreSalaries(List<Salary> salaries);
 
-    Salary selectByPrimaryKey(Integer id);
+    int addSalary(Salary salary);
 
-    int updateByPrimaryKeySelective(Salary record);
-
-    int updateByPrimaryKey(Salary record);
+    int updateSalary(Salary salary);
 }

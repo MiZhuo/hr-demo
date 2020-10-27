@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public PageInfo<Employee> getAllEmp(Map<String,Object> params) {
-        Integer pageNum = MapUtils.getIntegerValue(params,"pageNum",10);
+        Integer pageNum = MapUtils.getIntegerValue(params,"pageNum",1);
         Integer pageSize = MapUtils.getIntegerValue(params,"pageSize",10);
         String orderField = MapUtils.getStringValue(params,"orderField","");
         String sortType = MapUtils.getStringValue(params,"sortType","");

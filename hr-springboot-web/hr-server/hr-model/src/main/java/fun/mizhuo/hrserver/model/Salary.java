@@ -1,5 +1,7 @@
 package fun.mizhuo.hrserver.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,6 +28,7 @@ public class Salary implements Serializable {
 
     private Float pensionPer;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date createDate;
 
     private Integer medicalBase;

@@ -3,17 +3,25 @@
         <el-container>
             <el-header class="homeHeader">
                 <div class="title">微人事</div>
-                <el-dropdown class="userInfo" @command="commandHandler">
-                  <span class="el-dropdown-link">
-                      <img :src="user.userFace">{{user.name}}
-                      <i class="el-icon-arrow-down el-icon--right"></i>
-                  </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="userinfo"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
-                    <el-dropdown-item command="setting"><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
-                    <el-dropdown-item command="logout" divided><i class="el-icon-s-fold"></i>注销登录</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
+                <div style="display:flex;justify-content: space-between">
+                    <div>
+                        <el-button icon="el-icon-bell" type="text" style="margin-right: 20px;font-size: 20px;color: #000000"
+                            @click="openChat"></el-button>
+                    </div>
+                    <div>
+                    <el-dropdown class="userInfo" @command="commandHandler">
+                      <span class="el-dropdown-link">
+                          <img :src="user.userFace">{{user.name}}
+                          <i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="userinfo"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
+                        <el-dropdown-item command="setting"><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
+                        <el-dropdown-item command="logout" divided><i class="el-icon-s-fold"></i>注销登录</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
+                </div>
             </el-header>
         </el-container>
         <el-container>
@@ -35,8 +43,14 @@
                 </el-breadcrumb>
                 <div v-if="this.$router.currentRoute.path=='/home'">Welcome to hr!</div>
                 <router-view class="homeRouterView"/>
+<!--                <el-tooltip class="item" effect="dark" content="聊天" placement="top">-->
+<!--                    <i class="el-icon-s-comment suspensionIcon"></i>-->
+<!--                </el-tooltip>-->
             </el-main>
         </el-container>
+        <el-dialog :visible.sync="dialogFormVisible">
+            
+        </el-dialog>
     </div>
 </template>
 
@@ -46,7 +60,8 @@ export default {
     data(){
         return {
             user : JSON.parse(window.sessionStorage.getItem("user")),
-            collapse : true
+            collapse : true,
+            dialogFormVisible : false
         }
     },
     methods:{
@@ -79,6 +94,9 @@ export default {
         menuClick(index){
             // this.$router.push(index);
             console.log(index);
+        },
+        openChat(){
+            this.dialogFormVisible = true;
         }
     },
     computed:{
@@ -122,5 +140,20 @@ export default {
 .el-dropdown-link{
     display: flex;
     align-items: center;
+}
+
+.suspensionIcon {
+    width: 8rem;
+    height: 6rem;
+    position: fixed;
+    bottom: 2rem;
+    right: 0.5rem;
+    z-index: 9999;
+    font-size: 80px;
+    cursor:pointer;
+    color: #409EFF;
+}
+.suspensionIcon:hover{
+    color: #8cc5ff;
 }
 </style>

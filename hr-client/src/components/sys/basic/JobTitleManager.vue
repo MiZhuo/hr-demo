@@ -18,7 +18,7 @@
         </div>
         <div style="margin-top: 10px">
             <el-table :data="jobTitleData" size="mini" class="component-table"
-                      border stripe style="width: 62%"
+                      border stripe style="width: 65%"
                       :header-cell-style="getTableStyle"
                       :cell-style="getTableStyle"
                       @selection-change="handleSelectionChange">

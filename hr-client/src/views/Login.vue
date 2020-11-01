@@ -49,6 +49,7 @@
                         this.loginBtnText = '正在登录...';
                         this.postKeyValueRequest('/doLogin',this.loginForm).then(resp=>{
                             if(resp){
+                                this.$store.commit('INIT_CURRENT_HR',resp.result);
                                 window.sessionStorage.setItem("user",JSON.stringify(resp.result));
                                 let path = this.$route.query.redirect;
                                 this.$router.replace((path == '/' || path == undefined) ? '/home' : path);

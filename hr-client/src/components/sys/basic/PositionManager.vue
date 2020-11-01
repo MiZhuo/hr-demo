@@ -10,7 +10,7 @@
         </div>
         <div style="margin-top: 10px">
             <el-table :data="positionData" size="mini" class="component-table"
-                    border stripe style="width: 53%;"
+                    border stripe style="width: 55%;"
                     :header-cell-style="getTableStyle"
                     :cell-style="getTableStyle"
                     @selection-change="handleSelectionChange">

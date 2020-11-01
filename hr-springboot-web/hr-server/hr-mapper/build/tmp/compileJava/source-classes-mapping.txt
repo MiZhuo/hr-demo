@@ -27,12 +27,12 @@ fun/mizhuo/hrserver/mapper/EmployeeRemoveMapper.java
  fun.mizhuo.hrserver.mapper.EmployeeRemoveMapper
 fun/mizhuo/hrserver/mapper/SysMsgMapper.java
  fun.mizhuo.hrserver.mapper.SysMsgMapper
-fun/mizhuo/hrserver/mapper/SalaryMapper.java
- fun.mizhuo.hrserver.mapper.SalaryMapper
+fun/mizhuo/hrserver/mapper/CommonMapper.java
+ fun.mizhuo.hrserver.mapper.CommonMapper
 fun/mizhuo/hrserver/mapper/EmployeeEcMapper.java
  fun.mizhuo.hrserver.mapper.EmployeeEcMapper
-fun/mizhuo/hrserver/mapper/EmpSalaryMapper.java
- fun.mizhuo.hrserver.mapper.EmpSalaryMapper
+fun/mizhuo/hrserver/mapper/PoliticsStatusMapper.java
+ fun.mizhuo.hrserver.mapper.PoliticsStatusMapper
 fun/mizhuo/hrserver/mapper/PositionMapper.java
  fun.mizhuo.hrserver.mapper.PositionMapper
 fun/mizhuo/hrserver/mapper/HrRoleMapper.java
@@ -45,7 +45,7 @@ fun/mizhuo/hrserver/mapper/AppraiseMapper.java
  fun.mizhuo.hrserver.mapper.AppraiseMapper
 fun/mizhuo/hrserver/mapper/DepartmentMapper.java
  fun.mizhuo.hrserver.mapper.DepartmentMapper
-fun/mizhuo/hrserver/mapper/CommonMapper.java
- fun.mizhuo.hrserver.mapper.CommonMapper
-fun/mizhuo/hrserver/mapper/PoliticsStatusMapper.java
- fun.mizhuo.hrserver.mapper.PoliticsStatusMapper
+fun/mizhuo/hrserver/mapper/EmpSalaryMapper.java
+ fun.mizhuo.hrserver.mapper.EmpSalaryMapper
+fun/mizhuo/hrserver/mapper/SalaryMapper.java
+ fun.mizhuo.hrserver.mapper.SalaryMapper

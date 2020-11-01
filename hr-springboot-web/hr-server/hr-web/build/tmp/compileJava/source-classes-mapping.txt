@@ -10,6 +10,8 @@ fun/mizhuo/hrserver/config/CustomUrlDecisionManager.java
  fun.mizhuo.hrserver.config.CustomUrlDecisionManager
 fun/mizhuo/hrserver/HrserverApplication.java
  fun.mizhuo.hrserver.HrserverApplication
+fun/mizhuo/hrserver/controller/salary/salsob/EmpSalaryController.java
+ fun.mizhuo.hrserver.controller.salary.salsob.EmpSalaryController
 fun/mizhuo/hrserver/enums/NoneRoleURLEnum.java
  fun.mizhuo.hrserver.enums.NoneRoleURLEnum
 fun/mizhuo/hrserver/config/VerifyCaptchaFilter.java
@@ -23,6 +25,8 @@ fun/mizhuo/hrserver/config/SecurityConfig.java
  fun.mizhuo.hrserver.config.SecurityConfig$5
 fun/mizhuo/hrserver/filter/MyAuthenticationFilter.java
  fun.mizhuo.hrserver.filter.MyAuthenticationFilter
+fun/mizhuo/hrserver/controller/salary/salsob/SalarySobController.java
+ fun.mizhuo.hrserver.controller.salary.salsob.SalarySobController
 fun/mizhuo/hrserver/controller/system/basic/RoleTeamController.java
  fun.mizhuo.hrserver.controller.system.basic.RoleTeamController
 fun/mizhuo/hrserver/controller/common/SysConfigController.java

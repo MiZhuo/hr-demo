@@ -286,7 +286,7 @@
                     :total="employeeTableData.total">
             </el-pagination>
         </div>
-        <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" width="80%">
+        <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" width="85%">
             <el-form :model="employee" :rules="rules" size="mini" ref="employeeForm">
                 <el-row>
                     <el-col :span="6">

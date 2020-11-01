@@ -17,4 +17,5 @@ public interface HrMapper {
     Integer enabledHrById(Hr hr);
 
     Integer deleteHrById(Integer id);
+
 }

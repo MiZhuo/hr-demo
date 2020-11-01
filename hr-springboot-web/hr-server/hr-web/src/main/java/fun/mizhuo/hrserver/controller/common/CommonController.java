@@ -2,8 +2,10 @@ package fun.mizhuo.hrserver.controller.common;
 
 import fun.mizhuo.hrserver.enums.FileEnum;
 import fun.mizhuo.hrserver.exception.HrException;
+import fun.mizhuo.hrserver.model.Hr;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.common.CommonService;
+import fun.mizhuo.hrserver.service.system.hr.HrService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ import java.util.Map;
 public class CommonController {
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    HrService hrService;
 
     @ApiOperation(value = "获取下拉列表")
     @GetMapping("/dropDown/{arr}")
@@ -67,5 +72,12 @@ public class CommonController {
         }catch (Exception e){
             throw new HrException("下载文件失败!",e);
         }
+    }
+
+    @ApiOperation(value = "获取所有HR信息")
+    @GetMapping("/getHrs")
+    public ResponseVo getAllHrs(){
+        List<Hr> hrs = hrService.getAllHrs();
+        return ResponseVo.ok("",hrs);
     }
 } 

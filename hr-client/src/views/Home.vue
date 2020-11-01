@@ -15,7 +15,7 @@
                           <i class="el-icon-arrow-down el-icon--right"></i>
                       </span>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="userinfo"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
+                        <el-dropdown-item command="userInfo"><i class="el-icon-user-solid"></i>个人中心</el-dropdown-item>
                         <el-dropdown-item command="setting"><i class="el-icon-s-tools"></i>设置</el-dropdown-item>
                         <el-dropdown-item command="logout" divided><i class="el-icon-s-fold"></i>注销登录</el-dropdown-item>
                       </el-dropdown-menu>
@@ -43,20 +43,22 @@
                 </el-breadcrumb>
                 <div v-if="this.$router.currentRoute.path=='/home'">Welcome to hr!</div>
                 <router-view class="homeRouterView"/>
-<!--                <el-tooltip class="item" effect="dark" content="聊天" placement="top">-->
-<!--                    <i class="el-icon-s-comment suspensionIcon"></i>-->
-<!--                </el-tooltip>-->
             </el-main>
         </el-container>
-        <el-dialog :visible.sync="dialogFormVisible">
-            
+        <el-dialog id="chatDialog" :visible.sync="dialogFormVisible">
+            <div style="height: 100px">
+                <Chat></Chat>
+            </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
+import Chat from "../components/common/Chat";
+
 export default {
     name : "Home",
+    components: {Chat},
     data(){
         return {
             user : JSON.parse(window.sessionStorage.getItem("user")),
@@ -67,7 +69,7 @@ export default {
     methods:{
         commandHandler(cmd){
             switch (cmd) {
-                case "userinfo" : {
+                case "userInfo" : {
                     break;
                 }
                 case "setting" : {
@@ -103,6 +105,9 @@ export default {
         routes(){
             return this.$store.state.routes;
         }
+    },
+    mounted:function() {
+        this.$store.dispatch('connect');
     }
 }
 </script>
@@ -142,18 +147,12 @@ export default {
     align-items: center;
 }
 
-.suspensionIcon {
-    width: 8rem;
-    height: 6rem;
-    position: fixed;
-    bottom: 2rem;
-    right: 0.5rem;
-    z-index: 9999;
-    font-size: 80px;
-    cursor:pointer;
-    color: #409EFF;
+#chatDialog .el-dialog__header{
+    padding: 0;
 }
-.suspensionIcon:hover{
-    color: #8cc5ff;
+
+#chatDialog .el-dialog__body{
+    padding: 0;
 }
+
 </style>

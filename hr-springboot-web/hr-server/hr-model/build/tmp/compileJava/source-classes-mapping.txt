@@ -28,8 +28,8 @@ fun/mizhuo/hrserver/model/Nation.java
  fun.mizhuo.hrserver.model.Nation
 fun/mizhuo/hrserver/model/Meta.java
  fun.mizhuo.hrserver.model.Meta
-fun/mizhuo/hrserver/model/Salary.java
- fun.mizhuo.hrserver.model.Salary
+fun/mizhuo/hrserver/model/Role.java
+ fun.mizhuo.hrserver.model.Role
 fun/mizhuo/hrserver/model/Position.java
  fun.mizhuo.hrserver.model.Position
 fun/mizhuo/hrserver/model/Appraise.java
@@ -42,5 +42,5 @@ fun/mizhuo/hrserver/model/AdjustSalary.java
  fun.mizhuo.hrserver.model.AdjustSalary
 fun/mizhuo/hrserver/model/PoliticsStatus.java
  fun.mizhuo.hrserver.model.PoliticsStatus
-fun/mizhuo/hrserver/model/Role.java
- fun.mizhuo.hrserver.model.Role
+fun/mizhuo/hrserver/model/Salary.java
+ fun.mizhuo.hrserver.model.Salary

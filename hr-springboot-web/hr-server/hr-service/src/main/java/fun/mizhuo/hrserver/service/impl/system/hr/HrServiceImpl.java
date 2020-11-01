@@ -65,4 +65,5 @@ public class HrServiceImpl implements HrService {
         params.put("keyWord",keyWord);
         return hrMapper.getAllHrsWithOutCurrentHr(params);
     }
+
 }

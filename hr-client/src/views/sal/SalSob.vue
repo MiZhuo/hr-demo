@@ -49,10 +49,12 @@
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
+                                style="padding: 3px"
                                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-button
                                 size="mini"
                                 type="danger"
+                                style="padding: 3px"
                                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>

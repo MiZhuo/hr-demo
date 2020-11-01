@@ -20,4 +20,5 @@ public interface HrService {
     Integer deleteHrById(Integer id);
 
     List<Hr> searchHrByKeyWord(String keyWord);
+
 }

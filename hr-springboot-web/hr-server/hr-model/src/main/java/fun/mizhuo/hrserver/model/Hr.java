@@ -36,6 +36,8 @@ public class Hr implements UserDetails,Serializable {
 
     private String remark;
 
+    private String isOnline;
+
     private List<Role> roles;
 
     public List<Role> getRoles() {
@@ -151,5 +153,13 @@ public class Hr implements UserDetails,Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(String isOnline) {
+        this.isOnline = isOnline;
     }
 }

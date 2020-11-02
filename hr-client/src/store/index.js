@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {Notification} from 'element-ui'
 import {getRequest} from "../utils/api";
+import {postRequest} from "../utils/api";
 import '../utils/stomp'
 import SockJS from '../utils/sockjs'
 
@@ -49,7 +50,8 @@ const store = new Vuex.Store({
             //浏览器本地历史聊天记录
             let data = localStorage.getItem("vue-chat-session");
             if(data){
-                state.session = JSON.parse(data);
+                state.sessions = JSON.parse(data);
+                console.log(data);
             }
         },
         INIT_HR(state,data){
@@ -60,6 +62,14 @@ const store = new Vuex.Store({
         connect(context){
             context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
             context.state.stomp.connect({},success=>{
+                //上线
+                postRequest('/common/online');
+                //TODO 获取离线消息
+                getRequest('/common/getOfflineMsg').then(resp=>{
+                    if(resp){
+
+                    }
+                });
                 //订阅消息
                 context.state.stomp.subscribe('/user/queue/chat',msg=>{
                     let receiveMsg = JSON.parse(msg.body);

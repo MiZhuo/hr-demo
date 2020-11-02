@@ -6,6 +6,7 @@ import fun.mizhuo.hrserver.model.Hr;
 import fun.mizhuo.hrserver.model.ResponseVo;
 import fun.mizhuo.hrserver.service.common.CommonService;
 import fun.mizhuo.hrserver.service.system.hr.HrService;
+import fun.mizhuo.hrserver.util.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -38,6 +37,9 @@ public class CommonController {
 
     @Autowired
     HrService hrService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @ApiOperation(value = "获取下拉列表")
     @GetMapping("/dropDown/{arr}")
@@ -78,6 +80,26 @@ public class CommonController {
     @GetMapping("/getHrs")
     public ResponseVo getAllHrs(){
         List<Hr> hrs = hrService.getAllHrs();
+        hrs.forEach(hr->{
+            hr.setIsOnline(String.valueOf(redisUtils.get(hr.getUsername())));
+        });
         return ResponseVo.ok("",hrs);
     }
-} 
+
+    @ApiOperation(value = "上线")
+    @PostMapping("/online")
+    public ResponseVo online(Authentication authentication){
+        Hr hr = (Hr) authentication.getPrincipal();
+        redisUtils.set(hr.getUsername(),"true");
+        redisUtils.expire(hr.getUsername(),30 * 60 * 1000);
+        return ResponseVo.ok("");
+    }
+
+    @ApiOperation(value = "获取离线消息")
+    @PostMapping("/getOfflineMsg")
+    public ResponseVo getOfflineMsg(Authentication authentication){
+        Hr hr = (Hr) authentication.getPrincipal();
+        //TODO 离线消息
+        return ResponseVo.ok("");
+    }
+}

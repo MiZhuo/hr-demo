@@ -4,7 +4,7 @@
   		<li v-for="item in hrs" :class="{ active: currentSession ? item.username === currentSession.username : false}"
 			v-on:click="changeCurrentSession(item)">
   			<img class="avatar" :src="item.userFace" :alt="item.name">
-  			<el-badge :is-dot="isDot[user.username + '#' + item.username]"><p class="name">{{item.name}}</p></el-badge>
+  			<el-badge :is-dot="isDot[user.username + '#' + item.username]"><p class="name">{{item.name}}<span style="font-size: 4px">{{item.isOnline == 'true' ? '[在线]' : '[离线]'}} </span></p></el-badge>
   		</li>
   	</ul>
   </div>
